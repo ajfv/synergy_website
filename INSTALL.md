@@ -10,7 +10,7 @@ Si no lo tiene instalado, puede hacerlo ejecutando el comando
 
     mkdir aplicaciones
 
- ### 3. Crear el ambiente virtual
+### 3. Crear el ambiente virtual
 
 En una ventana de comandos cambiar a la carpeta principal de la aplicación.
 
