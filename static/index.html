@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="social">
+    <head><title>social</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bsPerso.css">
+        <link rel="stylesheet" href="css/angular/ngDialog.min.css">
+        <link rel="stylesheet" href="css/angular/ngDialog-theme-default.min.css">
+        <link rel="stylesheet" href="css/angular/ng-table.min.css">
+        <link rel="stylesheet" href="css/app/style.css">
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+<body ng-controller="socialController_">
+    <div class="container">
+        <flash:messages class="alert-perso"></flash:messages>
+        <div ng-view class="fade"></div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12" style="background-color: #333333; height: 2px;"></div>
+          </div>
+          <div class="row">
+              <div class="col-xs-10 text-inverse" ng-bind="title"></div>
+              <div class="col-xs-2" style="text-align: right"><img alt="Logo" src="img/logo.png" height="30" /></div>
+          </div>
+      </div>
+    </footer>
+    <!-- LOAD JQUERY -->
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/d3.v3.min.js"></script>
+
+    <!-- LOAD ANGULAR -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/angular/angular-animate.min.js"></script>
+    <script src="js/angular/angular-resource.min.js"></script>
+    <script src="js/angular/angular-route.min.js"></script>
+    <script src="js/angular/angular-sanitize.js"></script>
+    <script src="js/angular/textAngular-sanitize.min.js"></script>
+    <script src="js/angular/textAngular.min.js"></script>
+    <script src="js/angular/ngDialog.min.js"></script>
+    <script src="js/jquery.layout-latest.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/angular/ng-flash.js"></script>
+    <!-- LOAD APP -->
+    <script src="js/app/app.js"></script>
+    <script src="js/app/ident/IdentService.js"></script>
+    <script src="js/app/ident/IdentController.js"></script>
+    <script src="js/app/paginas/PaginasService.js"></script>
+    <script src="js/app/paginas/PaginasController.js"></script>
+
+
+</body>
+</html>

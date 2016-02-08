@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h2>Control de acceso</h2>
+<p><span style="line-height: 1.2; font-family: Arial; font-size: 15px;">En tanto que participante en el desarrollo incluyendo el maestro Scrum, el dueño del producto y los miembros del equipo de desarrollo puedo tener acceso a la aplicación para identificarse como miembro del equipo y obtener soporte al desarrollo de un producto bajo Scrum.</span></p>
+<ol>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/ident/AIdentificar'</li>
+   <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
+<li>Parámetros POST:
+    <ul>     <li>usuario -  
+Requerido. 
+Long. mínima: <code>1</code>. 
+     </li>     <li>clave -  
+Requerido. 
+Long. mínima: <code>1</code>. 
+     </li>
+    </ul>
+   </li>
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VPrincipal',</li>
+       <li> msg:"Bienvenido usuario".</li>
+      </ul>
+<p>Se continúa con el rol de duenoProducto.</p>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VLogin',</li>
+       <li> msg:"Datos de identificación incorrectos".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/ident/ARegistrar'</li>
+   <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
+<li>Parámetros POST:
+    <ul>     <li>nombre -  
+Requerido. 
+Long. máxima: <code>50</code>. 
+     </li>     <li>usuario -  
+Requerido. 
+Long. máxima: <code>15</code>. 
+     </li>     <li>clave -  
+Requerido. 
+Long. mínima: <code>8</code>. 
+Long. máxima: <code>16</code>. 
+     </li>     <li>correo -  
+Requerido. 
+     </li>
+    </ul>
+   </li>
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VLogin',</li>
+       <li> msg:"Felicitaciones, Ya estás registrado en la aplicación".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VRegistro',</li>
+       <li> msg:"Error al tratar de registrarse".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/ident/VLogin'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/ident/VPrincipal'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/ident/VRegistro'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li>
+</ol>
+<h2>Páginas de usuarios</h2>
+<p></p>
+<ol>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/paginas/AModificarPagina'</li>
+   <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
+<li>Parámetros POST:
+    <ul>     <li>titulo -  
+Requerido. 
+Long. mínima: <code>5</code>. 
+     </li>     <li>contenido -  
+Opcional. 
+     </li>
+    </ul>
+   </li>
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VPagina',</li>
+       <li> msg:"Cambios almacenados".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/paginas/VPagina'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idUsuario
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li>
+</ol>
+
+</html>

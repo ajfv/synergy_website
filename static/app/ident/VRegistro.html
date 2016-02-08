@@ -1,0 +1,39 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" 
+                    data-toggle="collapse" 
+                    data-target="#contenido-plegable">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" >Registro de usuarios</span>
+        </div>
+        <div class="collapse navbar-collapse" id="contenido-plegable">
+            <ul class="nav navbar-nav navbar-left">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="VLogin1()">
+    Regresar</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <form name="fUsuarioForm" ng-submit="ARegistrar0(fUsuarioForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fUsuarioSubmitted && fUsuarioForm.nombre.$invalid && fUsuarioForm.nombre.$pristine && fUsuarioSubmitted}"><label for="fUsuario_nombre">Nombre completo</label><input id="fUsuario_nombre" type="text" name="nombre" class="form-control" ng-model="fUsuario.nombre" placeholder="Nombre completo" required ng-maxlength="50"/><p ng-show="fUsuarioSubmitted && fUsuarioForm.nombre.$invalid" class="help-block">Error en campo Nombre completo.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fUsuarioSubmitted && fUsuarioForm.usuario.$invalid && fUsuarioForm.usuario.$pristine && fUsuarioSubmitted}"><label for="fUsuario_usuario">usuario</label><input id="fUsuario_usuario" type="text" name="usuario" class="form-control" ng-model="fUsuario.usuario" placeholder="usuario" required ng-maxlength="15"/><p ng-show="fUsuarioSubmitted && fUsuarioForm.usuario.$invalid" class="help-block">Error en campo usuario.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fUsuarioSubmitted && fUsuarioForm.clave.$invalid && fUsuarioForm.clave.$pristine && fUsuarioSubmitted}"><label for="fUsuario_clave">Clave</label><input id="fUsuario_clave" type="password" name="clave" class="form-control" ng-model="fUsuario.clave" placeholder="Clave" required ng-minlength="8" ng-maxlength="16"/><p ng-show="fUsuarioSubmitted && fUsuarioForm.clave.$invalid" class="help-block">Error en campo Clave.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fUsuarioSubmitted && fUsuarioForm.clave2.$invalid && fUsuarioForm.clave2.$pristine && fUsuarioSubmitted}"><label for="fUsuario_clave2">Repita la clave</label><input id="fUsuario_clave2" type="password" name="clave2" class="form-control" ng-model="fUsuario.clave2" placeholder="Repita la clave" required same-as="fUsuario.clave"/><p ng-show="fUsuarioSubmitted && fUsuarioForm.clave2.$invalid" class="help-block">Error en campo Repita la clave.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fUsuarioSubmitted && fUsuarioForm.correo.$invalid && fUsuarioForm.correo.$pristine && fUsuarioSubmitted}"><label for="fUsuario_correo">Correo</label><input id="fUsuario_correo" type="email" name="correo" class="form-control" ng-model="fUsuario.correo" placeholder="Correo" required/><p ng-show="fUsuarioSubmitted && fUsuarioForm.correo.$invalid" class="help-block">Error en campo Correo.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>ARegisrarse
+        </button>
+    </form>
+    <hr />
+
+
+<div id="right"></div>

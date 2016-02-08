@@ -1,0 +1,36 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" 
+                    data-toggle="collapse" 
+                    data-target="#contenido-plegable">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" >APMWSC</span>
+        </div>
+        <div class="collapse navbar-collapse" id="contenido-plegable">
+            <ul class="nav navbar-nav navbar-left">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="VRegistro1()">
+    VRegistro</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <form name="fLoginForm" ng-submit="AIdentificar0(fLoginForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.usuario.$invalid && fLoginForm.usuario.$pristine && fLoginSubmitted}"><label for="fLogin_usuario">Usuario</label><input id="fLogin_usuario" type="text" name="usuario" class="form-control" ng-model="fLogin.usuario" placeholder="Usuario" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.usuario.$invalid" class="help-block">Error en campo Usuario.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.clave.$invalid && fLoginForm.clave.$pristine && fLoginSubmitted}"><label for="fLogin_clave">Clave</label><input id="fLogin_clave" type="password" name="clave" class="form-control" ng-model="fLogin.clave" placeholder="Clave" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.clave.$invalid" class="help-block">Error en campo Clave.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>AIdentificar
+        </button>
+    </form>
+    <hr />
+
+
+<div id="right"></div>

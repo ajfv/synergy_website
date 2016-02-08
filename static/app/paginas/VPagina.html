@@ -1,0 +1,39 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" 
+                    data-toggle="collapse" 
+                    data-target="#contenido-plegable">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" >Página de usuairo</span>
+        </div>
+        <div class="collapse navbar-collapse" id="contenido-plegable">
+            <ul class="nav navbar-nav navbar-left">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+<li><a ng-click="VPrincipal1()">
+    Regresar</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <form name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}"><label for="fPagina_titulo">Título</label><input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/><p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">Error en campo Título.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}"><label for="fPagina_contenido">Contenido</label><div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" ></div><p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">Error en campo Contenido.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>Modificar
+        </button>
+    </form>
+    <hr />
+
+
+<div id="right"></div><script type="text/ng-template" id="ayuda_VPagina.html">
+Vista con el editor de páginas de usuario.
+</script>
