@@ -85,10 +85,10 @@ def VPagina():
     
     #res={'titulo':pagina_existente.titulo,'contenido':pagina_existente.contenido}
     
-    return pagina_existente.contenido
+    #return pagina_existente.contenido
 
     #Action code ends here
-    #return json.dumps(res)
+    return json.dumps(res)
 
 
 
