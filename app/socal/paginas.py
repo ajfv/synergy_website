@@ -47,7 +47,7 @@ def AModificarPagina():
     for titulo,id_usuario in nueva_sesion.query(Pagina.titulo, Pagina.id_usuario) :
         if id_usuario == session['nombre_usuario'] :
             
-            pagina_existente = nueva_sesion.query(Pagina).filter_by(id_usuario=session['nombre_usuario']).first(
+            pagina_existente = nueva_sesion.query(Pagina).filter_by(id_usuario=session['nombre_usuario']).first()
             
             if 'contenido' in params :
                 pagina_existente.contenido = params['contenido']
