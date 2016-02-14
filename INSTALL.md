@@ -26,6 +26,7 @@ Luego deberá crear el usuario y la base de datos para la aplicación:
 CREATE USER synergy WITH PASSWORD 'lacontraseña';
 CREATE DATABASE base_ci3725 OWNER synergy;
 ```
+Puede cambiar estos valores, pero recuerde cambiarlos también en base.py
 
 ### 3. Crear una carpeta aplicaciones:
 
