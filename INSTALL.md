@@ -6,11 +6,33 @@ Si no lo tiene instalado, puede hacerlo ejecutando el comando
 
     sudo apt-get install python3-pip
 
-### 2. Crear una carpeta aplicaciones:
+### 2. Prepare la base de datos
+
+La aplicación utiliza PostgreSQL. Puede conseguir las instrucciones de
+instalación [aquí](http://www.postgresql.org/download/).
+
+También necesitará SQLAlchemy, que puede instalar con los siguientes comandos:
+
+    sudo pip3 install SQLAlchemy
+    sudo pip3 install Flask-SQLAlchemy
+    sudo pip3 install Flask-Migrate
+
+Para poder trabajar con PostgreSQL usando SQLAlchemy necesitará instalar
+[psycopg2](http://initd.org/psycopg/docs/install.html).
+
+Luego deberá crear el usuario y la base de datos para la aplicación:
+
+```sql
+CREATE USER synergy WITH PASSWORD 'lacontraseña';
+CREATE DATABASE base_ci3725 OWNER synergy;
+```
+Puede cambiar estos valores, pero recuerde cambiarlos también en base.py
+
+### 3. Crear una carpeta aplicaciones:
 
     mkdir aplicaciones
 
-### 3. Crear el ambiente virtual
+### 4. Crear el ambiente virtual
 
 En una ventana de comandos cambiar a la carpeta principal de la aplicación.
 
@@ -20,23 +42,23 @@ Para crear el ambiente virtual
 
     pyvenv-3.4 --without-pip --system-site-packages venv3
 
-### 4. Descomprimir o copiar los archivos de esta distribución
+### 5. Descomprimir o copiar los archivos de esta distribución
 
-### 5. Activar el ambiente virtual
+### 6. Activar el ambiente virtual
 
     source venv3/bin/activate
 
-### 6. Instalar Flask
+### 7. Instalar Flask
 La primera vez que lo haga puede que necesite ejecutarlo con sudo.
 
     pip3 install flask
 
-### 7. Instalar la gestión de opciones del servidor web
+### 8. Instalar la gestión de opciones del servidor web
 La primera vez que lo haga puede que necesite ejecutarlo con sudo.
 
     sudo pip3 install flask-script
 
-### 8. Ejecutar la aplicación
+### 9. Ejecutar la aplicación
 
     python base.py runserver
 
@@ -62,19 +84,6 @@ Descargar una nueva versión desde cohesión y
 desempaquetarla en la carpeta de la aplicación:
 
     unzip socialFL.zip
-
-Si va a utilizar SQLAlchemy verifique que este paquete está instalado. Si no
-es el caso pruebe ejecutando los siguientes comandos de instalación:
-
-    sudo pip3 install SQLAlchemy
-    sudo pip3 install Flask-SQLAlchemy
-    sudo pip3 install Flask-Migrate
-
-Para verificar si ya están instalados ejecute python3 una consola de terminal e importe
-los archivos pertinentes:
-
-    from flask import Flask
-    from flask.ext.sqlalchemy import SQLAlchemy
 
 Para instalar con Miniconda:
 Crear ambiente:
