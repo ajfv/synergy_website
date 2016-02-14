@@ -32,17 +32,22 @@ def ARegistrar():
     #POST/PUT parameters
     params = request.get_json()
     results = [{'label':'/VLogin', 'msg':['Felicitaciones, Ya estás registrado en la aplicación']}, {'label':'/VRegistro', 'msg':['Error al tratar de registrarse']}, ]
-    res = results[0]
-    #Action code goes here, res should be a list with a label and a message
+    res = results[1]
 
-    nuevo_usuario = Usuario(nombre_completo=params['nombre']
-                            ,nombre_usuario=params['usuario']
-                            ,clave=params['clave']
-                            ,correo=params['correo'])
+    # Se verifica si el usuario existe en la base de datos
+    usuarioExistente = Usuario.query.filter_by(nombre_usuario=\
+                                    params['usuario']).first()
 
-    db.session.add(nuevo_usuario)
+    if not(usuarioExistente):
+        res = results[0]
+        nuevo_usuario = Usuario(nombre_completo=params['nombre']
+                                ,nombre_usuario=params['usuario']
+                                ,clave=params['clave']
+                                ,correo=params['correo'])
 
-    db.session.commit()
+        db.session.add(nuevo_usuario)
+
+        db.session.commit()
 
     #Action code ends here
     if "actor" in res:
