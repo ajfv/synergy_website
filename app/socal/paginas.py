@@ -11,10 +11,10 @@ def AModificarPagina():
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    res['label'] = res['label'] + '/' + db.session['nombre_usuario']
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
 
     pagina = (db.session.query(Pagina)
-        .filter_by(id_usuario=db.session['nombre_usuario'])
+        .filter_by(id_usuario=session['nombre_usuario'])
         .first())
     if pagina is None:
         pagina = Pagina(titulo=params['titulo'],
