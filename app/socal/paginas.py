@@ -12,18 +12,18 @@ def AModificarPagina():
     #Action code goes here, res should be a list with a label and a message
 
     res['label'] = res['label'] + '/' + session['nombre_usuario']
-
+    contenido = "" if 'contenido' not in params else params['contenido']
     pagina = (db.session.query(Pagina)
         .filter_by(id_usuario=session['nombre_usuario'])
         .first())
     if pagina is None:
         pagina = Pagina(titulo=params['titulo'],
-            contenido=params['contenido'],
+            contenido=contenido
             usuario=session['nombre_usuario'])
         db.session.add(pagina)
     else:
         pagina.titulo = params['titulo']
-        pagina.contenido = "" if 'contenido' not in params else params['contenido']
+        pagina.contenido = contenido
 
     db.session.commit()
 
