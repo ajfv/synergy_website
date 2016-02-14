@@ -8,18 +8,21 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///base_de_datos.db', echo=True)
+engine = create_engine(
+    'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db',
+    echo=True
+)
 Base_dec = declarative_base()
 
 class Usuario(Base_dec):
-    
+
     __tablename__ = "Usuario"
-    
+
     clave = Column(String)
     nombre_completo = Column(String)
     correo = Column(String)
     nombre_usuario = Column(String, primary_key=True)
-    
+
     def __repr__(self):
         return "< Usuario(nombre completo='%s', nombre de usuario='%s',correo='%s',clave='%s')>" %(self.nombre_completo, self.nombre_usuario, self.correo, self.clave)
 
@@ -39,7 +42,7 @@ def AIdentificar():
     #Action code goes here, res should be a list with a label and a message
 
     nueva_sesion = Sesion()
-    
+
     for nombre_usuario, clave in nueva_sesion.query(Usuario.nombre_usuario, Usuario.clave) :
         if nombre_usuario == params['usuario'] and clave == params['clave'] :
             res = results[0]
@@ -63,18 +66,18 @@ def ARegistrar():
     results = [{'label':'/VLogin', 'msg':['Felicitaciones, Ya estás registrado en la aplicación']}, {'label':'/VRegistro', 'msg':['Error al tratar de registrarse']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    
+
     nuevo_usuario = Usuario(nombre_completo=params['nombre']
                             ,nombre_usuario=params['usuario']
                             ,clave=params['clave']
                             ,correo=params['correo'])
-    
+
     nueva_sesion = Sesion()
-    
+
     nueva_sesion.add(nuevo_usuario)
-    
+
     nueva_sesion.commit()
-    
+
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -93,7 +96,7 @@ def VLogin():
     #Action code goes here, res should be a JSON structure
 
     #session.pop('nombre_usuario')
-    
+
     #Action code ends here
     return json.dumps(res)
 
@@ -107,10 +110,10 @@ def VPrincipal():
     #Action code goes here, res should be a JSON structure
 
     res['idUsuario'] = session['nombre_usuario']
-    
+
     #print("En VPrincipal ")
     #print(session)
-    
+
     #Action code ends here
     return json.dumps(res)
 
@@ -125,7 +128,7 @@ def VRegistro():
 
     #print("En VRegistro ")
     #print(session)
-    
+
     #Action code ends here
     return json.dumps(res)
 
@@ -137,4 +140,3 @@ def VRegistro():
 
 
 #Use case code ends here
-

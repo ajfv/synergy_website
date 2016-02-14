@@ -10,13 +10,16 @@ from sqlalchemy.orm import sessionmaker
 
 from app.socal.ident import Usuario
 
-engine = create_engine('sqlite:///base_de_datos.db', echo=True)
+engine = create_engine(
+    'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db',
+    echo=True
+)
 Base_dec = declarative_base()
 
 class Pagina(Base_dec):
-    
+
     __tablename__ = "Pagina"
-    
+
     titulo = Column(String)
     contenido = Column(String)
     id_usuario = Column(String, primary_key=True)
@@ -46,23 +49,23 @@ def AModificarPagina():
 
     for titulo,id_usuario in nueva_sesion.query(Pagina.titulo, Pagina.id_usuario) :
         if id_usuario == session['nombre_usuario'] :
-            
+
             pagina_existente = nueva_sesion.query(Pagina).filter_by(id_usuario=session['nombre_usuario']).first()
-            
+
             if 'contenido' in params :
                 pagina_existente.contenido = params['contenido']
             else :
                 pagina_existente.contenido = ""
-            
+
             pagina_existente.titulo = params['titulo']
             pagina_ya_existe = True
             break
 
     if not pagina_ya_existe :
         nueva_pagina = Pagina(titulo=params['titulo'], contenido=params['contenido'], id_usuario=session['nombre_usuario'])
-    
+
         nueva_sesion.add(nueva_pagina)
-    
+
     nueva_sesion.commit()
 
     #Action code ends here
@@ -83,13 +86,13 @@ def VPagina():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-    
+
     nueva_sesion = Sesion()
-    
+
     pagina_existente = nueva_sesion.query(Pagina).filter_by(id_usuario=idUsuario).first()
-    
+
     #res={'titulo':pagina_existente.titulo,'contenido':pagina_existente.contenido}
-    
+
     #return pagina_existente.contenido
 
     #Action code ends here
@@ -103,4 +106,3 @@ def VPagina():
 
 
 #Use case code ends here
-
