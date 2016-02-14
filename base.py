@@ -57,8 +57,11 @@ class Pagina(db.Model):
     def __init__(self, titulo, contenido, usuario):
         self.titulo = titulo
         self.contenido = contenido
-        self.usuario = usuario
-        self.id_usuario = usuario.nombre_usuario
+        self.id_usuario = usuario
+        self.usuario = (db.session
+            .query(Usuario)
+            .filter_by(nombre_usuario=usuario)
+            .first())
 
 #Application code ends here
 

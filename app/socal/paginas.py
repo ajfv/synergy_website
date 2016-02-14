@@ -19,7 +19,7 @@ def AModificarPagina():
     if pagina is None:
         pagina = Pagina(titulo=params['titulo'],
             contenido=params['contenido'],
-            id_usuario=session['nombre_usuario'])
+            usuario=session['nombre_usuario'])
         db.session.add(pagina)
     else:
         pagina.titulo = params['titulo']
