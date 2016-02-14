@@ -17,9 +17,13 @@ def AModificarPagina():
         .filter_by(id_usuario=session['nombre_usuario'])
         .first())
     if pagina is None:
+        usuario = (db.session
+            .query(Usuario)
+            .filter_by(nombre_usuario=session['nombre_usuario'])
+            .first())
         pagina = Pagina(titulo=params['titulo'],
             contenido=params['contenido'],
-            id_usuario=session['nombre_usuario'])
+            usuario=usuario)
         db.session.add(pagina)
     else:
         pagina.titulo = params['titulo']
