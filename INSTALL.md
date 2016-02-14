@@ -24,7 +24,7 @@ Luego deberá crear el usuario y la base de datos para la aplicación:
 
 ```sql
 CREATE USER synergy WITH PASSWORD 'lacontraseña';
-CREATE DATABASE base_ci3725 OWNER synergy;
+CREATE DATABASE ci3715_db OWNER synergy;
 ```
 Puede cambiar estos valores, pero recuerde cambiarlos también en base.py
 
@@ -58,7 +58,13 @@ La primera vez que lo haga puede que necesite ejecutarlo con sudo.
 
     sudo pip3 install flask-script
 
-### 9. Ejecutar la aplicación
+### 9. Ejecute la primera migración de la base de datos
+
+    python base.py db init
+    python base.py db migrate
+    python base.py db upgrade
+
+### 10. Ejecutar la aplicación
 
     python base.py runserver
 
