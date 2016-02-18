@@ -8,7 +8,7 @@ def AIdentificar():
     #POST/PUT parameters
     params = request.get_json()
     results = [{'label':'/VPrincipal', 'msg':['Bienvenido usuario'], "actor":"duenoProducto"}, {'label':'/VLogin', 'msg':['Datos de identificación incorrectos']}, ]
-    res = results[1] #Estaba en 0
+    res = results[1] 
     #Action code goes here, res should be a list with a label and a message
 
     for nombre_usuario, clave in db.session.query(Usuario.nombre_usuario, Usuario.clave) :
@@ -66,7 +66,7 @@ def VLogin():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    #session.pop('nombre_usuario')
+    session.pop('nombre_usuario', None)
 
     #Action code ends here
     return json.dumps(res)
@@ -82,9 +82,6 @@ def VPrincipal():
 
     res['idUsuario'] = session['nombre_usuario']
 
-    #print("En VPrincipal ")
-    #print(session)
-
     #Action code ends here
     return json.dumps(res)
 
@@ -97,8 +94,6 @@ def VRegistro():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    #print("En VRegistro ")
-    #print(session)
 
     #Action code ends here
     return json.dumps(res)
