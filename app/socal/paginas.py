@@ -1,7 +1,7 @@
 from flask import request, session, Blueprint, json
 
 paginas = Blueprint('paginas', __name__)
-
+from base import Usuario, Pagina, db
 
 @paginas.route('/paginas/AModificarPagina', methods=['POST'])
 def AModificarPagina():
@@ -11,7 +11,21 @@ def AModificarPagina():
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    res['label'] = res['label'] + '/' + 'Leo'
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
+    contenido = "" if 'contenido' not in params else params['contenido']
+    pagina = (db.session.query(Pagina)
+        .filter_by(id_usuario=session['nombre_usuario'])
+        .first())
+    if pagina is None:
+        pagina = Pagina(titulo=params['titulo'],
+            contenido=contenido,
+            usuario=session['nombre_usuario'])
+        db.session.add(pagina)
+    else:
+        pagina.titulo = params['titulo']
+        pagina.contenido = contenido
+
+    db.session.commit()
 
     #Action code ends here
     if "actor" in res:
@@ -32,6 +46,11 @@ def VPagina():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
+    pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
+
+    #res={'titulo':pagina_existente.titulo,'contenido':pagina_existente.contenido}
+
+    #return pagina_existente.contenido
 
     #Action code ends here
     return json.dumps(res)
@@ -44,4 +63,3 @@ def VPagina():
 
 
 #Use case code ends here
-
