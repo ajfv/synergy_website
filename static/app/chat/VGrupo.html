@@ -1,0 +1,41 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" 
+                    data-toggle="collapse" 
+                    data-target="#contenido-plegable">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" >Miembros del gurpo</span>
+        </div>
+        <div class="collapse navbar-collapse" id="contenido-plegable">
+            <ul class="nav navbar-nav navbar-left">
+<li><a ng-click="ASalirGrupo1()">
+  Salirme del grupo</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+<li><a ng-click="VAdminContactos2(idUsuario)">
+    Regresar</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <form name="fMiembroForm" ng-submit="AgregMiembro0(fMiembroForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fMiembroSubmitted && fMiembroForm.nombre.$invalid && fMiembroForm.nombre.$pristine && fMiembroSubmitted}"><label for="fMiembro_nombre">Nombre</label>:&nbsp;<select id="fMiembro_nombre" ng-model="fMiembro.nombre" required ng-options="item.key as item.value for item in fMiembro_opcionesNombre"></select><p ng-show="fMiembroSubmitted && fMiembroForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>Agregar
+        </button>
+    </form>
+    <hr />
+
+
+<div id="right"></div><script type="text/ng-template" id="ayuda_VGrupo.html">
+Manual...<br>
+</script>

@@ -102,7 +102,7 @@ Requerido.
   <ul>
    <li>URL: '/ident/VPrincipal'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
-   <li>Roles: Sin restricción de rol
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
   </ul>
  </li> <li>
   <p></p>
@@ -147,12 +147,212 @@ Opcional.
    </li>
   </ul>
  </li> <li>
-  <p>Vista con el editor de páginas de usuario.</p>
+  <p></p>
+  <ul>
+   <li>URL: '/paginas/APagina'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idPagina
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VPagina',</li>
+       <li> msg:"".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VMiPagina',</li>
+       <li> msg:"".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p>manual...<br></p>
+  <ul>
+   <li>URL: '/paginas/VMiPagina'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idUsuario
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
+  </ul>
+ </li> <li>
+  <p>Manual...</p>
   <ul>
    <li>URL: '/paginas/VPagina'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
 Parámetros GET: idUsuario
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
+  </ul>
+ </li>
+</ol>
+<h2>chat</h2>
+<p></p>
+<ol>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/chat/AElimContacto'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
    <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"Contacto eliminado".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"No se pudo eliminar contacto".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/chat/AEscribir'</li>
+   <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
+<li>Parámetros POST:
+    <ul>     <li>texto -  
+Requerido. 
+     </li>
+    </ul>
+   </li>
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VChat',</li>
+       <li> msg:"Enviado".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VChat',</li>
+       <li> msg:"No se pudo enviar mensaje".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/chat/ASalirGrupo'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"Ya no estás en ese grupo".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VGrupo',</li>
+       <li> msg:"Sigues en el grupo".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/chat/AgregMiembro'</li>
+   <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
+<li>Parámetros POST:
+    <ul>     <li>opcionesNombre -  
+Requerido. 
+     </li>     <li>nombre -  
+Requerido. 
+     </li>
+    </ul>
+   </li>
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VGrupo',</li>
+       <li> msg:"Nuevo miembro agregado".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VGrupo',</li>
+       <li> msg:"No se pudo agregar al nuevo miembro".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p>Manual...</p>
+  <ul>
+   <li>URL: '/chat/VAdminContactos'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idUsuario
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li> <li>
+  <p>Manual...</p>
+  <ul>
+   <li>URL: '/chat/VChat'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idChat
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
+  </ul>
+ </li> <li>
+  <p>Manual...</p>
+  <ul>
+   <li>URL: '/chat/VContactos'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idUsuario
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
+  </ul>
+ </li> <li>
+  <p>Manual...</p>
+  <ul>
+   <li>URL: '/chat/VGrupo'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idGrupo
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
   </ul>
  </li>
 </ol>

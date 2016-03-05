@@ -69,7 +69,8 @@ from app.socal.ident import ident
 app.register_blueprint(ident)
 from app.socal.paginas import paginas
 app.register_blueprint(paginas)
-
+from app.socal.chat import chat
+app.register_blueprint(chat)
 
 if __name__ == '__main__':
     app.config.update(
