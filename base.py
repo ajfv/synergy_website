@@ -26,7 +26,7 @@ def root():
 #Application code starts here
 
 # Código para la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/base_ci3725'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
@@ -69,6 +69,8 @@ from app.socal.ident import ident
 app.register_blueprint(ident)
 from app.socal.paginas import paginas
 app.register_blueprint(paginas)
+from app.socal.chat import chat
+app.register_blueprint(chat)
 
 
 if __name__ == '__main__':
