@@ -26,16 +26,20 @@ def root():
 #Application code starts here
 
 # Código para la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/base_ci3725'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
+#-------------------------------------------------------------------------------
+
 class Usuario(db.Model):
+
     nombre_usuario = db.Column(db.String, primary_key=True)
     nombre_completo = db.Column(db.String)
     correo = db.Column(db.String)
     clave = db.Column(db.String)
+
 
     def __init__(self, nombre_usuario, nombre_completo, correo, clave):
         self.nombre_usuario = nombre_usuario
@@ -46,6 +50,8 @@ class Usuario(db.Model):
     def __repr__(self):
         return "<Usuario(nombre completo='%s', nombre de usuario='%s', correo='%s', clave='%s'>" %(
             self.nombre_completo, self.nombre_usuario, self.correo, self.clave)
+
+#-------------------------------------------------------------------------------
 
 class Pagina(db.Model):
     titulo = db.Column(db.String)
@@ -63,6 +69,106 @@ class Pagina(db.Model):
             .filter_by(nombre_usuario=usuario)
             .first())
 
+#-------------------------------------------------------------------------------
+
+class Amigo(db.Model): 
+
+    id = db.Column (db.Integer, primary_key=True)
+    usuario = db.relationship('Usuario',
+    backref=db.backref('amigo1', uselist=False), uselist=False)
+
+    amigo = db.relationship('Usuario',
+    backref=db.backref('amigo2', uselist=False), uselist=False)
+
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
+    chat = db.relationship('Chat',
+        backref=db.backref('amigos', uselist=False), uselist=False)                                              
+                                                                                                                   
+    def __init__(self, usuario, amigo):                                                                
+        self.usuario = (db.session                                                                                 
+            .query(Usuario)                                                                                        
+            .filter_by(nombre_usuario=usuario)                                                                     
+            .first())
+        self.amigo = (db.session                                                                                 
+            .query(Usuario)                                                                                        
+            .filter_by(nombre_usuario=amigo)                                                                     
+            .first()) 
+
+#-------------------------------------------------------------------------------
+
+class Chat(db.Model):
+
+    id = db.Column (db.Integer, primary_key=True)
+    # mensaje = db.relationship('Mensaje',
+    # backref=db.backref('chat', uselist=False) ) 
+
+    # def __init__(self, mensaje):                                                                
+    #     self.mensaje = mensaje
+
+#-------------------------------------------------------------------------------
+
+class Mensaje(db.Model):
+    
+    id = db.Column (db.Integer, primary_key=True)
+    chat_id =  db.Column(db.String, db.ForeignKey('Chat.id'))
+    chat = db.relationship('Chat',
+        backref=db.backref('mensaje'), uselist=False)
+    
+    hora = db.Column(db.DateTime(timezone=False))
+    contenido = db.Column(db.Text)
+    fecha = db.Column(db.Date)
+
+    usuario_origen = db.relationship('Usuario',
+    backref=db.backref('usuario_origen'), uselist=False) 
+
+    # usuario_destino = db.relationship('Usuario', secondary=Usuario_destino,
+    #     backref=db.backref('usuario_destino', lazy='dynamic'))
+
+    def __init__(self,usuario_origen,contenido):
+        self.usuario_origen = (db.session
+            .query(Usuario)
+            .filter_by(nombre_usuario=usuario_origen)
+            .first())
+        self.contenido = contenido
+
+# Usuario_destino = db.Table('Usuario_destino',
+#     db.Column('destino', db.String, db.ForeignKey('usuario.nombre_usuario'))
+# )
+
+#-------------------------------------------------------------------------------
+
+class Grupo(db.Model): 
+    __tablename__ = 'grupo'
+    nombre = db.Column(db.String, primary_key = True)  # Como se llama este id por defecto?
+    id_admin = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    admin = db.relationship('Usuario', 
+        backref=db.backref('grupo', uselist=False), uselist=False)
+
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
+    chat = db.relationship('Chat',
+        backref=db.backref('grupo', uselist=False), uselist=False)
+
+    def __init__(self,nombre,admin):
+        self.nombre = nombre
+        self.admin = (db.session
+            .query(Usuario)
+            .filter_by(nombre_usuario=admin)
+            .first())
+
+miembrosGrupo = db.Table('miembrosGrupo',
+    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
+    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+
+# tags = db.Table('tags',
+#     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+#     db.Column('page_id', db.Integer, db.ForeignKey('page.id'))
+# )
+
+# class Page(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     tags = db.relationship('Tag', secondary=tags,
+#         backref=db.backref('pages', lazy='dynamic'))
+        
 #Application code ends here
 
 from app.socal.ident import ident
@@ -71,7 +177,6 @@ from app.socal.paginas import paginas
 app.register_blueprint(paginas)
 from app.socal.chat import chat
 app.register_blueprint(chat)
-
 
 if __name__ == '__main__':
     app.config.update(
