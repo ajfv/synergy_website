@@ -138,6 +138,11 @@ class Mensaje(db.Model):
 
 #-------------------------------------------------------------------------------
 
+miembrosGrupo = db.Table('miembrosGrupo',
+    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
+    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+)
+
 class Grupo(db.Model): 
     __tablename__ = 'grupo'
     nombre = db.Column(db.String, primary_key = True)  # Como se llama este id por defecto?
@@ -151,9 +156,7 @@ class Grupo(db.Model):
         self.nombre = nombre
         self.admin = admin
 
-miembrosGrupo = db.Table('miembrosGrupo',
-    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
-    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+
 
 """
 u1 = Usuario('samuel','Samuel Arleo','s@c.com','saar1312')
