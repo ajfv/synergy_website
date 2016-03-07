@@ -31,6 +31,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
+
 class Usuario(db.Model):
     nombre_usuario = db.Column(db.String, primary_key=True)
     nombre_completo = db.Column(db.String)
@@ -62,6 +63,55 @@ class Pagina(db.Model):
             .query(Usuario)
             .filter_by(nombre_usuario=usuario)
             .first())
+ 
+miembrosGrupo = db.Table('miembrosGrupo',
+    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
+    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+)
+ 
+class Grupo(db.Model): 
+    __tablename__ = 'grupo'
+    nombre = db.Column(db.String, primary_key = True)  # Como se llama este id por defecto?
+    id_admin = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    admin = db.relationship('Usuario', 
+            backref=db.backref('admin_grupo', uselist=False), uselist=False)
+    miembros = db.relationship('Usuario',
+               secondary=miembrosGrupo, # Hace que usen la tabla miembrosGrupo
+               backref=db.backref('miembro_grupo'),uselist=False) # Sin uselist, porque la relacion
+    def __init__(self,nombre,admin):        # es de muchos a muchos
+        self.nombre = nombre
+        self.admin = admin
+"""
+u1 = Usuario('samuel','Samuel Arleo','s@c.com','saar1312')
+u2 = Usuario('alejandra','Alejandra C','s@c.com','alejandra')
+u3 = Usuario('pedro','Pedro Perez','s@c.com','pedro')
+
+db.session.add(u1)
+db.session.add(u2)
+db.session.add(u3)
+db.session.commit()
+
+#users = Usuario.query.all()
+admin = Usuario.query.filter_by(nombre_usuario='alejandra').first()
+admin2 = Usuario.query.filter_by(nombre_usuario='samuel').first()
+
+g1 = Grupo('Mango',admin)
+g2 = Grupo('Synergy',admin2)
+db.session.add(g1)
+db.session.add(g2)
+db.session.commit()
+
+mango = Grupo.query.filter_by(nombre='Mango').first()
+synergy = Grupo.query.filter_by(nombre='Synergy').first()
+
+alej = Usuario.query.filter_by(nombre_usuario='alejandra').first()
+samuel = Usuario.query.filter_by(nombre_usuario='samuel').first()
+
+mango.miembros = alej
+mango.miembros = samuel
+synergy.miembros = alej
+db.session.commit()
+"""
 
 #Application code ends here
 
@@ -69,8 +119,8 @@ from app.socal.ident import ident
 app.register_blueprint(ident)
 from app.socal.paginas import paginas
 app.register_blueprint(paginas)
-from app.socal.chat import chat
-app.register_blueprint(chat)
+#from app.socal.chat import chat
+#app.register_blueprint(chat)
 
 if __name__ == '__main__':
     app.config.update(
