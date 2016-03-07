@@ -150,6 +150,11 @@ class Grupo(db.Model):
     def __init__(self,nombre,admin):        # es de muchos a muchos
         self.nombre = nombre
         self.admin = admin
+
+miembrosGrupo = db.Table('miembrosGrupo',
+    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
+    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+
 """
 u1 = Usuario('samuel','Samuel Arleo','s@c.com','saar1312')
 u2 = Usuario('alejandra','Alejandra C','s@c.com','alejandra')
