@@ -71,7 +71,7 @@ class Pagina(db.Model):
             .first())
  
 #-------------------------------------------------------------------------------
-
+"""
 class Amigo(db.Model): 
 
     id = db.Column (db.Integer, primary_key=True)
@@ -135,7 +135,7 @@ class Mensaje(db.Model):
 # Usuario_destino = db.Table('Usuario_destino',
 #     db.Column('destino', db.String, db.ForeignKey('usuario.nombre_usuario'))
 # )
-
+"""
 #-------------------------------------------------------------------------------
 
 miembrosGrupo = db.Table('miembrosGrupo',
