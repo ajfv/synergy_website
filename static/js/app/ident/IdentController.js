@@ -12,8 +12,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VLoginController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
       $scope.fLogin = {};
 
@@ -49,8 +49,8 @@ socialModule.controller('VLoginController',
 
     }]);
 socialModule.controller('VPrincipalController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
       identService.VPrincipal().then(function (object) {
         $scope.res = object.data;
@@ -72,8 +72,8 @@ socialModule.controller('VPrincipalController',
 
     }]);
 socialModule.controller('VRegistroController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
       $scope.fUsuario = {};
 

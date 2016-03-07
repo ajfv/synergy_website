@@ -1,5 +1,5 @@
 // Creación del módulo de la aplicación
-var socialModule = angular.module('social', ['ngRoute', 'ngAnimate', 'textAngular', 'ngDialog', 'ngSanitize', 'flash']);
+var socialModule = angular.module('social', ['ngRoute', 'ngAnimate', 'ngTable', 'textAngular', 'ngDialog', 'ngSanitize', 'flash']);
 socialModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
