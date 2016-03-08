@@ -68,8 +68,9 @@ def VMiPagina():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    res['titulo'] = "El título de mi página"
-    res['contenido'] = "<h3>¿No es bella mi página?</h3><p>Claro que <b>si</b>.</p>"
+    pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
+    res['titulo'] = pagina_existente.titulo
+    res['contenido'] = pagina_existente.contenido
     res['idUsuario'] = idUsuario #Esto arregla el botón del prof
     #Action code ends here
     return json.dumps(res)
