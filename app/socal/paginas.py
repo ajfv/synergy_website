@@ -45,7 +45,7 @@ def APagina():
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    #Cuando la página exista, ir directamente a ella. 
+    #Cuando la página exista, ir directamente a ella.
     #Si no exite ir al editor de páginas.
     res['label'] = res['label'] + '/' + repr(1)
 
@@ -70,8 +70,7 @@ def VMiPagina():
 
     res['titulo'] = "El título de mi página"
     res['contenido'] = "<h3>¿No es bella mi página?</h3><p>Claro que <b>si</b>.</p>"
-    
-
+    res['idUsuario'] = idUsuario #Esto arregla el botón del prof
     #Action code ends here
     return json.dumps(res)
 
