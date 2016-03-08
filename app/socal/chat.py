@@ -154,6 +154,7 @@ def VContactos():
       {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
       {'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'},
     ]
+    res['idUsuario'] = idUsuario # Esto arregla el botón del prof
 
 
     #Action code ends here
@@ -188,4 +189,3 @@ def VGrupo():
 
 
 #Use case code ends here
-

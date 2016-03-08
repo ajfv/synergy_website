@@ -11,7 +11,7 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             });
 }]);
 
-socialModule.controller('VLoginController', 
+socialModule.controller('VLoginController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
@@ -36,7 +36,7 @@ socialModule.controller('VLoginController',
       $scope.AIdentificar0 = function(isValid) {
         $scope.fLoginSubmitted = true;
         if (isValid) {
-          
+
           identService.AIdentificar($scope.fLogin).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
@@ -48,7 +48,7 @@ socialModule.controller('VLoginController',
       };
 
     }]);
-socialModule.controller('VPrincipalController', 
+socialModule.controller('VPrincipalController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
@@ -69,9 +69,14 @@ socialModule.controller('VPrincipalController',
       $scope.VPagina1 = function(idUsuario) {
         $location.path('/VPagina/'+idUsuario);
       };
-
+      $scope.VMiPagina1 = function(idUsuario) {
+          $location.path('/VMiPagina/'+idUsuario);
+      }
+      $scope.VContactos1 = function(idUsuario) {
+          $location.path('/VContactos/'+idUsuario);
+      }
     }]);
-socialModule.controller('VRegistroController', 
+socialModule.controller('VRegistroController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
@@ -96,7 +101,7 @@ socialModule.controller('VRegistroController',
       $scope.ARegistrar0 = function(isValid) {
         $scope.fUsuarioSubmitted = true;
         if (isValid) {
-          
+
           identService.ARegistrar($scope.fUsuario).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
