@@ -8,7 +8,7 @@ def AIdentificar():
     #POST/PUT parameters
     params = request.get_json()
     results = [{'label':'/VPrincipal', 'msg':['Bienvenido usuario'], "actor":"duenoProducto"}, {'label':'/VLogin', 'msg':['Datos de identificación incorrectos']}, ]
-    res = results[1] 
+    res = results[1]
     #Action code goes here, res should be a list with a label and a message
 
     for nombre_usuario, clave in db.session.query(Usuario.nombre_usuario, Usuario.clave) :
@@ -81,7 +81,7 @@ def VPrincipal():
     #Action code goes here, res should be a JSON structure
 
     res['idUsuario'] = session['nombre_usuario']
-
+    res["usuario"] = {"nombre":res['idUsuario']}
     #Action code ends here
     return json.dumps(res)
 
