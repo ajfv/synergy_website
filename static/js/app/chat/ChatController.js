@@ -11,6 +11,9 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VGrupo/:idGrupo', {
                 controller: 'VGrupoController',
                 templateUrl: 'app/chat/VGrupo.html'
+            }).when('/VAgregarContacto', {
+                controller: 'VAgregarContactoController',
+                templateUrl: 'app/chat/VAgregarContacto.html'
             });
 }]);
 
@@ -58,6 +61,10 @@ socialModule.controller('VAdminContactosController',
         $location.path('/VPrincipal');
       };
 
+      $scope.VAgregarContacto0 = function() {
+        $location.path('/VAgregarContacto');
+      };
+
       $scope.AElimContacto1 = function(id) {
           var tableFields = [["idContacto","id"],["nombre","Nombre"],["tipo","Tipo"]];
           var arg = {};
@@ -79,6 +86,63 @@ ngDialog.open({ template: 'ayuda_VAdminContactos.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
 }
     }]);
+
+
+socialModule.controller('VAgregarContactoController',
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
+      $scope.msg = '';
+      $scope.fLogin = {};
+
+      identService.VLogin().then(function (object) {
+        $scope.res = object.data;
+        for (var key in object.data) {
+            $scope[key] = object.data[key];
+        }
+        if ($scope.logout) {
+            $location.path('/');
+        }
+
+
+      });
+      $scope.VRegistro1 = function() {
+        $location.path('/VRegistro');
+      };
+
+      $scope.fLoginSubmitted = false;
+      $scope.AIdentificar0 = function(isValid) {
+        $scope.fLoginSubmitted = true;
+        if (isValid) {
+
+          identService.AIdentificar($scope.fLogin).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+        }
+      };
+
+    }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 socialModule.controller('VChatController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {

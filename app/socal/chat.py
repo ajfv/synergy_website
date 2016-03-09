@@ -182,6 +182,26 @@ def VGrupo():
     return json.dumps(res)
 
 
+# @chat.route('/chat/VAgregarContacto')
+# def VGrupo():
+#     #GET parameter
+#     idGrupo = request.args['idGrupo']
+#     res = {}
+#     if "actor" in session:
+#         res['actor']=session['actor']
+#     #Action code goes here, res should be a JSON structure
+
+#     res['idGrupo'] = 1
+#     res['fMiembro_opcionesNombre'] = [
+#       {'key':1, 'value':'Leo'},
+#       {'key':2, 'value':'Lauri'},
+#       {'key':3, 'value':'Mara'},
+#     ]
+
+#     #Action code ends here
+    # return json.dumps(res)
+
+
 
 
 
