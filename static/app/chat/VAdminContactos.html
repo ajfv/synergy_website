@@ -11,12 +11,8 @@
             <span class="navbar-brand" >Administración de  contactos y grupos</span>
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
-
             <ul class="nav navbar-nav navbar-left">
-                <li><a ng-click="VAgregarContacto0()">
-                  Agregar contacto</a></li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
 <li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
@@ -45,7 +41,13 @@
             </tr>
         </table>
 
-<hr />
+<hr />    <form name="fContactoForm" ng-submit="AgregContacto3(fContactoForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fContactoSubmitted && fContactoForm.nombre.$invalid && fContactoForm.nombre.$pristine && fContactoSubmitted}"><label for="fContacto_nombre">Nombre</label>:&nbsp;<select id="fContacto_nombre" ng-model="fContacto.nombre" required ng-options="item.key as item.value for item in fContacto_opcionesNombre"></select><p ng-show="fContactoSubmitted && fContactoForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>Agregar contacto
+        </button>
+    </form>
+    <hr />
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VAdminContactos.html">

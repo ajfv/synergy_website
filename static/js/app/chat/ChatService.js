@@ -13,6 +13,19 @@ socialModule.service('chatService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
+    this.AElimMiembro = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'chat/AElimMiembro',
+          method: 'GET',
+          params: args
+        });
+    //    var labels = ["/VGrupo", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
     this.AEscribir = function(fChat) {
         return  $http({
           url: "chat/AEscribir",
@@ -39,6 +52,19 @@ socialModule.service('chatService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
+    this.AgregContacto = function(fContacto) {
+        return  $http({
+          url: "chat/AgregContacto",
+          data: fContacto,
+          method: 'POST',
+        });
+    //    var labels = ["/VAdminContactos", "/VAdminContactos", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
     this.AgregMiembro = function(fMiembro) {
         return  $http({
           url: "chat/AgregMiembro",

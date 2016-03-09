@@ -43,6 +43,7 @@ def APagina():
     idPagina = request.args['idPagina']
     results = [{'label':'/VPagina', 'msg':[]}, {'label':'/VMiPagina', 'msg':[]}, ]
     res = results[0]
+    print("ESTOY EN APAGINA")
     #Action code goes here, res should be a list with a label and a message
 
     #Cuando la página exista, ir directamente a ella.
@@ -86,12 +87,7 @@ def VPagina():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
-    usuario = {"nombre":idUsuario}
-    res = {"fPagina": {"titulo":pagina_existente.titulo, "contenido":pagina_existente.contenido}}
-    res["usuario"]=usuario
-
-    #return pagina_existente.contenido
+    res['idPagina'] = 1
 
     #Action code ends here
     return json.dumps(res)

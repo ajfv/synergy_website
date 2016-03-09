@@ -5,14 +5,34 @@ chat = Blueprint('chat', __name__)
 
 @chat.route('/chat/AElimContacto')
 def AElimContacto():
-    #POST/PUT parameters
-    params = request.get_json()
+    #GET parameter
+    id = request.args['id']
     results = [{'label':'/VAdminContactos', 'msg':['Contacto eliminado']}, {'label':'/VAdminContactos', 'msg':['No se pudo eliminar contacto']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
     res['label'] = res['label'] + '/' + repr(1)
 
+
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
+
+
+
+@chat.route('/chat/AElimMiembro')
+def AElimMiembro():
+    #GET parameter
+    id = request.args['id']
+    results = [{'label':'/VGrupo', 'msg':['Miembro eliminado']}, ]
+    res = results[0]
+    #Action code goes here, res should be a list with a label and a message
+
+    res['label'] = res['label'] + '/' + repr(1)
 
     #Action code ends here
     if "actor" in res:
@@ -66,6 +86,26 @@ def ASalirGrupo():
 
 
 
+@chat.route('/chat/AgregContacto', methods=['POST'])
+def AgregContacto():
+    #POST/PUT parameters
+    params = request.get_json()
+    results = [{'label':'/VAdminContactos', 'msg':['Contacto agregado']}, {'label':'/VAdminContactos', 'msg':['No se pudo agregar contacto']}, ]
+    res = results[0]
+    #Action code goes here, res should be a list with a label and a message
+
+    res['label'] = res['label'] + '/' + repr(1)
+
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
+
+
+
 @chat.route('/chat/AgregMiembro', methods=['POST'])
 def AgregMiembro():
     #POST/PUT parameters
@@ -106,7 +146,12 @@ def VAdminContactos():
     res['data2'] = [
       {'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'},
     ]
-
+    res['idGrupo'] = 1
+    res['fContacto_opcionesNombre'] = [
+      {'key':1, 'value':'Leo'},
+      {'key':2, 'value':'Lauri'},
+      {'key':3, 'value':'Mara'},
+    ]
 
     #Action code ends here
     return json.dumps(res)
@@ -176,6 +221,12 @@ def VGrupo():
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
       {'key':3, 'value':'Mara'},
+    ]
+    res['data3'] = [
+      {'idContacto':34, 'nombre':'ana', 'tipo':'usuario'},
+      {'idContacto':23, 'nombre':'leo', 'tipo':'usuario'},
+      {'idContacto':11, 'nombre':'distra', 'tipo':'usuario'},
+      {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
     ]
 
     #Action code ends here

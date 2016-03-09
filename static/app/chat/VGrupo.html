@@ -33,7 +33,14 @@
             <span class="glyphicon glyphicon-flash"></span>Agregar
         </button>
     </form>
-    <hr />
+    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
+                <td ng-show="row['idContacto']"><a ng-click="AElimMiembro3(row['idContacto'])">Eliminar</a></td>
+            </tr>
+        </table>
+
+<hr />
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VGrupo.html">

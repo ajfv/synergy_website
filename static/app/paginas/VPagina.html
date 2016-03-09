@@ -2,8 +2,8 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-                    data-toggle="collapse"
+            <button type="button" class="navbar-toggle" 
+                    data-toggle="collapse" 
                     data-target="#contenido-plegable">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -17,7 +17,8 @@
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
 <li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-<li><a ng-click="VPrincipal1()">
+<li><a ng-click="VPrincipal1()"
+       ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false">
     Regresar</a></li>
 
             </ul>
@@ -26,16 +27,8 @@
 </nav>
 
     <form name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}">
-                <label for="fPagina_titulo">Título</label>
-                <input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/>
-                <p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">Error en campo Título.</p>
-            </div>
-            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}">
-                <label for="fPagina_contenido">Contenido</label>
-                <div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" ></div>
-                <p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">Error en campo Contenido.</p>
-            </div>
+            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}"><label for="fPagina_titulo">Título</label><input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/><p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">Error en campo Título.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}"><label for="fPagina_contenido">Contenido</label><div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" ></div><p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">Error en campo Contenido.</p></div>
         <button type="submit" class="btn btn-perso btn-lg btn-block">
             <span class="glyphicon glyphicon-flash"></span>Modificar
         </button>
@@ -44,25 +37,5 @@
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VPagina.html">
-<div><span></span>
-<p dir="ltr" style="text-align: center;"><span><b>Manual para modificar su página de usuario</b></span></p>
-<p dir="ltr" style="text-align: justify;"><span> Una página de usuario debe contener un título. Sin embargo, el contenido de la misma es opcional. Una vez haya terminado de realizar las modificaciones deseadas, puede guardar los cambios haciendo clic en el botón verde "Modificar" que se encuentra en la parte inferior de la ventana de Contenido.</span></p>
-<p dir="ltr"><span> Si no desea modificar su página, sino más bien volver a la página principal haga clic en la palabra “Regresar” que se encuentra en la esquina superior derecha. Desde allí, puede desconectarse si lo desea. Para ello haga clic en la palabra “Salir” que se encuentra en la esquina superior derecha de la vista.</span></p>
-<p dir="ltr" style="text-align: justify;"><span>Podrá notar que sobre el cuadro de texto grande que corresponde al contenido de su página, se encuentran una serie de botones que puede encontrar útiles a la hora de redactar el contenido. </span></p>
-<p dir="ltr"><span>Las funciones que cumplen cada uno de estos botones son las siguientes:</span></p>
-<ul>
-<li dir="ltr"><p dir="ltr"><span>Los primeros seis botones, de la forma H[Número], corresponden a los formatos de encabezado: títulos, subtítulos. (Headers 1, 2,3,...,6).</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>El botón P corresponde al formato de párrafo.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>El botón Pre se utiliza para textos preformateados. Permite conservar el espaciado.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>El botón de comillas (</span><span>&#34;</span><span>) se utiliza para escribir citas textuales.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>Los siguientes tres botones sirven para poner el texto seleccionado en </span><span><b>negritas</b></span><span> (</span><span><b>B</b></span><span>), </span><span><i>cursivas</i></span><span> (</span><span><i>I</i></span><span>) y/o </span><span><u>subrayar</u></span><span> (</span><span><u>U</u></span><span>).</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>Las siguientes opciones sirven para la creación de listas. Las cuales pueden ser con viñetas o numeradas.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>Las flechas circulares son los botones de Deshacer (undo, la flecha hacia la izquierda) la cual deshace el último cambio hecho y Rehacer (redo, la flecha hacia la derecha) la cual rehace el último cambio deshecho.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>La opción de prohibido sirve para borrar el formato del texto seleccionado.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>Las próximas tres opciones sirven para cambiar la alineación del texto seleccionado (hacia la izquierda, centrado, hacia la derecha).</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>Toggle HTML permite ver la versión HTML del contenido escrito.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>El cuadro de imagen sirve para adjuntar una imagen al texto, esto se hace por medio del link (URL) de la imagen deseada.</span></p></li>
-<li dir="ltr"><p dir="ltr"><span>Por último están las opciones para crear enlaces a otras páginas y la opción para eliminar enlaces.</span></p></li>
-</ul>
-</div>
+Manual...
 </script>

@@ -11,9 +11,6 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VGrupo/:idGrupo', {
                 controller: 'VGrupoController',
                 templateUrl: 'app/chat/VGrupo.html'
-            }).when('/VAgregarContacto', {
-                controller: 'VAgregarContactoController',
-                templateUrl: 'app/chat/VAgregarContacto.html'
             });
 }]);
 
@@ -21,6 +18,8 @@ socialModule.controller('VAdminContactosController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
+      $scope.fContacto = {};
+
       chatService.VAdminContactos({"idUsuario":$routeParams.idUsuario}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
@@ -61,8 +60,19 @@ socialModule.controller('VAdminContactosController',
         $location.path('/VPrincipal');
       };
 
-      $scope.VAgregarContacto0 = function() {
-        $location.path('/VAgregarContacto');
+      $scope.fContactoSubmitted = false;
+      $scope.AgregContacto3 = function(isValid) {
+        $scope.fContactoSubmitted = true;
+        if (isValid) {
+          
+          chatService.AgregContacto($scope.fContacto).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+        }
       };
 
       $scope.AElimContacto1 = function(id) {
@@ -86,63 +96,6 @@ ngDialog.open({ template: 'ayuda_VAdminContactos.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
 }
     }]);
-
-
-socialModule.controller('VAgregarContactoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
-      $scope.msg = '';
-      $scope.fLogin = {};
-
-      identService.VLogin().then(function (object) {
-        $scope.res = object.data;
-        for (var key in object.data) {
-            $scope[key] = object.data[key];
-        }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
-      });
-      $scope.VRegistro1 = function() {
-        $location.path('/VRegistro');
-      };
-
-      $scope.fLoginSubmitted = false;
-      $scope.AIdentificar0 = function(isValid) {
-        $scope.fLoginSubmitted = true;
-        if (isValid) {
-
-          identService.AIdentificar($scope.fLogin).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
-        }
-      };
-
-    }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 socialModule.controller('VChatController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {
@@ -229,8 +182,8 @@ ngDialog.open({ template: 'ayuda_VContactos.html',
 }
     }]);
 socialModule.controller('VGrupoController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fMiembro = {};
 
@@ -242,6 +195,19 @@ socialModule.controller('VGrupoController',
         if ($scope.logout) {
             $location.path('/');
         }
+
+
+              var AElimMiembro3Data = $scope.res.data3;
+              if(typeof AElimMiembro3Data === 'undefined') AElimMiembro3Data=[];
+              $scope.tableParams3 = new ngTableParams({
+                  page: 1,            // show first page
+                  count: 10           // count per page
+              }, {
+                  total: AElimMiembro3Data.length, // length of data
+                  getData: function($defer, params) {
+                      $defer.resolve(AElimMiembro3Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                  }
+              });            
 
 
       });
@@ -271,6 +237,19 @@ socialModule.controller('VGrupoController',
               $route.reload();
           });
         }
+      };
+
+      $scope.AElimMiembro3 = function(id) {
+          var tableFields = [["idContacto","id"],["nombre","Nombre"]];
+          var arg = {};
+          arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+          chatService.AElimMiembro(arg).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
       };
 
 $scope.__ayuda = function() {
