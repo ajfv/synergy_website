@@ -121,8 +121,10 @@ class Mensaje(db.Model):
 #-------------------------------------------------------------------------------
 
 miembrosGrupo = db.Table('miembrosGrupo', db.metadata,
-    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
-    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre'),primary_key=True),
+    db.Column('usuario',db.String,
+        db.ForeignKey('usuario.nombre_usuario'),
+        primary_key=True)
 )
 
 class Grupo(db.Model):
