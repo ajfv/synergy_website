@@ -33,20 +33,35 @@ manager.add_command('db', MigrateCommand)
 
 #-------------------------------------------------------------------------------
 
+amigos = db.Table('amigos', db.metadata,
+    db.Column('usuario_id',
+        db.String,db.ForeignKey('usuario.nombre_usuario'),primary_key=True),
+    db.Column('amigo_id',
+        db.String,db.ForeignKey('usuario.nombre_usuario'),primary_key=True)
+)
 
 class Usuario(db.Model):
-
+    __tablename__ = "usuario"
     nombre_usuario = db.Column(db.String, primary_key=True)
     nombre_completo = db.Column(db.String)
     correo = db.Column(db.String)
     clave = db.Column(db.String)
+    amigos = db.relationship("Usuario",
+        secondary=amigos,
+        primaryjoin=nombre_usuario==amigos.c.usuario_id,
+        secondaryjoin=nombre_usuario==amigos.c.amigo_id)
 
+    @staticmethod
+    def hacer_amigos(usuario1, usuario2):
+        usuario1.amigos.push(usuario2)
+        usuario2.amigos.push(usuario1)
 
     def __init__(self, nombre_usuario, nombre_completo, correo, clave):
         self.nombre_usuario = nombre_usuario
         self.nombre_completo = nombre_completo
         self.clave = clave
         self.correo = correo
+        self.amigos = []
 
     def __repr__(self):
         return "<Usuario(nombre completo='%s', nombre de usuario='%s', correo='%s', clave='%s'>" %(
@@ -69,92 +84,63 @@ class Pagina(db.Model):
             .query(Usuario)
             .filter_by(nombre_usuario=usuario)
             .first())
- 
-#-------------------------------------------------------------------------------
-
-class Amigo(db.Model): 
-
-    id = db.Column (db.Integer, primary_key=True)
-    usuario = db.relationship('Usuario',
-    backref=db.backref('amigo1', uselist=False), uselist=False)
-
-    amigo = db.relationship('Usuario',
-    backref=db.backref('amigo2', uselist=False), uselist=False)
-
-    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
-    chat = db.relationship('Chat',
-        backref=db.backref('amigos', uselist=False), uselist=False)                                              
-                                                                                                                   
-    def __init__(self, usuario, amigo):                                                                
-        self.usuario = (db.session                                                                                 
-            .query(Usuario)                                                                                        
-            .filter_by(nombre_usuario=usuario)                                                                     
-            .first())
-        self.amigo = (db.session                                                                                 
-            .query(Usuario)                                                                                        
-            .filter_by(nombre_usuario=amigo)                                                                     
-            .first()) 
 
 #-------------------------------------------------------------------------------
 
 class Chat(db.Model):
 
-    id = db.Column (db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    mensajes = db.relationship('Mensaje',
+        backref=db.backref('chat',uselist=False),
+        order_by=lambda: desc(Mensaje.creado))
     # mensaje = db.relationship('Mensaje',
-    # backref=db.backref('chat', uselist=False) ) 
+    # backref=db.backref('chat', uselist=False) )
 
-    # def __init__(self, mensaje):                                                                
-    #     self.mensaje = mensaje
 
 #-------------------------------------------------------------------------------
 
 class Mensaje(db.Model):
-    
-    id = db.Column (db.Integer, primary_key=True)
-    chat_id =  db.Column(db.String, db.ForeignKey('Chat.id'))
-    chat = db.relationship('Chat',
-        backref=db.backref('mensaje'), uselist=False)
-    
-    hora = db.Column(db.DateTime(timezone=False))
-    contenido = db.Column(db.Text)
-    fecha = db.Column(db.Date)
 
-    usuario_origen = db.relationship('Usuario',
-    backref=db.backref('usuario_origen'), uselist=False) 
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    chat_id =  db.Column(db.Integer, db.ForeignKey('chat.id'))
+    contenido = db.Column(db.Text)
+    creado = db.Column(db.DateTime, server_default=db.func.now())
+    usuario_origen = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
 
     # usuario_destino = db.relationship('Usuario', secondary=Usuario_destino,
     #     backref=db.backref('usuario_destino', lazy='dynamic'))
 
-    def __init__(self,usuario_origen,contenido):
-        self.usuario_origen = (db.session
-            .query(Usuario)
-            .filter_by(nombre_usuario=usuario_origen)
-            .first())
+    def __init__(self,usuario_origen,contenido,chat):
+        self.usuario_origen = usuario_origen.nombre_usuario
+        self.chat_id = chat.id
+        self.chat = chat
         self.contenido = contenido
-
-# Usuario_destino = db.Table('Usuario_destino',
-#     db.Column('destino', db.String, db.ForeignKey('usuario.nombre_usuario'))
-# )
 
 #-------------------------------------------------------------------------------
 
-miembrosGrupo = db.Table('miembrosGrupo',
+miembrosGrupo = db.Table('miembrosGrupo', db.metadata,
     db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
     db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
 )
 
-class Grupo(db.Model): 
+class Grupo(db.Model):
     __tablename__ = 'grupo'
     nombre = db.Column(db.String, primary_key = True)  # Como se llama este id por defecto?
     id_admin = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    admin = db.relationship('Usuario', 
-            backref=db.backref('admin_grupo', uselist=False), uselist=False)
+    admin = db.relationship('Usuario',
+            backref=db.backref('admin_grupo'), uselist=False)
     miembros = db.relationship('Usuario',
                secondary=miembrosGrupo, # Hace que usen la tabla miembrosGrupo
-               backref=db.backref('miembro_grupo'),uselist=False) # Sin uselist, porque la relacion
-    def __init__(self,nombre,admin):        # es de muchos a muchos
+               backref=db.backref('grupos'))
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
+    chat = db.relationship('Chat', uselist=False)
+
+    def __init__(self,nombre,admin,chat):        # es de muchos a muchos
         self.nombre = nombre
         self.admin = admin
+        self.admin_id = admin.nombre_usuario
+        self.chat_id = chat.id
+        self.chat = chat
 
 
 
@@ -189,16 +175,6 @@ mango.miembros = samuel
 synergy.miembros = alej
 db.session.commit()
 """
-
-# tags = db.Table('tags',
-#     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-#     db.Column('page_id', db.Integer, db.ForeignKey('page.id'))
-# )
-
-# class Page(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     tags = db.relationship('Tag', secondary=tags,
-#         backref=db.backref('pages', lazy='dynamic'))
 
 #-------------------------------------------------------------------------------
 
