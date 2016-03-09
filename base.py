@@ -33,6 +33,12 @@ manager.add_command('db', MigrateCommand)
 
 #-------------------------------------------------------------------------------
 
+miembrosGrupo = db.Table('miembrosGrupo',
+    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
+    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
+)
+
+#------------------------------------------------------------------------------
 
 class Usuario(db.Model):
 
@@ -138,20 +144,15 @@ class Mensaje(db.Model):
 
 #-------------------------------------------------------------------------------
 
-miembrosGrupo = db.Table('miembrosGrupo',
-    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre')),
-    db.Column('usuario',db.String,db.ForeignKey('usuario.nombre_usuario'))
-)
-
 class Grupo(db.Model): 
     __tablename__ = 'grupo'
     nombre = db.Column(db.String, primary_key = True)  # Como se llama este id por defecto?
     id_admin = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    admin = db.relationship('Usuario', 
-            backref=db.backref('admin_grupo', uselist=False), uselist=False)
+    admin = db.relationship('Usuario',
+            backref=db.backref('admin_grupo'))
     miembros = db.relationship('Usuario',
                secondary=miembrosGrupo, # Hace que usen la tabla miembrosGrupo
-               backref=db.backref('miembro_grupo'),uselist=False) # Sin uselist, porque la relacion
+               backref=db.backref('grupos')) # Sin uselist, porque la relacion
     def __init__(self,nombre,admin):        # es de muchos a muchos
         self.nombre = nombre
         self.admin = admin
@@ -184,10 +185,11 @@ synergy = Grupo.query.filter_by(nombre='Synergy').first()
 alej = Usuario.query.filter_by(nombre_usuario='alejandra').first()
 samuel = Usuario.query.filter_by(nombre_usuario='samuel').first()
 
-mango.miembros = alej
-mango.miembros = samuel
-synergy.miembros = alej
+mango.miembros.append(alej)
+mango.miembros.append(samuel)
+synergy.miembros.append(samuel)
 db.session.commit()
+
 """
 
 # tags = db.Table('tags',
