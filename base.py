@@ -40,6 +40,8 @@ amigos = db.Table('amigos', db.metadata,
         db.String,db.ForeignKey('usuario.nombre_usuario'),primary_key=True)
 )
 
+#------------------------------------------------------------------------------
+
 class Usuario(db.Model):
     __tablename__ = "usuario"
     nombre_usuario = db.Column(db.String, primary_key=True)
@@ -170,10 +172,11 @@ synergy = Grupo.query.filter_by(nombre='Synergy').first()
 alej = Usuario.query.filter_by(nombre_usuario='alejandra').first()
 samuel = Usuario.query.filter_by(nombre_usuario='samuel').first()
 
-mango.miembros = alej
-mango.miembros = samuel
-synergy.miembros = alej
+mango.miembros.append(alej)
+mango.miembros.append(samuel)
+synergy.miembros.append(samuel)
 db.session.commit()
+
 """
 
 #-------------------------------------------------------------------------------
