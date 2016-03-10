@@ -9,14 +9,26 @@ from sqlalchemy.sql import select, insert
 @chat.route('/chat/AElimContacto')
 def AElimContacto():
     #GET parameter
-    id = request.args['id']
+    idContacto = request.args['id']
     results = [{'label':'/VAdminContactos', 'msg':['Contacto eliminado']}, {'label':'/VAdminContactos', 'msg':['No se pudo eliminar contacto']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    res['label'] = res['label'] + '/' + repr(1)
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
 
-    nombre = params['nombre']
+
+    usuarioActual = session['nombre_usuario']
+    ContactoAEliminar = idContacto
+
+    usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
+    usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoAEliminar ).first()
+
+    usuario1.amigos.remove(usuario2)
+    usuario2.amigos.remove(usuario1)
+
+    db.session.commit()
+
+    # nombre = params['nombre']
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -24,7 +36,6 @@ def AElimContacto():
         else:
             session['actor'] = res['actor']
     return json.dumps(res)
-
 
 
 @chat.route('/chat/AElimMiembro')
