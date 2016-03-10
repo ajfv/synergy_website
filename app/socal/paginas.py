@@ -86,9 +86,10 @@ def VPagina():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
-    res['idPagina'] = 1
-
+    pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
+    usuario = {"nombre":idUsuario}
+    res = {"fPagina": {"titulo":pagina_existente.titulo, "contenido":pagina_existente.contenido}}
+    res["usuario"]=usuario
     #Action code ends here
     return json.dumps(res)
 
