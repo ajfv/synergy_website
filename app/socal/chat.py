@@ -131,7 +131,6 @@ def AgregMiembro():
     #Action code goes here, res should be a list with a label and a message
     
     res['label'] = res['label'] + '/' + repr(1)
-    print(res)
     id_grupo = res['label']
     usuario = params['nombre']
     
@@ -196,7 +195,6 @@ def VAdminContactos():
     # ]
 
     res['fContacto_opcionesNombre'] = opciones_usuarios
-    print(res)
 
 
     #Action code ends here
@@ -263,9 +261,8 @@ def VGrupo():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-    print(idGrupo)
+    
     res['idGrupo'] = 'Grupo Est. Leng.'
-    print(res['idGrupo'])
     res['fMiembro_opcionesNombre'] = [
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
