@@ -1,4 +1,5 @@
 from flask import request, session, Blueprint, json
+from base import Usuario, Pagina, db, amigos
 
 chat = Blueprint('chat', __name__)
 from base import Grupo, miembrosGrupo, db
@@ -15,7 +16,7 @@ def AElimContacto():
 
     res['label'] = res['label'] + '/' + repr(1)
 
-
+    nombre = params['nombre']
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -96,8 +97,21 @@ def AgregContacto():
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    res['label'] = res['label'] + '/' + repr(1)
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
 
+    usuarioActual = session['nombre_usuario']
+    ContactoNuevo = params['nombre']
+
+    
+    usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
+    usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoNuevo ).first()
+
+    usuario1.amigos.append(usuario2)
+    usuario2.amigos.append(usuario1)
+
+    db.session.commit()
+
+    print(ContactoNuevo)
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -161,22 +175,40 @@ def VAdminContactos():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    res['idContacto'] = 1
-    res['data1'] = [
-      {'idContacto':34, 'nombre':'ana', 'tipo':'usuario'},
-      {'idContacto':23, 'nombre':'leo', 'tipo':'usuario'},
-      {'idContacto':11, 'nombre':'distra', 'tipo':'usuario'},
-      {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
-    ]
+    res['idContacto'] = idUsuario 
+    User = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
+
+
+    
+    listaAmigos = []
+
+    for i in User.amigos:
+        listaAmigos += [ {'idContacto':i.nombre_usuario,'nombre':i.nombre_usuario, 'tipo':'usuario'} ]
+
+    res['data1'] = listaAmigos
+
     res['data2'] = [
       {'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'},
     ]
     res['idGrupo'] = 1
-    res['fContacto_opcionesNombre'] = [
-      {'key':1, 'value':'Leo'},
-      {'key':2, 'value':'Lauri'},
-      {'key':3, 'value':'Mara'},
-    ]
+
+    nombres = Usuario.query.all()
+    amigos = User.amigos
+
+    opciones_usuarios = []
+    for i in nombres:
+        if(i.nombre_usuario!= idUsuario and i not in amigos):
+            opciones_usuarios += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
+
+
+    # res['fContacto_opcionesNombre'] = [
+    #   {'key':'pepe', 'value':'Pepe'},
+    #   {'key':'juana', 'value':'Juana'},
+    #   {'key':'maria', 'value':'Maria'},
+    # ]
+
+    res['fContacto_opcionesNombre'] = opciones_usuarios
+
 
     #Action code ends here
     return json.dumps(res)
@@ -217,13 +249,15 @@ def VContactos():
     #Action code goes here, res should be a JSON structure
 
     res['idContacto'] = 1
-    res['data1'] = [
-      {'idContacto':34, 'nombre':'ana', 'tipo':'usuario'},
-      {'idContacto':23, 'nombre':'leo', 'tipo':'usuario'},
-      {'idContacto':11, 'nombre':'distra', 'tipo':'usuario'},
-      {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
-      {'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'},
-    ]
+
+    listaAmigos = []
+
+    User = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
+    for i in User.amigos:
+        listaAmigos += [{'idContacto':i.nombre_usuario,'nombre':i.nombre_usuario, 'tipo':'usuario'}]
+
+    listaAmigos += [{'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
+    res['data1'] = listaAmigos
     res['idUsuario'] = idUsuario # Esto arregla el botón del prof
 
 
