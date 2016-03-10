@@ -1,3 +1,5 @@
 cosas/
 __pycache__/
 migrations/
+INSTALL.md
+.gitignore
