@@ -48,7 +48,7 @@ def APagina():
 
     #Cuando la página exista, ir directamente a ella.
     #Si no exite ir al editor de páginas.
-    res['label'] = res['label'] + '/' + repr(1)
+    res['label'] = res['label'] + '/' + idPagina
 
     #Action code ends here
     if "actor" in res:
