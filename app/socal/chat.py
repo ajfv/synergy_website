@@ -131,30 +131,18 @@ def AgregMiembro():
     #Action code goes here, res should be a list with a label and a message
     
     res['label'] = res['label'] + '/' + repr(1)
-    #En params está el ID de la persona a agregar.
-    #Para hacer conexiones a la tabla miembrosGrupo.
-    #conn = engine.connect()
+    print(res)
+    id_grupo = res['label']
+    usuario = params['nombre']
     
-    #Se verifica si la persona ya está en el grupo. Como miembrosGrupo es una tabla
-    #no se pueden hacer queries sobre ella, sino que hay que aplicar SQL.
-    #selectMiembros = select([miembrosGrupo])
-    #for filas in conn.execute(selectMiembros):
-    #    print(filas)
-    #select(miembrosGrupo).where(usuario=params['nombre'],grupo=res['label'])
-    #engine = create_engine('postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db')
-    #ins = insert(miembrosGrupo)\
-    #    .values(grupo=res['label'],usuario=params['nombre'])
-    #print(ins)
-#    conn = engine.connect()
-#    result = conn.execute(ins)
-    #Se agrega el usuario a la tabla de miembrosGrupo.
-    #miembroNuevo =  miembrosGrupo(grupo=res['label'],usuario=params['nombre'])
-    #db.session.add(miembroNuevo)
+    grupo = Grupo.query.filter_by(nombre = id_grupo).first()
+    usuario = Usuario.query.filter_by(nombre_usuario = usuario).first()
     
-    #db.session.commit()
     
-    #Se ejecuta la inserción
-    #result = conn.execute(ins)
+    grupo.miembrosGrupo.append([grupo,usuario])
+    
+    
+    db.session.commit()
     
     #Action code ends here
     if "actor" in res:
@@ -190,7 +178,7 @@ def VAdminContactos():
     res['data2'] = [
       {'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'},
     ]
-    res['idGrupo'] = 1
+    res['idGrupo'] = 'Grupo Est. Leng.'
 
     nombres = Usuario.query.all()
     amigos = User.amigos
@@ -208,6 +196,7 @@ def VAdminContactos():
     # ]
 
     res['fContacto_opcionesNombre'] = opciones_usuarios
+    print(res)
 
 
     #Action code ends here
@@ -274,8 +263,9 @@ def VGrupo():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
-    res['idGrupo'] = 1
+    print(idGrupo)
+    res['idGrupo'] = 'Grupo Est. Leng.'
+    print(res['idGrupo'])
     res['fMiembro_opcionesNombre'] = [
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
