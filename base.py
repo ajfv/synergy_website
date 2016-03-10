@@ -94,7 +94,7 @@ class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     mensajes = db.relationship('Mensaje',
         backref=db.backref('chat',uselist=False),
-        order_by=lambda: desc(Mensaje.creado))
+        order_by=lambda: db.desc(Mensaje.creado))
     # mensaje = db.relationship('Mensaje',
     # backref=db.backref('chat', uselist=False) )
 

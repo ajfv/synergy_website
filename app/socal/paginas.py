@@ -48,8 +48,16 @@ def APagina():
 
     #Cuando la página exista, ir directamente a ella.
     #Si no exite ir al editor de páginas.
-    res['label'] = res['label'] + '/' + idPagina
 
+    pagina = (db.session.query(Pagina)
+        .filter_by(id_usuario=idPagina)
+        .first())
+    if pagina is None:
+        res['msg'] = ['Crea tu página de usuario para que te conozcan.']
+    else:
+        res = results[1]
+    res['label'] = res['label'] + '/' + idPagina
+    
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
