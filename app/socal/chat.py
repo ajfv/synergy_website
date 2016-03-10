@@ -1,5 +1,6 @@
 from flask import request, session, Blueprint, json
-from base import Usuario, Pagina, db, amigos
+from base import Usuario, Pagina, db, Amigo, Chat, Mensaje
+from sqlalchemy.orm import sessionmaker
 
 chat = Blueprint('chat', __name__)
 from base import Grupo, miembrosGrupo, db
@@ -20,13 +21,13 @@ def AElimContacto():
     usuarioActual = session['nombre_usuario']
     ContactoAEliminar = idContacto
 
-    usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
-    usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoAEliminar ).first()
+    # usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
+    # usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoAEliminar ).first()
 
-    usuario1.amigos.remove(usuario2)
-    usuario2.amigos.remove(usuario1)
+    # usuario1.amigos.remove(usuario2)
+    # usuario2.amigos.remove(usuario1)
 
-    db.session.commit()
+    # db.session.commit()
 
     # nombre = params['nombre']
     #Action code ends here
@@ -62,11 +63,27 @@ def AElimMiembro():
 def AEscribir():
     #POST/PUT parameters
     params = request.get_json()
+    print("PARAMS",params)
+    #print("AMIGO",session['amigo'])
+    texto = params['texto']
+
+    amigo = session['amigo']
+    usuarioActual = session['nombre_usuario']
+
     results = [{'label':'/VChat', 'msg':['Enviado']}, {'label':'/VChat', 'msg':['No se pudo enviar mensaje']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
+    res['label'] = res['label'] + '/' + session['amigo'] 
 
-    res['label'] = res['label'] + '/' + repr(1)
+    
+    busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
+    chat = Chat.query.filter_by(id = busqueda.chat_id).first()
+
+    mensaje = Mensaje(usuarioActual,texto,busqueda.chat)
+    db.session.add(mensaje)
+    db.session.commit()
+
+    print("BUSQUEDA",busqueda.amigo1,busqueda.amigo2,busqueda.chat_id)
 
 
     #Action code ends here
@@ -110,17 +127,34 @@ def AgregContacto():
 
     res['label'] = res['label'] + '/' + session['nombre_usuario']
 
+
+
     usuarioActual = session['nombre_usuario']
     ContactoNuevo = params['nombre']
 
     
-    usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
-    usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoNuevo ).first()
+    # usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
+    # usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoNuevo ).first()
 
-    usuario1.amigos.append(usuario2)
-    usuario2.amigos.append(usuario1)
+    # nuevoChat = Chat()
+    # db.session.add(nuevoChat)
 
-    db.session.commit()
+    # usuario1.amigos.append(usuario2,nuevoChat.id)
+    # usuario2.amigos.append(usuario1,nuevoChat.id)
+    # db.session.commit()
+
+
+    # Amigo = db.session.query(amigos).filter(amigos.c.usuario_id==usuarioActual).one()
+    # print("AMIGO",Amigo.chat_id,Amigo.amigo_id)
+    # Amigo.chat_id = AmigosnuevoChat.id
+
+
+
+    # db.session.commit()
+
+
+
+
 
     print(ContactoNuevo)
     #Action code ends here
@@ -191,12 +225,12 @@ def VAdminContactos():
     res['idGrupo'] = 'Grupo Est. Leng.'
 
     nombres = Usuario.query.all()
-    amigos = User.amigos
+    # amigos = User.amigos
 
-    opciones_usuarios = []
-    for i in nombres:
-        if(i.nombre_usuario!= idUsuario and i not in amigos):
-            opciones_usuarios += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
+    # opciones_usuarios = []
+    # for i in nombres:
+    #     if(i.nombre_usuario!= idUsuario and i not in amigos):
+    #         opciones_usuarios += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
 
 
     # res['fContacto_opcionesNombre'] = [
@@ -217,20 +251,36 @@ def VAdminContactos():
 def VChat():
     #GET parameter
     idChat = request.args['idChat']
+    session['amigo'] = idChat
+    print("ID CHAT",idChat)
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    res['idChat'] = 1
-    res['idUsuario'] = 1
-    res['mensajesAnt'] = [
-      {'texto': '¿Me traes mi gato por la tarde?', 'usuario':'ana', 'fecha':'lun feb 29 09:08:17 VET 2016'},
+    res['idChat'] = idChat
+    res['idUsuario'] = idChat
+
+    usuarioActual = session['nombre_usuario']
+    amigo = idChat
+
+    busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
+    chat = Chat.query.filter_by(id = busqueda.chat_id).first()
+
+
+    mensaje = chat.mensajes
+    print("MENSAJE",mensaje.contenido)
+
+    Lista = [{'texto': '¿Me traes mi gato por la tarde?', 'usuario':'ana', 'fecha':'lun feb 29 09:08:17 VET 2016'},
       {'texto': '¡Hay! no lo encuentro, debió escaparse. Ahora salgo a buscarlo', 'usuario':'distra', 'fecha':'lun feb 29 09:09:17 VET 2016'},
       {'texto': 'Hola vane, ayer al pasar por tu casa dejé a naco mi anacondita..', 'usuario':'uri', 'fecha':'lun feb 29 09:09:17 VET 2016'},
       {'texto': 'La dejasete fue en mi casa. No la había visto porque está en un rincon, no se mueve y ... pareceira que tiene algo atragantado.', 'usuario':'distra', 'fecha':'lun feb 29 09:10:17 VET 2016'},
       {'texto': '¿Qué?', 'usuario':'ana', 'fecha':'lun feb 29 09:12:17 VET 2016'},
-    ]
+      {'texto': 'PRUEBA', 'usuario':'ana', 'fecha':'lun feb 29 09:12:17 VET 2016'},]
+
+    Lista += [{'texto':mensaje.contenido,'usuario':mensaje.usuario_origen,'fecha':mensaje.creado}]
+
+    res['mensajesAnt'] = Lista
 
     #Action code ends here
     return json.dumps(res)
@@ -250,11 +300,12 @@ def VContactos():
 
     listaAmigos = []
 
-    User = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
-    for i in User.amigos:
-        listaAmigos += [{'idContacto':i.nombre_usuario,'nombre':i.nombre_usuario, 'tipo':'usuario'}]
+    User = Amigo.query.filter_by(amigo1=idUsuario).all()
 
-    listaAmigos += [{'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
+    for i in User:
+        listaAmigos += [{'idContacto':i.amigo2,'nombre':i.amigo2, 'tipo':'usuario'}]
+
+    listaAmigos += [{'idContacto':'mango', 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
     res['data1'] = listaAmigos
     res['idUsuario'] = idUsuario # Esto arregla el botón del prof
 

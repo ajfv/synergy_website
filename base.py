@@ -31,15 +31,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
-#-------------------------------------------------------------------------------
-
-amigos = db.Table('amigos', db.metadata,
-    db.Column('usuario_id',
-        db.String,db.ForeignKey('usuario.nombre_usuario'),primary_key=True),
-    db.Column('amigo_id',
-        db.String,db.ForeignKey('usuario.nombre_usuario'),primary_key=True)
-)
-
 #------------------------------------------------------------------------------
 
 class Usuario(db.Model):
@@ -48,26 +39,40 @@ class Usuario(db.Model):
     nombre_completo = db.Column(db.String)
     correo = db.Column(db.String)
     clave = db.Column(db.String)
-    amigos = db.relationship("Usuario",
-        secondary=amigos,
-        primaryjoin=nombre_usuario==amigos.c.usuario_id,
-        secondaryjoin=nombre_usuario==amigos.c.amigo_id)
-
-    @staticmethod
-    def hacer_amigos(usuario1, usuario2):
-        usuario1.amigos.push(usuario2)
-        usuario2.amigos.push(usuario1)
 
     def __init__(self, nombre_usuario, nombre_completo, correo, clave):
         self.nombre_usuario = nombre_usuario
         self.nombre_completo = nombre_completo
-        self.clave = clave
         self.correo = correo
-        self.amigos = []
+        self.clave = clave
+
 
     def __repr__(self):
         return "<Usuario(nombre completo='%s', nombre de usuario='%s', correo='%s', clave='%s'>" %(
             self.nombre_completo, self.nombre_usuario, self.correo, self.clave)
+
+#-------------------------------------------------------------------------------
+
+
+class Amigo(db.Model):
+    """docstring for Amigo"""
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
+    amigo1 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    amigo2 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+
+    # amigo2 = db.relationship('Usuario',
+    #     backref=db.backref('amigo2', uselist=False), uselist=False)
+
+
+    def __init__(self, amigo1 ,amigo2,chat_id):
+        self.amigo1 = amigo1
+        self.amigo2 = amigo2
+        self.chat_id = chat_id
+
+
+
 
 #-------------------------------------------------------------------------------
 
@@ -92,10 +97,13 @@ class Pagina(db.Model):
 class Chat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    mensajes = db.relationship('Mensaje',
-        backref=db.backref('chat',uselist=False),
-        order_by=lambda: db.desc(Mensaje.creado))
-    # mensaje = db.relationship('Mensaje',
+    # mensajes = db.relationship('Mensaje',
+    #     backref=db.backref('chat',uselist=False),
+    #     order_by=lambda: db.desc(Mensaje.creado))
+
+    # def __init__(self):
+    #     self.id = id
+
     # backref=db.backref('chat', uselist=False) )
 
 
@@ -104,7 +112,10 @@ class Chat(db.Model):
 class Mensaje(db.Model):
 
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
-    chat_id =  db.Column(db.Integer, db.ForeignKey('chat.id'))
+    #chat_id =  db.Column(db.Integer, db.ForeignKey('chat.id'))
+    chat = db.relationship('Chat',
+        backref=db.backref('mensaje'),uselist=False)
+
     contenido = db.Column(db.Text)
     creado = db.Column(db.DateTime, server_default=db.func.now())
     usuario_origen = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
@@ -113,10 +124,9 @@ class Mensaje(db.Model):
     #     backref=db.backref('usuario_destino', lazy='dynamic'))
 
     def __init__(self,usuario_origen,contenido,chat):
-        self.usuario_origen = usuario_origen.nombre_usuario
-        self.chat_id = chat.id
-        self.chat = chat
+        self.usuario_origen = usuario_origen
         self.contenido = contenido
+        self.chat  = chat
 
 #-------------------------------------------------------------------------------
 
