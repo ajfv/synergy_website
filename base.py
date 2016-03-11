@@ -97,9 +97,9 @@ class Pagina(db.Model):
 class Chat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # mensajes = db.relationship('Mensaje',
-    #     backref=db.backref('chat',uselist=False),
-    #     order_by=lambda: db.desc(Mensaje.creado))
+    mensajes = db.relationship('Mensaje',
+        backref=db.backref('chat',uselist=False),
+        order_by=lambda: db.desc(Mensaje.creado))
 
     # def __init__(self):
     #     self.id = id
@@ -112,10 +112,7 @@ class Chat(db.Model):
 class Mensaje(db.Model):
 
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
-    #chat_id =  db.Column(db.Integer, db.ForeignKey('chat.id'))
-    chat = db.relationship('Chat',
-        backref=db.backref('mensaje'),uselist=False)
-
+    chat_id =  db.Column(db.Integer, db.ForeignKey('chat.id'))
     contenido = db.Column(db.Text)
     creado = db.Column(db.DateTime, server_default=db.func.now())
     usuario_origen = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
@@ -125,8 +122,9 @@ class Mensaje(db.Model):
 
     def __init__(self,usuario_origen,contenido,chat):
         self.usuario_origen = usuario_origen
+        self.chat_id = chat
+        #self.chat = chat
         self.contenido = contenido
-        self.chat  = chat
 
 #-------------------------------------------------------------------------------
 

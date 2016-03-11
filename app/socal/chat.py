@@ -79,8 +79,11 @@ def AEscribir():
     busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
     chat = Chat.query.filter_by(id = busqueda.chat_id).first()
 
-    mensaje = Mensaje(usuarioActual,texto,busqueda.chat)
+    mensaje = Mensaje(usuarioActual,texto,busqueda.chat_id)
     db.session.add(mensaje)
+    db.session.commit()
+
+    chat.mensaje = mensaje
     db.session.commit()
 
     print("BUSQUEDA",busqueda.amigo1,busqueda.amigo2,busqueda.chat_id)
@@ -266,10 +269,7 @@ def VChat():
 
     busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
     chat = Chat.query.filter_by(id = busqueda.chat_id).first()
-
-
     mensaje = chat.mensajes
-    print("MENSAJE",mensaje.contenido)
 
     Lista = [{'texto': '¿Me traes mi gato por la tarde?', 'usuario':'ana', 'fecha':'lun feb 29 09:08:17 VET 2016'},
       {'texto': '¡Hay! no lo encuentro, debió escaparse. Ahora salgo a buscarlo', 'usuario':'distra', 'fecha':'lun feb 29 09:09:17 VET 2016'},
@@ -278,7 +278,8 @@ def VChat():
       {'texto': '¿Qué?', 'usuario':'ana', 'fecha':'lun feb 29 09:12:17 VET 2016'},
       {'texto': 'PRUEBA', 'usuario':'ana', 'fecha':'lun feb 29 09:12:17 VET 2016'},]
 
-    Lista += [{'texto':mensaje.contenido,'usuario':mensaje.usuario_origen,'fecha':mensaje.creado}]
+    for i in mensaje:
+        Lista += [{'texto':i.contenido,'usuario':i.usuario_origen,'fecha':i.creado}]
 
     res['mensajesAnt'] = Lista
 
