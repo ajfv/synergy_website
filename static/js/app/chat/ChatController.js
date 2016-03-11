@@ -14,7 +14,7 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             });
 }]);
 
-socialModule.controller('VAdminContactosController', 
+socialModule.controller('VAdminContactosController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
@@ -40,7 +40,7 @@ socialModule.controller('VAdminContactosController',
                   getData: function($defer, params) {
                       $defer.resolve(AElimContacto1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                   }
-              });            
+              });
 
               var VGrupo2Data = $scope.res.data2;
               if(typeof VGrupo2Data === 'undefined') VGrupo2Data=[];
@@ -52,7 +52,7 @@ socialModule.controller('VAdminContactosController',
                   getData: function($defer, params) {
                       $defer.resolve(VGrupo2Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                   }
-              });            
+              });
 
 
       });
@@ -64,7 +64,7 @@ socialModule.controller('VAdminContactosController',
       $scope.AgregContacto3 = function(isValid) {
         $scope.fContactoSubmitted = true;
         if (isValid) {
-          
+
           chatService.AgregContacto($scope.fContacto).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
@@ -96,7 +96,7 @@ ngDialog.open({ template: 'ayuda_VAdminContactos.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
 }
     }]);
-socialModule.controller('VChatController', 
+socialModule.controller('VChatController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {
       $scope.msg = '';
@@ -121,7 +121,7 @@ socialModule.controller('VChatController',
       $scope.AEscribir1 = function(isValid) {
         $scope.fChatSubmitted = true;
         if (isValid) {
-          
+
           chatService.AEscribir($scope.fChat).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
@@ -137,7 +137,7 @@ ngDialog.open({ template: 'ayuda_VChat.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
 }
     }]);
-socialModule.controller('VContactosController', 
+socialModule.controller('VContactosController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
@@ -161,7 +161,7 @@ socialModule.controller('VContactosController',
                   getData: function($defer, params) {
                       $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                   }
-              });            
+              });
 
 
       });
@@ -171,7 +171,9 @@ socialModule.controller('VContactosController',
       $scope.VAdminContactos2 = function(idUsuario) {
         $location.path('/VAdminContactos/'+idUsuario);
       };
-
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
+      };
       $scope.VChat1 = function(idChat) {
         $location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
       };
@@ -181,7 +183,7 @@ ngDialog.open({ template: 'ayuda_VContactos.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
 }
     }]);
-socialModule.controller('VGrupoController', 
+socialModule.controller('VGrupoController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
@@ -207,12 +209,12 @@ socialModule.controller('VGrupoController',
                   getData: function($defer, params) {
                       $defer.resolve(AElimMiembro3Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                   }
-              });            
+              });
 
 
       });
       $scope.ASalirGrupo1 = function() {
-          
+
         chatService.ASalirGrupo().then(function (object) {
           var msg = object.data["msg"];
           if (msg) flash(msg);
@@ -228,7 +230,7 @@ socialModule.controller('VGrupoController',
       $scope.AgregMiembro0 = function(isValid) {
         $scope.fMiembroSubmitted = true;
         if (isValid) {
-          
+
           chatService.AgregMiembro($scope.fMiembro).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
