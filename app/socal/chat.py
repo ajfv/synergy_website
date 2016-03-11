@@ -135,7 +135,20 @@ def AgregContacto():
     usuarioActual = session['nombre_usuario']
     ContactoNuevo = params['nombre']
 
-    
+    # Se crea un nuevo chat:
+    nuevoChat = Chat()
+    db.session.add(nuevoChat)
+    db.session.commit()
+
+    # Se crean las relaciones de amigos:
+    amigos1 = Amigo(usuarioActual,ContactoNuevo,nuevoChat.id)
+    amigos2 = Amigo(ContactoNuevo,usuarioActual,nuevoChat.id)
+
+    db.session.add(amigos1)
+    db.session.add(amigos2)
+    db.session.commit()
+
+
     # usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
     # usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoNuevo ).first()
 
@@ -211,14 +224,14 @@ def VAdminContactos():
     #Action code goes here, res should be a JSON structure
 
     res['idContacto'] = idUsuario 
-    User = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
-
-
-    
+    Amistades = Amigo.query.filter_by(amigo1=idUsuario).all()
+ 
     listaAmigos = []
+    amigos = []
 
-    for i in User.amigos:
-        listaAmigos += [ {'idContacto':i.nombre_usuario,'nombre':i.nombre_usuario, 'tipo':'usuario'} ]
+    for i in Amistades:
+        listaAmigos += [ {'idContacto':i.amigo2,'nombre':i.amigo2, 'tipo':'usuario'} ]
+        amigos += [i.amigo2]
 
     res['data1'] = listaAmigos
 
@@ -228,17 +241,16 @@ def VAdminContactos():
     res['idGrupo'] = 'Grupo Est. Leng.'
 
     nombres = Usuario.query.all()
-    # amigos = User.amigos
 
-    # opciones_usuarios = []
-    # for i in nombres:
-    #     if(i.nombre_usuario!= idUsuario and i not in amigos):
-    #         opciones_usuarios += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
+    opciones_usuarios = []
+    for i in nombres:
+        if(i.nombre_usuario!= idUsuario and i.nombre_usuario not in amigos):
+            opciones_usuarios += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
 
 
     # res['fContacto_opcionesNombre'] = [
     #   {'key':'pepe', 'value':'Pepe'},
-    #   {'key':'juana', 'value':'Juana'},
+    #  {'key':'juana', 'value':'Juana'},
     #   {'key':'maria', 'value':'Maria'},
     # ]
 
