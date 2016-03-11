@@ -168,10 +168,6 @@ def AgregContacto():
 
     # db.session.commit()
 
-
-
-
-
     print(ContactoNuevo)
     #Action code ends here
     if "actor" in res:
@@ -283,12 +279,7 @@ def VChat():
     chat = Chat.query.filter_by(id = busqueda.chat_id).first()
     mensaje = chat.mensajes
 
-    Lista = [{'texto': '¿Me traes mi gato por la tarde?', 'usuario':'ana', 'fecha':'lun feb 29 09:08:17 VET 2016'},
-      {'texto': '¡Hay! no lo encuentro, debió escaparse. Ahora salgo a buscarlo', 'usuario':'distra', 'fecha':'lun feb 29 09:09:17 VET 2016'},
-      {'texto': 'Hola vane, ayer al pasar por tu casa dejé a naco mi anacondita..', 'usuario':'uri', 'fecha':'lun feb 29 09:09:17 VET 2016'},
-      {'texto': 'La dejasete fue en mi casa. No la había visto porque está en un rincon, no se mueve y ... pareceira que tiene algo atragantado.', 'usuario':'distra', 'fecha':'lun feb 29 09:10:17 VET 2016'},
-      {'texto': '¿Qué?', 'usuario':'ana', 'fecha':'lun feb 29 09:12:17 VET 2016'},
-      {'texto': 'PRUEBA', 'usuario':'ana', 'fecha':'lun feb 29 09:12:17 VET 2016'},]
+    Lista = []
 
     for i in mensaje:
         Lista += [{'texto':i.contenido,'usuario':i.usuario_origen,'fecha':i.creado}]
