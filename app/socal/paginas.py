@@ -57,7 +57,7 @@ def APagina():
     else:
         res = results[1]
     res['label'] = res['label'] + '/' + idPagina
-    
+
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -78,8 +78,14 @@ def VMiPagina():
     #Action code goes here, res should be a JSON structure
 
     pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
-    res['titulo'] = pagina_existente.titulo
-    res['contenido'] = pagina_existente.contenido
+    if pagina_existente is not None:
+        res['titulo'] = pagina_existente.titulo
+        res['contenido'] = pagina_existente.contenido
+    else:
+        res['titulo'] = ""
+        res['contenido'] = "Este usuario no ha creado su página."
+    if session['nombre_usuario'] == idUsuario:
+        res['mostrar'] = 'true'
     res['idUsuario'] = idUsuario #Esto arregla el botón del prof
     #Action code ends here
     return json.dumps(res)
@@ -96,7 +102,8 @@ def VPagina():
     #Action code goes here, res should be a JSON structure
     pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
     usuario = {"nombre":idUsuario}
-    res = {"fPagina": {"titulo":pagina_existente.titulo, "contenido":pagina_existente.contenido}}
+    if pagina_existente is not None:
+        res = {"fPagina": {"titulo":pagina_existente.titulo, "contenido":pagina_existente.contenido}}
     res["usuario"]=usuario
     #Action code ends here
     return json.dumps(res)
