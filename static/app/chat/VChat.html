@@ -37,7 +37,16 @@
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VChat.html">
-Manual...<ul>
+
+
+<div style="text-align: center;"><span><b>Manual:</b></span></div>
+<p>En la vista actual se encuentran las siguientes opciones:</p><p></p>
+<ul>
+<li>Regresar: Se regresa a la página principal.</li>
+<li>Escribir: Se envía a la otra persona el mensaje redactado en el cuadro de texto.</li>
+</ul> 
+
+<ul>
   <li ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
 </ul>
 </script>
