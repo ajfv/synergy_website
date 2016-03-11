@@ -1,5 +1,5 @@
 from flask import request, session, Blueprint, json
-from base import Usuario, Pagina, db, amigos
+from base import Usuario, Pagina, db, amigos, Grupo,Chat
 
 chat = Blueprint('chat', __name__)
 
@@ -91,7 +91,7 @@ def ASalirGrupo():
     usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
     id_grupo = session.get('idGrupo')
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
-    #grupo = Grupo.query.filter_by(grupo_pkey = idgrupo).first()
+    #grupo = Grupo.query.filter_by(id = id_grupo).first()
     #grupo.miembros.remove(usuario)
 
     #Action code ends here
@@ -150,7 +150,7 @@ def AgregMiembro():
     usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
     id_grupo = session.get('idGrupo')
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
-    #grupo = Grupo.query.filter_by(grupo_pkey = idgrupo).first()
+    #grupo = Grupo.query.filter_by(id = id_grupo).first()
     #grupo.miembros.append(usuario)
     
     db.session.commit()
@@ -276,7 +276,7 @@ def VGrupo():
     session['idGrupo']=idGrupo
     
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
-    '''grupo = Grupo.query.filter_by(grupo_pkey = idGgrupo).first()
+    '''grupo = Grupo.query.filter_by(id = idGgrupo).first()
     grupo.miembros.append(usuario)
     idUsuario = session.get('nombre_usuario')
     usuario = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
@@ -297,7 +297,7 @@ def VGrupo():
     res['fMiembro_opcionesNombre'] = posibles_miembros
     res['data3'] = usuarios_miembros'''
     
-    res['idGrupo'] = idGrupo
+    res['idGrupo'] = 1
     res['fMiembro_opcionesNombre'] = [
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
