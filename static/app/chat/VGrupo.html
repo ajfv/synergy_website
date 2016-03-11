@@ -28,7 +28,7 @@
 </nav>
 
     <form name="fMiembroForm" ng-submit="AgregMiembro0(fMiembroForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fMiembroSubmitted && fMiembroForm.nombre.$invalid && fMiembroForm.nombre.$pristine && fMiembroSubmitted}"><label for="fMiembro_nombre">Nombre</label>:&nbsp;<select id="fMiembro_nombre" ng-model="fMiembro.nombre" required ng-options="item.key as item.value for item in fMiembro_opcionesNombre"></select><p ng-show="fMiembroSubmitted && fMiembroForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
+            <div class="form-group" ng-class="{ 'has-error' :  fMiembroSubmitted && fMiembroForm.nombre.$invalid && fMiembroForm.nombre.$pristine && fMiembroSubmitted}"><label for="fMiembro_nombre">Nombre</label>:&nbsp;<select id="fMiembro_nombre" ng-model="fMiembro.nombre" required ng-options="item.value as item.value for item in fMiembro_opcionesNombre"></select><p ng-show="fMiembroSubmitted && fMiembroForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
         <button type="submit" class="btn btn-perso btn-lg btn-block">
             <span class="glyphicon glyphicon-flash"></span>Agregar
         </button>
@@ -36,7 +36,7 @@
     <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
-                <td ng-show="row['idContacto']"><a ng-click="AElimMiembro3(row['idContacto'])">Eliminar</a></td>
+                <td ng-show="row['nombre']"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
             </tr>
         </table>
 
