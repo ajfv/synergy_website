@@ -1,8 +1,8 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" 
-                    data-toggle="collapse" 
+            <button type="button" class="navbar-toggle"
+                    data-toggle="collapse"
                     data-target="#contenido-plegable">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -30,7 +30,14 @@
 
         <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
-                <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
+                <td data-title="'Nombre'">
+                    <div ng-if="row['tipo'] === 'usuario'">
+                        <a href="" ng-click="VMiPagina0(row['nombre'])">{{row['nombre']}}</a>
+                    </div>
+                    <div ng-if="row['tipo'] === 'grupo'">
+                        <div ng-bind="row['nombre']"></div>
+                    </div>
+                </td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
                 <td ng-show="row['idContacto']"><a ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false" ng-click="VChat1(row['idContacto'])">chat</a></td>
             </tr>
