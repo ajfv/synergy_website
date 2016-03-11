@@ -274,7 +274,7 @@ def VChat():
     #Action code goes here, res should be a JSON structure
 
     res['idChat'] = idChat
-    res['idUsuario'] = idChat
+    res['idUsuario'] = session['nombre_usuario']
 
     usuarioActual = session['nombre_usuario']
     amigo = idChat
