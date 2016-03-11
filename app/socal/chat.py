@@ -21,13 +21,13 @@ def AElimContacto():
     usuarioActual = session['nombre_usuario']
     ContactoAEliminar = idContacto
 
-    # usuario1 = Usuario.query.filter_by(nombre_usuario = usuarioActual).first()
-    # usuario2 = Usuario.query.filter_by(nombre_usuario = ContactoAEliminar ).first()
+    amistad1 = Amigo.query.filter_by(amigo1 = usuarioActual,amigo2 = ContactoAEliminar).first()
+    amistad2 = Amigo.query.filter_by(amigo1 = ContactoAEliminar,amigo2 = usuarioActual,).first()
 
-    # usuario1.amigos.remove(usuario2)
-    # usuario2.amigos.remove(usuario1)
+    db.session.delete(amistad1)
+    db.session.delete(amistad2)
 
-    # db.session.commit()
+    db.session.commit()
 
     # nombre = params['nombre']
     #Action code ends here
