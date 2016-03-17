@@ -1,6 +1,6 @@
 from flask import request, session, Blueprint, json
 from sqlalchemy.orm import sessionmaker
-from base import Usuario, Pagina, db, amigos, Grupo,Chat, Mensaje, Amigo
+from base import Usuario, Pagina, db, Grupo,Chat, Mensaje, Amigo
 
 chat = Blueprint('chat', __name__)
 from base import Grupo, miembrosGrupo, db
