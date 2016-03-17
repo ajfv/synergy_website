@@ -67,26 +67,26 @@ def AEscribir():
     #print("AMIGO",session['amigo'])
     texto = params['texto']
 
-    amigo = session['amigo']
+    idChat = session['idChat']
     usuarioActual = session['nombre_usuario']
 
     results = [{'label':'/VChat', 'msg':['Enviado']}, {'label':'/VChat', 'msg':['No se pudo enviar mensaje']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    res['label'] = res['label'] + '/' + session['amigo'] 
+    res['label'] = res['label'] + '/' + session['idChat'] 
 
     
-    busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
-    chat = Chat.query.filter_by(id = busqueda.chat_id).first()
+    #busqueda = idChat.query.filter_by(idChat1=usuarioActual,idChat2=idChat).first()
+    chat = Chat.query.filter_by(id = idChat).first()
 
-    mensaje = Mensaje(usuarioActual,texto,busqueda.chat_id)
+    mensaje = Mensaje(usuarioActual,texto,idChat)
     db.session.add(mensaje)
     db.session.commit()
 
     chat.mensaje = mensaje
     db.session.commit()
 
-    print("BUSQUEDA",busqueda.amigo1,busqueda.amigo2,busqueda.chat_id)
+    #print("BUSQUEDA",busqueda.amigo1,busqueda.amigo2,busqueda.chat_id)
 
 
     #Action code ends here
@@ -283,7 +283,7 @@ def VAdminContactos():
 def VChat():
     #GET parameter
     idChat = request.args['idChat']
-    session['amigo'] = idChat
+    session['idChat'] = idChat
     print("ID CHAT",idChat)
     res = {}
     if "actor" in session:
@@ -294,10 +294,10 @@ def VChat():
     res['idUsuario'] = session['nombre_usuario']
 
     usuarioActual = session['nombre_usuario']
-    amigo = idChat
+    # amigo = idChat
 
-    busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
-    chat = Chat.query.filter_by(id = busqueda.chat_id).first()
+    #busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
+    chat = Chat.query.filter_by(id = idChat).first()
     mensaje = chat.mensajes
 
     Lista = []
@@ -328,7 +328,9 @@ def VContactos():
     User = Amigo.query.filter_by(amigo1=idUsuario).all()
 
     for i in User:
-        listaAmigos += [{'idContacto':i.amigo2,'nombre':i.amigo2, 'tipo':'usuario'}]
+
+        busqueda = Amigo.query.filter_by(amigo1=idUsuario,amigo2=i.amigo2).first()
+        listaAmigos += [{'idContacto':busqueda.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
 
     listaAmigos += [{'idContacto':'mango', 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
     res['data1'] = listaAmigos
