@@ -65,6 +65,19 @@ socialModule.service('chatService', ['$q', '$http', function($q, $http) {
     //    return deferred.promise;
     };
 
+    this.AgregGrupo = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'chat/AgregGrupo',
+          method: 'GET',
+          params: args
+        });
+    //    var labels = ["/VAdminContactos", "/VAdminContactos", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
     this.AgregMiembro = function(fMiembro) {
         return  $http({
           url: "chat/AgregMiembro",

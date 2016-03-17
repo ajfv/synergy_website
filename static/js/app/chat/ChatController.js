@@ -59,6 +59,15 @@ socialModule.controller('VAdminContactosController',
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
+      $scope.AgregGrupo4 = function(idUsuario) {
+          
+        chatService.AgregGrupo({"idUsuario":((typeof idUsuario === 'object')?JSON.stringify(idUsuario):idUsuario)}).then(function (object) {
+          var msg = object.data["msg"];
+          if (msg) flash(msg);
+          var label = object.data["label"];
+          $location.path(label);
+          $route.reload();
+        });};
 
       $scope.fContactoSubmitted = false;
       $scope.AgregContacto3 = function(isValid) {

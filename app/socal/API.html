@@ -152,7 +152,7 @@ Opcional.
    <li>URL: '/paginas/APagina'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
 Parámetros GET: idPagina
-   <li>Roles: Sin restricción de rol
+   <li>Roles: desarrollador duenoProducto maestroScrum </li>
    <li>Requisitos: No disponible
    <li>
     <p><strong>Cursos posibles</strong></p>
@@ -290,6 +290,71 @@ Requerido.
  </li> <li>
   <p></p>
   <ul>
+   <li>URL: '/chat/AgregContacto'</li>
+   <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
+<li>Parámetros POST:
+    <ul>     <li>opcionesNombre -  
+Requerido. 
+     </li>     <li>nombre -  
+Requerido. 
+     </li>
+    </ul>
+   </li>
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"Contacto agregado".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"No se pudo agregar contacto".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p>Agrega un grupo de contacto que sólo incluye al usuario y tiene un nombre único creado por defecto. Por ejemplo: grupo 1<br></p>
+  <ul>
+   <li>URL: '/chat/AgregGrupo'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idUsuario
+   <li>Roles: Sin restricción de rol
+   <li>Requisitos: No disponible
+   <li>
+    <p><strong>Cursos posibles</strong></p>
+    <ol>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"Grupo agregado".</li>
+      </ul>
+     </li>
+     <li>
+      <p>resultado:</p>
+      <ul>
+       <li>label:'/VAdminContactos',</li>
+       <li> msg:"Error al crear grupo".</li>
+      </ul>
+     </li>
+
+    </ol>
+   </li>
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
    <li>URL: '/chat/AgregMiembro'</li>
    <li>Método: POST</li><li>Formato de entrada y salida: JSON</li>
 <li>Parámetros POST:
@@ -354,6 +419,42 @@ Parámetros GET: idUsuario
    <li>Método: GET</li><li>Formato de salida: JSON</li>
 Parámetros GET: idGrupo
    <li>Roles: desarrollador duenoProducto maestroScrum </li>
+  </ul>
+ </li>
+</ol>
+<h2>foros</h2>
+<p></p>
+<ol>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/VComentariosPagina'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idPaginaSitio
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/VForo'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idForo
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/VForos'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+   <li>Roles: Sin restricción de rol
+  </ul>
+ </li> <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/VPublicacion'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idForo
+   <li>Roles: Sin restricción de rol
   </ul>
  </li>
 </ol>

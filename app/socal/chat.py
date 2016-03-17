@@ -178,6 +178,27 @@ def AgregContacto():
     return json.dumps(res)
 
 
+@chat.route('/chat/AgregGrupo')
+def AgregGrupo():
+    results = [{'label':'/VAdminContactos', 'msg':['Grupo agregado']}, {'label':'/VAdminContactos', 'msg':['Error al crear grupo']}, ]
+    print("Estoy aqui")
+    #GET parameter
+    #idUsuario = request.args['idUsuario']
+    idUsuario = session['nombre_usuario']
+    res = results[0]
+    #Action code goes here, res should be a list with a label and a message
+
+    #res['label'] = res['label'] + '/' + repr(1)
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
+
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
+
 
 @chat.route('/chat/AgregMiembro', methods=['POST'])
 def AgregMiembro():
