@@ -73,9 +73,9 @@ def AEscribir():
     results = [{'label':'/VChat', 'msg':['Enviado']}, {'label':'/VChat', 'msg':['No se pudo enviar mensaje']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    res['label'] = res['label'] + '/' + session['idChat'] 
+    res['label'] = res['label'] + '/' + session['idChat']
 
-    
+
     #busqueda = idChat.query.filter_by(idChat1=usuarioActual,idChat2=idChat).first()
     chat = Chat.query.filter_by(id = idChat).first()
 
@@ -207,20 +207,20 @@ def AgregMiembro():
     results = [{'label':'/VGrupo', 'msg':['Nuevo miembro agregado']}, {'label':'/VGrupo', 'msg':['No se pudo agregar al nuevo miembro']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    
+
     res['label'] = res['label'] + '/' + repr(1)
     id_grupo = res['label']
     usuario = params['nombre']
-    
+
     grupo = Grupo.query.filter_by(nombre = id_grupo).first()
     usuario = Usuario.query.filter_by(nombre_usuario = usuario).first()
-    
-    
+
+
     grupo.miembrosGrupo.append([grupo,usuario])
-    
-    
+
+
     db.session.commit()
-    
+
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -240,9 +240,9 @@ def VAdminContactos():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    res['idContacto'] = idUsuario 
+    res['idContacto'] = idUsuario
     Amistades = Amigo.query.filter_by(amigo1=idUsuario).all()
- 
+
     listaAmigos = []
     amigos = []
 
@@ -299,6 +299,7 @@ def VChat():
     #busqueda = Amigo.query.filter_by(amigo1=usuarioActual,amigo2=amigo).first()
     chat = Chat.query.filter_by(id = idChat).first()
     mensaje = chat.mensajes
+    mensaje = reversed(chat.mensajes)
 
     Lista = []
 
@@ -350,13 +351,13 @@ def VGrupo():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-    
+
     res['idGrupo'] = 'Grupo Est. Leng.'
     res['fMiembro_opcionesNombre'] = [
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
       {'key':3, 'value':'Mara'},
-      
+
     ]
     res['data3'] = [
       {'idContacto':34, 'nombre':'ana', 'tipo':'usuario'},

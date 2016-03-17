@@ -60,7 +60,7 @@ socialModule.controller('VAdminContactosController',
         $location.path('/VPrincipal');
       };
       $scope.AgregGrupo4 = function(idUsuario) {
-          
+
         chatService.AgregGrupo({"idUsuario":((typeof idUsuario === 'object')?JSON.stringify(idUsuario):idUsuario)}).then(function (object) {
           var msg = object.data["msg"];
           if (msg) flash(msg);
@@ -106,8 +106,8 @@ ngDialog.open({ template: 'ayuda_VAdminContactos.html',
 }
     }]);
 socialModule.controller('VChatController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {
+   ['$scope', '$interval', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
+    function ($scope, $interval, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {
       $scope.msg = '';
       $scope.fChat = {};
 
@@ -122,6 +122,17 @@ socialModule.controller('VChatController',
 
 
       });
+
+      var recargarChat = $interval(function () {
+          chatService.VChat({"idChat":$routeParams.idChat}).then(function (obj) {
+              $scope.mensajesAnt = obj.data['mensajesAnt'];
+          });
+      }, 3000);
+
+      $scope.$on('$destroy', function (){
+         $interval.cancel(recargarChat);
+      });
+
       $scope.VContactos2 = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
       };
