@@ -329,9 +329,7 @@ def VContactos():
     User = Amigo.query.filter_by(amigo1=idUsuario).all()
 
     for i in User:
-
-        busqueda = Amigo.query.filter_by(amigo1=idUsuario,amigo2=i.amigo2).first()
-        listaAmigos += [{'idContacto':busqueda.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
+        listaAmigos += [{'idContacto':i.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
 
     listaAmigos += [{'idContacto':'mango', 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
     res['data1'] = listaAmigos
