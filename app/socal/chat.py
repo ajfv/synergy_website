@@ -1,6 +1,6 @@
 from flask import request, session, Blueprint, json
-from base import Usuario, Pagina, db, Amigo, Chat, Mensaje
 from sqlalchemy.orm import sessionmaker
+from base import Usuario, Pagina, db, amigos, Grupo,Chat, Mensaje, Amigo
 
 chat = Blueprint('chat', __name__)
 from base import Grupo, miembrosGrupo, db
@@ -48,7 +48,8 @@ def AElimMiembro():
     #Action code goes here, res should be a list with a label and a message
 
     res['label'] = res['label'] + '/' + repr(1)
-
+    print(request.args)
+    
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -108,7 +109,12 @@ def ASalirGrupo():
     #Action code goes here, res should be a list with a label and a message
 
     res['label'] = res['label'] + '/' + repr(1)
-
+    nombreUsuario = session.get('nombre_usuario')
+    usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
+    id_grupo = session.get('idGrupo')
+    #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
+    #grupo = Grupo.query.filter_by(id = id_grupo).first()
+    #grupo.miembros.remove(usuario)
 
     #Action code ends here
     if "actor" in res:
@@ -209,18 +215,15 @@ def AgregMiembro():
     #Action code goes here, res should be a list with a label and a message
     
     res['label'] = res['label'] + '/' + repr(1)
-    id_grupo = res['label']
-    usuario = params['nombre']
-    
-    grupo = Grupo.query.filter_by(nombre = id_grupo).first()
-    usuario = Usuario.query.filter_by(nombre_usuario = usuario).first()
-    
-    
-    grupo.miembrosGrupo.append([grupo,usuario])
-    
+    nombreUsuario = params['nombre']
+    usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
+    id_grupo = session.get('idGrupo')
+    #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
+    #grupo = Grupo.query.filter_by(id = id_grupo).first()
+    #grupo.miembros.append(usuario)
     
     db.session.commit()
-    
+
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -348,8 +351,32 @@ def VGrupo():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
+
+    session['idGrupo']=idGrupo
     
-    res['idGrupo'] = 'Grupo Est. Leng.'
+    #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
+    '''grupo = Grupo.query.filter_by(id = idGgrupo).first()
+    grupo.miembros.append(usuario)
+    idUsuario = session.get('nombre_usuario')
+    usuario = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
+    
+    amigos = usuario.amigos
+    miembros = grupo.miembros
+
+    opciones_usuarios = []
+    for i in amigos:
+        if(i.nombre_usuario!= idUsuario and i not in miembros):
+            posibles_miembros += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
+    
+    usuarios_miembros = []
+    for i in miembros:
+        usuarios_miembros += [{'key':i.nombre_usuario, 'nombre':i.nombre_usuario, 'tipo':'usuario'}]
+    
+    res['idGrupo'] = idGrupo
+    res['fMiembro_opcionesNombre'] = posibles_miembros
+    res['data3'] = usuarios_miembros'''
+    
+    res['idGrupo'] = 1
     res['fMiembro_opcionesNombre'] = [
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
@@ -362,7 +389,7 @@ def VGrupo():
       {'idContacto':11, 'nombre':'distra', 'tipo':'usuario'},
       {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
     ]
-
+    
     #Action code ends here
     return json.dumps(res)
 

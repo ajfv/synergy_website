@@ -129,7 +129,7 @@ class Mensaje(db.Model):
 #-------------------------------------------------------------------------------
 
 miembrosGrupo = db.Table('miembrosGrupo', db.metadata,
-    db.Column('grupo',db.String,db.ForeignKey('grupo.nombre'),primary_key=True),
+    db.Column('grupo',db.Integer,db.ForeignKey('grupo.id'),primary_key=True),
     db.Column('usuario',db.String,
         db.ForeignKey('usuario.nombre_usuario'),
         primary_key=True)
@@ -137,7 +137,8 @@ miembrosGrupo = db.Table('miembrosGrupo', db.metadata,
 
 class Grupo(db.Model):
     __tablename__ = 'grupo'
-    nombre = db.Column(db.String, primary_key = True)  # Como se llama este id por defecto?
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    nombre = db.Column(db.String, nullable=False)
     id_admin = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
     admin = db.relationship('Usuario',
             backref=db.backref('admin_grupo'), uselist=False)
