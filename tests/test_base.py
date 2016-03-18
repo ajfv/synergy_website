@@ -215,16 +215,53 @@ class BaseTestCase(unittest.TestCase):
             self.assertTrue(bytes('No se pudo enviar mensaje', 'UTF-8') in res.data) #True si el amigo no existe
     """
     
+    """
+    def test_VGrupo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+            res = contexto.get('/chat/VContactos?idGrupo=Grupo Est. Leng.')
+        self.assertEqual(res.status_code,200) # True si puede ver el grupo
+        self.assertTrue(bytes('Grupo Est. Leng.', 'UTF-8') in res.data)
+    
+    
+    
     def test_ASalirGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
+                sesion_actual['idGrupo'] = "Grupo Est. Leng."
             res = contexto.get('/chat/ASalirGrupo?idUsuario=johngalt')
         self.assertEqual(res.status_code,200)
         self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
         self.assertTrue(bytes('Ya no estás en ese grupo', 'UTF-8') in res.data) # True si el usuario se elimina
     
     
+    def test_AgregMiembro(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                sesion_actual['amigo'] = 'algo'
+                sesion_actual['idGrupo'] = "Grupo Est. Leng."
+            res = self.app.post('/chat/AEscribir', data=json.dumps({
+                'nombre': 'johngalt',
+                'opcionesNombre':'johngalt'
+                
+            }), content_type='application/json;charset=utf-8', follow_redirects=True)
+            
+            self.assertTrue(bytes('/VGrupo', 'UTF-8') in res.data) 
+            self.assertTrue(bytes('Nuevo miembro agregado', 'UTF-8') in res.data)
+            self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
+    
+    
+    def test_AgregGrupo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+            res = contexto.get('/chat/VContactos?idGrupo=Grupo Est. Leng.')
+        self.assertEqual(res.status_code,200) # True si puede ver el grupo
+        self.assertTrue(bytes('Grupo agregado.', 'UTF-8') in res.data)
+    """  
     
 if __name__ == '__main__':
     unittest.main()
