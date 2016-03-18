@@ -43,8 +43,8 @@ def AElimContacto():
 def AElimMiembro():
     #GET parameter
     id = request.args['id']
-    results = [{'label':'/VGrupo', 'msg':['Miembro eliminado']}, ]
-    res = results[0]
+    results = [{'label':'/VGrupo', 'msg':['Miembro eliminado']},{'label':'/VGrupo', 'msg':['No se puede eliminar miembro']}, ]
+    res = results[1]
     #Action code goes here, res should be a list with a label and a message
     
     admin = Usuario.query.filter_by(nombre_usuario = session.get('nombre_usuario')).first()
@@ -56,6 +56,7 @@ def AElimMiembro():
         grupo.miembros.remove(usuarioElim)
         db.session.add(grupo)
         db.session.commit()
+        res = results[0]
     
     #URL después de eliminar.
     res['label'] = res['label'] + '/' + str(grupo.id)
@@ -375,7 +376,7 @@ def VContactos():
     
     if(usuarioID.grupos):
         for i in usuarioID.grupos:
-            listaAmigos += [ {'idContacto':i.id,'nombre':i.nombre,'tipo':'grupo'} ]
+            listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
 
     res['data1'] = listaAmigos
     res['idUsuario'] = idUsuario # Esto arregla el botón del prof
