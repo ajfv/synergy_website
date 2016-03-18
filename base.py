@@ -64,17 +64,10 @@ class Amigo(db.Model):
     amigo1 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
     amigo2 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
 
-    # amigo2 = db.relationship('Usuario',
-    #     backref=db.backref('amigo2', uselist=False), uselist=False)
-
-
     def __init__(self, amigo1 ,amigo2,chat_id):
         self.amigo1 = amigo1
         self.amigo2 = amigo2
         self.chat_id = chat_id
-
-
-
 
 #-------------------------------------------------------------------------------
 
@@ -103,12 +96,6 @@ class Chat(db.Model):
         backref=db.backref('chat',uselist=False),
         order_by=lambda: db.desc(Mensaje.creado))
 
-    # def __init__(self):
-    #     self.id = id
-
-    # backref=db.backref('chat', uselist=False) )
-
-
 #-------------------------------------------------------------------------------
 
 class Mensaje(db.Model):
@@ -118,9 +105,6 @@ class Mensaje(db.Model):
     contenido = db.Column(db.Text)
     creado = db.Column(db.DateTime, server_default=db.func.now())
     usuario_origen = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-
-    # usuario_destino = db.relationship('Usuario', secondary=Usuario_destino,
-    #     backref=db.backref('usuario_destino', lazy='dynamic'))
 
     def __init__(self,usuario_origen,contenido,chat):
         self.usuario_origen = usuario_origen
@@ -156,41 +140,6 @@ class Grupo(db.Model):
         self.admin_id = admin.nombre_usuario
         self.chat_id = chat.id
         self.chat = chat
-
-
-
-"""
-u1 = Usuario('samuel','Samuel Arleo','s@c.com','saar1312')
-u2 = Usuario('alejandra','Alejandra C','s@c.com','alejandra')
-u3 = Usuario('pedro','Pedro Perez','s@c.com','pedro')
-
-db.session.add(u1)
-db.session.add(u2)
-db.session.add(u3)
-db.session.commit()
-
-#users = Usuario.query.all()
-admin = Usuario.query.filter_by(nombre_usuario='alejandra').first()
-admin2 = Usuario.query.filter_by(nombre_usuario='samuel').first()
-
-g1 = Grupo('Mango',admin)
-g2 = Grupo('Synergy',admin2)
-db.session.add(g1)
-db.session.add(g2)
-db.session.commit()
-
-mango = Grupo.query.filter_by(nombre='Mango').first()
-synergy = Grupo.query.filter_by(nombre='Synergy').first()
-
-alej = Usuario.query.filter_by(nombre_usuario='alejandra').first()
-samuel = Usuario.query.filter_by(nombre_usuario='samuel').first()
-
-mango.miembros.append(alej)
-mango.miembros.append(samuel)
-synergy.miembros.append(samuel)
-db.session.commit()
-
-"""
 
 #-------------------------------------------------------------------------------
 
