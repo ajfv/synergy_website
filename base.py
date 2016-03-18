@@ -146,7 +146,7 @@ class Grupo(db.Model):
             backref=db.backref('admin_grupo'), uselist=False)
     miembros = db.relationship('Usuario',
                secondary=miembrosGrupo, # Hace que usen la tabla miembrosGrupo
-               backref=db.backref('grupos'))
+               backref=db.backref('grupos', lazy="dynamic"))
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
     chat = db.relationship('Chat', uselist=False)
 

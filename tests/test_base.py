@@ -16,6 +16,8 @@ class BaseTestCase(unittest.TestCase):
         self.app = base.app.test_client()
         self.app.testing = True
         self.db = base.db
+        
+        
         #manager.run()
         
     
@@ -140,8 +142,8 @@ class BaseTestCase(unittest.TestCase):
                 sesion_actual['nombre_usuario'] = 'johngalt'
             
             res = self.app.post('/chat/AgregContacto', data=json.dumps({
-                'nombre': 'algo',
-                'opcionesNombre': 'algo'
+                'nombre': 'RL',
+                'opcionesNombre': 'RL'
             }), content_type='application/json;charset=utf-8', follow_redirects=True)
             
             self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data) 
@@ -167,7 +169,7 @@ class BaseTestCase(unittest.TestCase):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
-            res = contexto.get('/chat/AElimContacto?id=algo')
+            res = contexto.get('/chat/AElimContacto?id=RL')
         self.assertEqual(res.status_code,200) 
         self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
         self.assertTrue(bytes('Contacto eliminado', 'UTF-8') in res.data) # True si tiene si usuario tenia contacto
@@ -184,12 +186,15 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('No se pudo eliminar contacto', 'UTF-8') in res.data) # True si tiene si usuario no tenia contacto
     """
     
-    
+    """
     def test_AEscribir(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
-                sesion_actual['amigo'] = 'algo'
+                sesion_actual['amigo'] = 'RL'
+                sesion_actual['idChat'] = base.Amigo.query.filter_by(amigo2='johngalt'
+                                                                    ,amigo1='RL').first().chat_id
+                
             res = self.app.post('/chat/AEscribir', data=json.dumps({
                 'texto': 'HOLA HOLA'
             }), content_type='application/json;charset=utf-8', follow_redirects=True)
@@ -199,7 +204,7 @@ class BaseTestCase(unittest.TestCase):
             self.assertTrue(base.Mensaje.query.filter_by(contenido='HOLA HOLA' #True si se guarda en la base de datos
                                                         , usuario_origen='johngalt').first() is not None)
     
-    
+    """
     #Esta en el API       
     """  
     def test_AEscribir_falla(self)
@@ -215,14 +220,24 @@ class BaseTestCase(unittest.TestCase):
             self.assertTrue(bytes('No se pudo enviar mensaje', 'UTF-8') in res.data) #True si el amigo no existe
     """
     
-    """
+    def test_AgregGrupo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+            res = contexto.get('/chat/AgregGrupo')
+        self.assertEqual(res.status_code,200) # True si puede ver el grupo
+        self.assertTrue(bytes('Grupo agregado', 'UTF-8') in res.data)
+       
+    
     def test_VGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
-            res = contexto.get('/chat/VContactos?idGrupo=Grupo Est. Leng.')
-        self.assertEqual(res.status_code,200) # True si puede ver el grupo
-        self.assertTrue(bytes('Grupo Est. Leng.', 'UTF-8') in res.data)
+                id_grupo = base.Usuario.query.filter_by(nombre_usuario="johngalt").first().grupos.filter(True).first().id
+                sesion_actual['idGrupo'] = id_grupo
+            res = contexto.get('/chat/VGrupo?idGrupo='+str(id_grupo))
+        self.assertEqual(res.status_code,200) # True si puede ver el grupo este usuario
+        self.assertTrue(bytes('johngalt', 'UTF-8') in res.data)
     
     
     
@@ -230,38 +245,41 @@ class BaseTestCase(unittest.TestCase):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
-                sesion_actual['idGrupo'] = "Grupo Est. Leng."
-            res = contexto.get('/chat/ASalirGrupo?idUsuario=johngalt')
+                id_grupo = base.Usuario.query.filter_by(nombre_usuario="johngalt").first().grupos.filter(True).first().id
+                sesion_actual['idGrupo'] = id_grupo
+            res = contexto.get('/chat/ASalirGrupo?idGrupo='+str(id_grupo))
         self.assertEqual(res.status_code,200)
         self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
-        self.assertTrue(bytes('Ya no estás en ese grupo', 'UTF-8') in res.data) # True si el usuario se elimina
+        #self.assertTrue(bytes('Ya no estás en ese grupo', 'UTF-8') in res.data) # True si el usuario se elimina
+    
     
     
     def test_AgregMiembro(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
-                sesion_actual['amigo'] = 'algo'
-                sesion_actual['idGrupo'] = "Grupo Est. Leng."
-            res = self.app.post('/chat/AEscribir', data=json.dumps({
-                'nombre': 'johngalt',
-                'opcionesNombre':'johngalt'
+                sesion_actual['amigo'] = 'RL'
+                id_grupo = base.Usuario.query.filter_by(nombre_usuario="johngalt").first().grupos.filter(True).first().id
+                sesion_actual['idGrupo'] = str(id_grupo)
+            res = self.app.post('/chat/AgregMiembro', data=json.dumps({
+                'nombre': 'RL',
+                'opcionesNombre':'RL'
                 
             }), content_type='application/json;charset=utf-8', follow_redirects=True)
             
             self.assertTrue(bytes('/VGrupo', 'UTF-8') in res.data) 
             self.assertTrue(bytes('Nuevo miembro agregado', 'UTF-8') in res.data)
-            self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
+            #self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
     
     
     def test_AgregGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
-            res = contexto.get('/chat/VContactos?idGrupo=Grupo Est. Leng.')
+            res = contexto.get('/chat/AgregGrupo')
         self.assertEqual(res.status_code,200) # True si puede ver el grupo
-        self.assertTrue(bytes('Grupo agregado.', 'UTF-8') in res.data)
-    """  
+        self.assertTrue(bytes('Grupo agregado', 'UTF-8') in res.data)
+    
     
 if __name__ == '__main__':
     unittest.main()
