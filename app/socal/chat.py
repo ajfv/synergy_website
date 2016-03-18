@@ -46,7 +46,7 @@ def AElimMiembro():
     results = [{'label':'/VGrupo', 'msg':['Miembro eliminado']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-
+    print( "\n\n\n\n\n\n"+ str(id))
     res['label'] = res['label'] + '/' + repr(1)
     print(request.args)
     
@@ -108,14 +108,27 @@ def ASalirGrupo():
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    res['label'] = res['label'] + '/' + repr(1)
     nombreUsuario = session.get('nombre_usuario')
     usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
     id_grupo = session.get('idGrupo')
-    #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
-    #grupo = Grupo.query.filter_by(id = id_grupo).first()
-    #grupo.miembros.remove(usuario)
+    
+    grupo = Grupo.query.filter_by(id = id_grupo).first()
+    grupo.miembros.remove(usuario)
+    
+    #Si era la única persona en el grupo debe eliminarse de la tabla.
+    if (len(grupo.miembros) == 0):
+        db.session.delete(grupo)
+    else:
+        #Si el usuario es administrador, la administración se le otorga a otra persona.
+        if (grupo.admin == usuario):
+            grupo.admin = grupo.miembros[0]
+        db.session.add(grupo)
+        
+    db.session.commit()
 
+    #Para regresarse a la vista anterior siendo el mismo usuario.
+    res['label'] = res['label'] + '/' + nombreUsuario
+    
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -228,10 +241,10 @@ def AgregMiembro():
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
     
-    res['label'] = res['label'] + '/' + repr(1)
     nombreUsuario = params['nombre']
     usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
     id_grupo = session.get('idGrupo')
+    res['label'] = res['label'] + '/' + id_grupo
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
     grupo = Grupo.query.filter_by(id = id_grupo).first()
     grupo.miembros.append(usuario)
@@ -277,7 +290,6 @@ def VAdminContactos():
             listaGrupos += [ {'idContacto':i.id,'nombre':i.nombre,'tipo':'grupo'} ]
     
     res['data2'] = listaGrupos
-
     
     nombres = Usuario.query.all()
 
@@ -454,12 +466,42 @@ def VGrupo():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
-    session['idGrupo']=idGrupo
     #Para que el botón de regresar cuando se modifique un grupo funcione.
     res['idUsuario'] = session['nombre_usuario']
+    session['idGrupo']=idGrupo
+    res['idGrupo'] = idGrupo
     
+    #grupo = Grupo.query.filter_by(id = idGrupo).first()
+    
+            
+    #En data3 van los miembros del grupo.
+    grupoModificar = Grupo.query.filter_by(id = idGrupo).first()
+    miembrosGrupo = []
+    idMiembros =[]
+    if (grupoModificar.miembros):
+        for miembro in grupoModificar.miembros:
+            if(miembro.nombre_usuario != session['nombre_usuario']):
+                miembrosGrupo += [ {
+                    'idContacto':miembro.nombre_usuario, 
+                    'nombre':miembro.nombre_usuario,
+                    'tipo':'usuario'
+                    } ]
+            idMiembros += [miembro.nombre_usuario]
+    usuario = Usuario.query.filter_by(nombre_usuario=session['nombre_usuario']).first()
+    Amigos = Amigo.query.filter_by(amigo1=session['nombre_usuario']).all()
+    posibles_miembros = []
+    print(idMiembros,"aquuiiiiiiiiii")
+    if Amigos != None:
+        for i in Amigos:
+            if i.amigo2 not in idMiembros:
+                posibles_miembros += [{'key':i.amigo2,'value':i.amigo2}]
+    
+    res['data3'] = miembrosGrupo
+    res['fMiembro_opcionesNombre'] = posibles_miembros
+    #res['data3'] = listaAmigos
+    #print(grupo.miembros)
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
+    
     '''grupo = Grupo.query.filter_by(id = idGgrupo).first()
     grupo.miembros.append(usuario)
     idUsuario = session.get('nombre_usuario')
@@ -481,37 +523,18 @@ def VGrupo():
     res['fMiembro_opcionesNombre'] = posibles_miembros
     res['data3'] = usuarios_miembros'''
     
+    """
     res['idGrupo'] = 1
     res['fMiembro_opcionesNombre'] = [
       {'key':1, 'value':'Leo'},
       {'key':2, 'value':'Lauri'},
       {'key':3, 'value':'Mara'},
       
-    ]
+    ]"""
     
-    #En data3 van los miembros del grupo.
-    grupoModificar = Grupo.query.filter_by(id = idGrupo).first()
-    #miembrosGrupo = []
-    print('\n\n\n\n\n\n\n\n\n\n\n\n')
-    #print(grupoModificar.miembros) #<- terminar, pensar por qué esta devolviendo grupos en vez de usuarios.
-    '''if (grupoModificar.miembros):
-        for miembro in grupoModificar.miembros:
-            miembrosGrupo += [ {
-                'idContacto':miembro.nombre_usuario, 
-                'nombre':miembro.nombre_usuario,
-                'tipo':'usuario'
-                } ]
     
-    res['data3'] = miembrosGrupo'''
     
-    '''
-    res['data3'] = [
-      {'idContacto':34, 'nombre':'ana', 'tipo':'usuario'},
-      {'idContacto':23, 'nombre':'leo', 'tipo':'usuario'},
-      {'idContacto':11, 'nombre':'distra', 'tipo':'usuario'},
-      {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
-    ]
-    '''
+
     #Action code ends here
     return json.dumps(res)
 """
