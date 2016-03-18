@@ -17,13 +17,54 @@ class BaseTestCase(unittest.TestCase):
         self.app.testing = True
         self.db = base.db
         
+        usuarioExistente_john = base.Usuario.query.filter_by(nombre_usuario=\
+                                    "johngalt").first()
         
-        #manager.run()
+        if not(usuarioExistente_john):
+            nuevo_usuario_john = base.Usuario(nombre_completo='johngalt'
+                                ,nombre_usuario='johngalt'
+                                ,clave='johngalt'
+                                ,correo='john@gmail.com')
+
+            self.db.session.add(nuevo_usuario_john)
+
+            self.db.session.commit()
+            
+        usuarioExistente_RL = base.Usuario.query.filter_by(nombre_usuario=\
+                                    "RL").first()
+        
+        if not(usuarioExistente_RL):
+            nuevo_usuario_RL = base.Usuario(nombre_completo='RL Mayer'
+                                ,nombre_usuario='RL'
+                                ,clave='rlmayerrlmayer'
+                                ,correo='RL@gmail.com')
+
+            self.db.session.add(nuevo_usuario_RL)
+
+            self.db.session.commit()
+        
+        
+        amistad = base.Amigo.query.filter_by(amigo1=\
+                                    "RL").first()
+        
+        if not(amistad):
+            
+            nuevo_chat = base.Chat()
+            self.db.session.add(nuevo_chat)
+            self.db.session.commit()
+            self.amigos1 = base.Amigo("johngalt","RL",nuevo_chat.id)
+            self.amigos2 = base.Amigo("RL","johngalt",nuevo_chat.id)
+        
+            self.db.session.add(self.amigos1)
+            self.db.session.add(self.amigos2)
+            self.db.session.commit()
+        
+        
         
     
     def tearDown(self):
         pass
-        
+    
     
     def test_app_exists(self):
         self.assertFalse(current_app is None)
@@ -192,8 +233,7 @@ class BaseTestCase(unittest.TestCase):
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
                 sesion_actual['amigo'] = 'RL'
-                sesion_actual['idChat'] = base.Amigo.query.filter_by(amigo2='johngalt'
-                                                                    ,amigo1='RL').first().chat_id
+                sesion_actual['idChat'] = base.Amigo.query.filter_by(amigo1='johngalt').first().chat_id
                 
             res = self.app.post('/chat/AEscribir', data=json.dumps({
                 'texto': 'HOLA HOLA'
