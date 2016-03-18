@@ -27,11 +27,16 @@ def root():
 
 # Código para la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db'
+app.config['TESTING']=True
+app.config.update(SECRET_KEY = repr(SystemRandom().random()))
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
+#------------------------------------------------------------------------------
+
 class Usuario(db.Model):
+    __tablename__ = "usuario"
     nombre_usuario = db.Column(db.String, primary_key=True)
     nombre_completo = db.Column(db.String)
     correo = db.Column(db.String)
@@ -40,12 +45,31 @@ class Usuario(db.Model):
     def __init__(self, nombre_usuario, nombre_completo, correo, clave):
         self.nombre_usuario = nombre_usuario
         self.nombre_completo = nombre_completo
-        self.clave = clave
         self.correo = correo
+        self.clave = clave
+
 
     def __repr__(self):
         return "<Usuario(nombre completo='%s', nombre de usuario='%s', correo='%s', clave='%s'>" %(
             self.nombre_completo, self.nombre_usuario, self.correo, self.clave)
+
+#-------------------------------------------------------------------------------
+
+
+class Amigo(db.Model):
+    """docstring for Amigo"""
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
+    amigo1 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    amigo2 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+
+    def __init__(self, amigo1 ,amigo2,chat_id):
+        self.amigo1 = amigo1
+        self.amigo2 = amigo2
+        self.chat_id = chat_id
+
+#-------------------------------------------------------------------------------
 
 class Pagina(db.Model):
     titulo = db.Column(db.String)
@@ -63,12 +87,71 @@ class Pagina(db.Model):
             .filter_by(nombre_usuario=usuario)
             .first())
 
+#-------------------------------------------------------------------------------
+
+class Chat(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    mensajes = db.relationship('Mensaje',
+        backref=db.backref('chat',uselist=False),
+        order_by=lambda: db.desc(Mensaje.creado))
+
+#-------------------------------------------------------------------------------
+
+class Mensaje(db.Model):
+
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    chat_id =  db.Column(db.Integer, db.ForeignKey('chat.id'))
+    contenido = db.Column(db.Text)
+    creado = db.Column(db.DateTime, server_default=db.func.now())
+    usuario_origen = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+
+    def __init__(self,usuario_origen,contenido,chat):
+        self.usuario_origen = usuario_origen
+        self.chat_id = chat
+        #self.chat = chat
+        self.contenido = contenido
+
+#-------------------------------------------------------------------------------
+
+miembrosGrupo = db.Table('miembrosGrupo', db.metadata,
+    db.Column('grupo',db.Integer,db.ForeignKey('grupo.id'),primary_key=True),
+    db.Column('usuario',db.String,
+        db.ForeignKey('usuario.nombre_usuario'),
+        primary_key=True)
+)
+
+class Grupo(db.Model):
+    __tablename__ = 'grupo'
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    nombre = db.Column(db.String, nullable=False)
+    id_admin = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    admin = db.relationship('Usuario',
+            backref=db.backref('admin_grupo'), uselist=False)
+    miembros = db.relationship('Usuario',
+               secondary=miembrosGrupo, # Hace que usen la tabla miembrosGrupo
+               backref=db.backref('grupos', lazy="dynamic"))
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
+    chat = db.relationship('Chat', uselist=False)
+
+    def __init__(self,nombre,admin,chat):        # es de muchos a muchos
+        self.nombre = nombre
+        self.admin = admin
+        self.admin_id = admin.nombre_usuario
+        self.chat_id = chat.id
+        self.chat = chat
+
+#-------------------------------------------------------------------------------
+
 #Application code ends here
 
 from app.socal.ident import ident
 app.register_blueprint(ident)
 from app.socal.paginas import paginas
 app.register_blueprint(paginas)
+
+from app.socal.chat import chat
+app.register_blueprint(chat)
 
 
 if __name__ == '__main__':

@@ -1,35 +1,9 @@
-socialModule.service('paginasService', ['$q', '$http', function($q, $http) {
+socialModule.service('foroService', ['$q', '$http', function($q, $http) {
 
-    this.AModificarPagina = function(fPagina) {
-        return  $http({
-          url: "paginas/AModificarPagina",
-          data: fPagina,
-          method: 'POST',
-        });
-    //    var labels = ["/VPagina", ];
-    //    var res = labels[0];
-    //    var deferred = $q.defer();
-    //    deferred.resolve(res);
-    //    return deferred.promise;
-    };
-
-    this.APagina = function(args) {
+    this.VComentariosPagina = function(args) {
         if(typeof args == 'undefined') args={};
         return $http({
-          url: 'paginas/APagina',
-          method: 'GET',
-          params: args
-        });
-    //    var labels = ["/VPagina", "/VMiPagina", ];
-    //    var res = labels[0];
-    //    var deferred = $q.defer();
-    //    deferred.resolve(res);
-    //    return deferred.promise;
-    };
-    this.VMiPagina = function(args) {
-        if(typeof args == 'undefined') args={};
-        return $http({
-          url: 'paginas/VMiPagina',
+          url: 'foro/VComentariosPagina',
           method: 'GET',
           params: args
         });
@@ -39,10 +13,36 @@ socialModule.service('paginasService', ['$q', '$http', function($q, $http) {
     //    return deferred.promise;
     };
 
-    this.VPagina = function(args) {
+    this.VForo = function(args) {
         if(typeof args == 'undefined') args={};
         return $http({
-          url: 'paginas/VPagina',
+          url: 'foro/VForo',
+          method: 'GET',
+          params: args
+        });
+    //    var res = {};
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
+    this.VForos = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'foro/VForos',
+          method: 'GET',
+          params: args
+        });
+    //    var res = {};
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
+    this.VPublicacion = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'foro/VPublicacion',
           method: 'GET',
           params: args
         });

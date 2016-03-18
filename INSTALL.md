@@ -21,14 +21,22 @@ También necesitará SQLAlchemy, que puede instalar con los siguientes comandos:
 Para poder trabajar con PostgreSQL usando SQLAlchemy necesitará instalar
 [psycopg2](http://initd.org/psycopg/docs/install.html).
 
+$ pip install psycopg2
+
 Luego deberá crear el usuario y la base de datos para la aplicación. Desde el
 usuario postgres basta con ejecutar los siguientes comandos en el intérprete
 del manejador:
+
+sudo service postgresql start
+sudo sudo -u postgres psql
 
 ```sql
 CREATE USER synergy WITH PASSWORD 'lacontraseña';
 CREATE DATABASE ci3715_db OWNER synergy;
 ```
+
+Iniciar en Postgres en la base de datos creada
+sudo sudo -u postgres psql -d ci3715_db
 
 Puede cambiar estos valores, pero recuerde cambiarlos también en base.py
 

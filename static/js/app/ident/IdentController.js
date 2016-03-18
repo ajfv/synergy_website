@@ -12,8 +12,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VLoginController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
       $scope.fLogin = {};
 
@@ -49,8 +49,8 @@ socialModule.controller('VLoginController',
 
     }]);
 socialModule.controller('VPrincipalController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
       identService.VPrincipal().then(function (object) {
         $scope.res = object.data;
@@ -66,14 +66,23 @@ socialModule.controller('VPrincipalController',
       $scope.VLogin0 = function() {
         $location.path('/VLogin');
       };
-      $scope.VPagina1 = function(idUsuario) {
-        $location.path('/VPagina/'+idUsuario);
+      $scope.APagina1 = function(idPagina) {
+          
+        paginasService.APagina({"idPagina":((typeof idPagina === 'object')?JSON.stringify(idPagina):idPagina)}).then(function (object) {
+          var msg = object.data["msg"];
+          if (msg) flash(msg);
+          var label = object.data["label"];
+          $location.path(label);
+          $route.reload();
+        });};
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
       };
 
     }]);
 socialModule.controller('VRegistroController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
       $scope.msg = '';
       $scope.fUsuario = {};
 
@@ -96,7 +105,7 @@ socialModule.controller('VRegistroController',
       $scope.ARegistrar0 = function(isValid) {
         $scope.fUsuarioSubmitted = true;
         if (isValid) {
-          
+
           identService.ARegistrar($scope.fUsuario).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
