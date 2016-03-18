@@ -228,7 +228,10 @@ def AgregGrupo():
     
     #Se obtiene el id del último grupo en la tabla para establecer el nombre del grupo.
     ultimoGrupo = Grupo.query.order_by(Grupo.id).all()
-    idNuevoGrupo = ultimoGrupo[len(ultimoGrupo) -1].id + 1
+    if (ultimoGrupo):
+        idNuevoGrupo = ultimoGrupo[len(ultimoGrupo) -1].id + 1
+    else:
+        idNuevoGrupo = 1;
     nombreNuevoGrupo = "Grupo Synergy " + str(idNuevoGrupo)
     nuevoGrupo = Grupo(nombreNuevoGrupo,admin,nuevoChat)
     nuevoGrupo.miembros.append(admin)
