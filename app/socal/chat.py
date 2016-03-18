@@ -46,9 +46,19 @@ def AElimMiembro():
     results = [{'label':'/VGrupo', 'msg':['Miembro eliminado']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    print( "\n\n\n\n\n\n"+ str(id))
-    res['label'] = res['label'] + '/' + repr(1)
-    print(request.args)
+    
+    admin = Usuario.query.filter_by(nombre_usuario = session.get('nombre_usuario')).first()
+    grupo = Grupo.query.filter_by(id = session.get('idGrupo')).first()
+    
+    if(grupo.admin == admin):
+        #Se obtiene el usuario a eliminar.
+        usuarioElim = Usuario.query.filter_by(nombre_usuario = id).first()
+        grupo.miembros.remove(usuarioElim)
+        db.session.add(grupo)
+        db.session.commit()
+    
+    #URL después de eliminar.
+    res['label'] = res['label'] + '/' + str(grupo.id)
     
     #Action code ends here
     if "actor" in res:
