@@ -39,7 +39,7 @@
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
-                <td ng-show="row['nombre']"><a ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false" ng-click="VGrupo2(row['nombre'])">Modificar grupo</a></td>
+                <td ng-show="row['idContacto']"><a ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false" ng-click="VGrupo2(row['idContacto'])">Modificar grupo</a></td>
             </tr>
         </table>
 
