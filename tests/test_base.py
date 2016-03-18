@@ -215,6 +215,15 @@ class BaseTestCase(unittest.TestCase):
             self.assertTrue(bytes('No se pudo enviar mensaje', 'UTF-8') in res.data) #True si el amigo no existe
     """
     
+    def test_ASalirGrupo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+            res = contexto.get('/chat/ASalirGrupo?idUsuario=johngalt')
+        self.assertEqual(res.status_code,200)
+        self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
+        self.assertTrue(bytes('Ya no estás en ese grupo', 'UTF-8') in res.data) # True si el usuario se elimina
+    
     
     
 if __name__ == '__main__':
