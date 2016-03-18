@@ -190,12 +190,27 @@ def AgregGrupo():
     print("Estoy aqui")
     #GET parameter
     #idUsuario = request.args['idUsuario']
-    idUsuario = session['nombre_usuario']
+    idUsuario = session.get('nombre_usuario')
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
 
-    #res['label'] = res['label'] + '/' + repr(1)
-    res['label'] = res['label'] + '/' + session['nombre_usuario']
+    res['label'] = res['label'] + '/' + idUsuario
+    #El usuario que agrega el grupo sera el administrador
+    admin = Usuario.query.filter_by(nombre_usuario=idUsuario).first()
+    
+    # Se crea un nuevo chat:
+    nuevoChat = Chat()
+    db.session.add(nuevoChat)
+    db.session.commit()
+    
+    #Se obtiene el id del último grupo en la tabla para establecer el nombre del grupo.
+    ultimoGrupo = Grupo.query.order_by(Grupo.id).all()
+    idNuevoGrupo = ultimoGrupo[len(ultimoGrupo) -1].id + 1
+    nombreNuevoGrupo = "Grupo Synergy " + str(idNuevoGrupo)
+    nuevoGrupo = Grupo(nombreNuevoGrupo,admin,nuevoChat)
+    nuevoGrupo.miembros.append(admin)
+    db.session.add(nuevoGrupo)
+    db.session.commit()
 
     #Action code ends here
     if "actor" in res:
@@ -204,7 +219,6 @@ def AgregGrupo():
         else:
             session['actor'] = res['actor']
     return json.dumps(res)
-
 
 @chat.route('/chat/AgregMiembro', methods=['POST'])
 def AgregMiembro():
@@ -219,8 +233,9 @@ def AgregMiembro():
     usuario = Usuario.query.filter_by(nombre_usuario = nombreUsuario).first()
     id_grupo = session.get('idGrupo')
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
-    #grupo = Grupo.query.filter_by(id = id_grupo).first()
-    #grupo.miembros.append(usuario)
+    grupo = Grupo.query.filter_by(id = id_grupo).first()
+    grupo.miembros.append(usuario)
+    db.session.add(grupo)
     
     db.session.commit()
 
@@ -231,8 +246,6 @@ def AgregMiembro():
         else:
             session['actor'] = res['actor']
     return json.dumps(res)
-
-
 
 @chat.route('/chat/VAdminContactos')
 def VAdminContactos():
@@ -254,12 +267,18 @@ def VAdminContactos():
         amigos += [i.amigo2]
 
     res['data1'] = listaAmigos
+    
+    #Ahora, se añade la información de los grupos del usuario. y se guarda en data2.
+    usuarioID = Usuario.query.filter_by(nombre_usuario = idUsuario).first()
+    listaGrupos = []
+    
+    if(usuarioID.grupos):
+        for i in usuarioID.grupos:
+            listaGrupos += [ {'idContacto':i.id,'nombre':i.nombre,'tipo':'grupo'} ]
+    
+    res['data2'] = listaGrupos
 
-    res['data2'] = [
-      {'idContacto':56, 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'},
-    ]
-    res['idGrupo'] = 'Grupo Est. Leng.'
-
+    
     nombres = Usuario.query.all()
 
     opciones_usuarios = []
@@ -280,7 +299,57 @@ def VAdminContactos():
     #Action code ends here
     return json.dumps(res)
 
+"""
+@chat.route('/chat/VAdminContactos')
+def VAdminContactos():
+    #GET parameter
+    idUsuario = request.args['idUsuario']
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
 
+    res['idContacto'] = idUsuario 
+    
+    Amistades = Amigo.query.filter_by(amigo1=idUsuario).all()
+ 
+    listaAmigos = []
+    amigos = []
+    if Amistades != None:
+        for i in Amistades:
+            listaAmigos += [ {'idContacto':i.amigo2,'nombre':i.amigo2, 'tipo':'usuario'} ]
+            amigos += [i.amigo2]
+
+    res['data1'] = listaAmigos    
+    listaGrupos = []
+    
+    grupos = Grupo.query.filter_by(id_admin = session['nombre_usuario'])
+    if grupos != None:
+        for grupo in grupos:
+            listaGrupos += [{'idContacto': grupo.nombre, 'nombre':grupo.nombre, 'tipo':'grupo'}]
+    res['data2'] = listaGrupos
+    #res['idGrupo'] = 'Grupo Est. Leng.'
+
+    nombres = Usuario.query.all()
+
+    opciones_usuarios = []
+    for i in nombres:
+        if(i.nombre_usuario!= idUsuario and i.nombre_usuario not in amigos):
+            opciones_usuarios += [{'key':i.nombre_usuario,'value':i.nombre_usuario}]
+
+
+    # res['fContacto_opcionesNombre'] = [
+    #   {'key':'pepe', 'value':'Pepe'},
+    #  {'key':'juana', 'value':'Juana'},
+    #   {'key':'maria', 'value':'Maria'},
+    # ]
+
+    res['fContacto_opcionesNombre'] = opciones_usuarios
+
+
+    #Action code ends here
+    return json.dumps(res)
+"""
 
 @chat.route('/chat/VChat')
 def VChat():
@@ -333,7 +402,13 @@ def VContactos():
     for i in User:
         listaAmigos += [{'idContacto':i.amigo2,'nombre':i.amigo2, 'tipo':'usuario'}]
 
-    listaAmigos += [{'idContacto':'mango', 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
+    usuarioID = Usuario.query.filter_by(nombre_usuario = idUsuario).first()
+    
+    
+    if(usuarioID.grupos):
+        for i in usuarioID.grupos:
+            listaAmigos += [ {'idContacto':i.id,'nombre':i.nombre,'tipo':'grupo'} ]
+    #listaAmigos += [{'idContacto':'mango', 'nombre':'Grupo Est. Leng.', 'tipo':'grupo'}]
     res['data1'] = listaAmigos
     res['idUsuario'] = idUsuario # Esto arregla el botón del prof
 
@@ -341,7 +416,35 @@ def VContactos():
     #Action code ends here
     return json.dumps(res)
 
+"""
+@chat.route('/chat/VContactos')
+def VContactos():
+    #GET parameter
+    idUsuario = request.args['idUsuario']
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
 
+    res['idContacto'] = 1
+
+    listaAmigos = []
+
+    User = Amigo.query.filter_by(amigo1=idUsuario).all()
+
+    for i in User:
+        listaAmigos += [{'idContacto':i.amigo2,'nombre':i.amigo2, 'tipo':'usuario'}]
+
+    grupos = Grupo.query.filter_by(id_admin = session['nombre_usuario'])
+    for grupo in grupos:
+        listaAmigos += [{'idContacto': grupo.nombre, 'nombre':grupo.nombre, 'tipo':'grupo'}]
+    res['data1'] = listaAmigos
+    res['idUsuario'] = idUsuario # Esto arregla el botón del prof
+
+
+    #Action code ends here
+    return json.dumps(res)
+"""
 
 @chat.route('/chat/VGrupo')
 def VGrupo():
@@ -353,6 +456,8 @@ def VGrupo():
     #Action code goes here, res should be a JSON structure
 
     session['idGrupo']=idGrupo
+    #Para que el botón de regresar cuando se modifique un grupo funcione.
+    res['idUsuario'] = session['nombre_usuario']
     
     #Descomentar lo de abajo cuando se tenga la especificación de crear grupos.
     '''grupo = Grupo.query.filter_by(id = idGgrupo).first()
@@ -383,16 +488,59 @@ def VGrupo():
       {'key':3, 'value':'Mara'},
       
     ]
+    
+    #En data3 van los miembros del grupo.
+    grupoModificar = Grupo.query.filter_by(id = idGrupo).first()
+    #miembrosGrupo = []
+    print('\n\n\n\n\n\n\n\n\n\n\n\n')
+    #print(grupoModificar.miembros) #<- terminar, pensar por qué esta devolviendo grupos en vez de usuarios.
+    '''if (grupoModificar.miembros):
+        for miembro in grupoModificar.miembros:
+            miembrosGrupo += [ {
+                'idContacto':miembro.nombre_usuario, 
+                'nombre':miembro.nombre_usuario,
+                'tipo':'usuario'
+                } ]
+    
+    res['data3'] = miembrosGrupo'''
+    
+    '''
     res['data3'] = [
       {'idContacto':34, 'nombre':'ana', 'tipo':'usuario'},
       {'idContacto':23, 'nombre':'leo', 'tipo':'usuario'},
       {'idContacto':11, 'nombre':'distra', 'tipo':'usuario'},
       {'idContacto':40, 'nombre':'vane', 'tipo':'usuario'},
     ]
-    
+    '''
     #Action code ends here
     return json.dumps(res)
+"""
+@chat.route('/chat/VGrupo')
+def VGrupo():
+    #GET parameter
+    idGrupo = request.args['idGrupo']
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
+    listaAmigos = []
+    
+    res['idGrupo'] = idGrupo
+    
+    grupo = Grupo.query.filter_by(nombre = idGrupo).first()
+    Amistades = Amigo.query.filter_by(amigo1=session['nombre_usuario']).all()
+    print(Amistades)
+    if Amistades != None:
+        for i in Amistades:
+            print(i.amigo2)
+            listaAmigos += [{'key':i.amigo2,'value':i.amigo2}]
+    res['fMiembro_opcionesNombre'] = listaAmigos
+    res['data3'] = listaAmigos
 
+    session['idGrupo'] = idGrupo
+    #Action code ends here
+    return json.dumps(res)
+"""
 
 # @chat.route('/chat/VAgregarContacto')
 # def VGrupo():
