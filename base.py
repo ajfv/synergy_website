@@ -89,6 +89,69 @@ class Pagina(db.Model):
 
 #-------------------------------------------------------------------------------
 
+
+class Paginasitio(db.Model):
+    url = db.Column(db.String, primary_key=True)
+    usuario_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    usuario = db.relationship('Usuario', 
+                            backref=db.backref('pagina_sitio'), uselist=False)
+    
+    def __init__(self, url, usuario):
+        self.url = url
+        self.id_usuario = usuario.nombre_usuario
+        self.usuario = usuario
+    
+    
+#-------------------------------------------------------------------------------
+class Publicacion(db.Model):
+    titulo = db.Column(db.String, primary_key=True)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+    contenido = db.Column(db.Text)
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    responde_a = db.Column(db.String, db.ForeignKey('publicacion.titulo'))
+    
+    hilo_id = db.Column(db.String, db.ForeignKey('hilo.titulo'))
+    hilo = db.relationship('Hilo',
+                            backref=db.backref('publicaciones'), uselist=False)
+    
+    
+    def __init__(self, titulo, contenido, usuario, respondido, hilo):
+        self.titulo = titulo
+        self.contenido = contenido
+        self.usuario = usuario.nombre_usuario
+        self.responde_a = respondido.titulo
+        self.hilo = hilo
+        self.hilo_id = hilo.titulo
+    
+    
+#-------------------------------------------------------------------------------
+class Hilo(db.Model):
+    titulo = db.Column(db.String, primary_key=True)
+    foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
+    pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
+    
+    pagina_sitio = db.relationship('PaginaSitio',
+                            backref=db.backref('hilo', uselist=False), uselist=False)
+    foro = hilo = db.relationship('Foro',
+                            backref=db.backref('hilos'), uselist=False)
+    
+    def __init__(self, titulo, foro, pagina_sitio):
+        self.titulo = titulo
+        self.foro_id = foro.titulo
+        self.foro = foro
+        self.pagina_sitio_id = pagina_sitio.url
+        self.pagina_sitio = pagina_sitio
+    
+#-------------------------------------------------------------------------------
+class Foro(db.Model):
+    titulo = db.Column(db.String, primary_key=True)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+    
+    def __init__(self, titulo):
+        self.titulo = titulo
+    
+#-------------------------------------------------------------------------------
+
 class Chat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
