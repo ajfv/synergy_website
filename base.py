@@ -130,7 +130,7 @@ class Hilo(db.Model):
     foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
     pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
     
-    pagina_sitio = db.relationship('PaginaSitio',
+    pagina_sitio = db.relationship('Paginasitio',
                             backref=db.backref('hilo', uselist=False), uselist=False)
     foro = hilo = db.relationship('Foro',
                             backref=db.backref('hilos'), uselist=False)
