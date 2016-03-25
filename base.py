@@ -135,6 +135,8 @@ class Hilo(db.Model):
     foro = hilo = db.relationship('Foro',
                             backref=db.backref('hilos'), uselist=False)
     
+    
+    
     def __init__(self, titulo, foro, pagina_sitio):
         self.titulo = titulo
         self.foro_id = foro.titulo

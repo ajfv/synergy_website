@@ -59,5 +59,13 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
           method: 'POST'
         });
     };
+    
+    this.AgregHilo = function(fHilo) {
+        return  $http({
+          url: "foro/AgregHilo",
+          data: fHilo,
+          method: 'POST'
+        });
+    };
 
 }]);
