@@ -151,8 +151,11 @@ class Foro(db.Model):
     titulo = db.Column(db.String, primary_key=True)
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
     
-    def __init__(self, titulo):
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    
+    def __init__(self, titulo, nombre_usuario):
         self.titulo = titulo
+        self.autor_id = nombre_usuario
     
 #-------------------------------------------------------------------------------
 

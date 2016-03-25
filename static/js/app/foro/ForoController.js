@@ -47,6 +47,8 @@ socialModule.controller('VForoController',
           $location.path('/VForos');  
         };
         
+        $scope.idForo = $routeParams.idForo;
+        
         var VHilo2Data = $scope.res.data;
         if(typeof VHilo2Data === 'undefined') VHilo2Data=[];
         $scope.tableParams1 = new ngTableParams({

@@ -32,8 +32,9 @@ def VForo():
     
     
     listaHilos = []
-    for htitulo, hfecha in db.session.query(Hilo.titulo, Hilo.fecha_creacion):
-        listaHilos += [ {'titulo':htitulo,'fecha': hfecha} ]
+    for htitulo, hfecha, hforo_id in db.session.query(Hilo.titulo, Hilo.fecha_creacion, Hilo.foro_id):
+        if hforo_id == session['idForo']:
+            listaHilos += [ {'titulo':htitulo,'fecha': hfecha} ]
     
     res['data'] = listaHilos
     
@@ -82,7 +83,7 @@ def AgregForo():
     results = [{'label':'/VForos', 'msg':['Foro Agregado']}, {'label':'/VForos', 'msg':['No se pudo agregar el nuevo foro']}]
     
     titulo_nuevo_foro = params['texto']
-    nuevo_foro = Foro(titulo=titulo_nuevo_foro)
+    nuevo_foro = Foro(titulo=titulo_nuevo_foro, nombre_usuario=session['nombre_usuario'])
     db.session.add(nuevo_foro)
     db.session.commit()
     
