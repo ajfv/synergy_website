@@ -12,8 +12,6 @@
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
-                <li><a ng-click="VCrearForo()">
-                Crear Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
@@ -28,7 +26,9 @@
     
        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
-                <td data-title="'Titulo'" ng-bind="row['titulo']"></td>
+                <td data-title="'Titulo'" >
+                    <a href="" ng-click="VForo0(row['titulo'])">{{row["titulo"]}}</a>
+                </td>
                 <td data-title="'Fecha'" ng-bind="row['fecha']"></td>
                 <!--<td><a ng-click="AElimForo1(foro.titulo)">Eliminar</a></td>-->
             </tr>

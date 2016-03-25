@@ -43,6 +43,9 @@ socialModule.controller('VForoController',
             $location.path('/');
         }
         
+        $scope.VForos1 = function(){
+          $location.path('/VForos');  
+        };
         
 
       });
@@ -93,6 +96,10 @@ socialModule.controller('VForosController',
               $route.reload();
           });
         }
+      };
+      
+      $scope.VForo0 = function(idForo){
+          $location.path('/VForo/'+idForo);
       };
 
       });
