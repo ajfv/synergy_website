@@ -79,6 +79,21 @@ socialModule.controller('VForosController',
         ngDialog.open({ template: 'ayuda_VForos.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
       };
+      
+      $scope.fForoSubmitted = false;
+      $scope.AgregForo3 = function(isValid) {
+        $scope.fForoSubmitted = true;
+        if (isValid) {
+
+          foroService.AgregForo($scope.fForo).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+        }
+      };
 
       });
     }]);

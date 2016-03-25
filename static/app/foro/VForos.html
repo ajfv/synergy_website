@@ -12,7 +12,8 @@
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
-                
+                <li><a ng-click="VCrearForo()">
+                Crear Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
@@ -34,19 +35,25 @@
         </table>
         
         <hr />
-        <!--
+        
         <form name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.nombre.$invalid && fForoForm.nombre.$pristine && fForoSubmitted}">
-                <label for="fForo_nombre">Título</label>:&nbsp;
-                <select id="fForo_nombre" ng-model="fForo.nombre" required ng-options="item.key as item.value for item in fForo_opcionesNombre">
-                </select>
-                    <p ng-show="fForoSubmitted && fForoForm.nombre.$invalid" class="help-block">Error en campo Título.</p>
+            <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
+                <label for="fForo_texto">
+                    Título del Foro
+                </label>
+                <input type="text" id="fForo_texto" name="texto" class="form-control" ng-model="fForo.texto" placeholder="Texto" required>
+                    
+                </input>
+                <p ng-show="fForoSubmitted && fForoForm.texto.$invalid" class="help-block">
+                    Error en campo Texto.
+                </p>
             </div>
-                <button type="submit" class="btn btn-perso btn-lg btn-block">
-                    <span class="glyphicon glyphicon-flash"></span>Crear Foro
-                </button>
+            <button type="submit" class="btn btn-perso btn-lg btn-block">
+                <span class="glyphicon glyphicon-flash"></span>Crear Foro
+            </button>
         </form>
-        -->
+        
+        <hr />
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VAdminContactos.html">
 

@@ -61,6 +61,14 @@ def VPublicacion():
     return json.dumps(res)
 
 
+@foro.route('/foro/AgregForo', methods=['POST'])
+def AgregForo():
+    params = request.get_json()
+    results = [{'label':'/VForos', 'msg':['Foro Agregado']}, {'label':'/VForos', 'msg':['No se pudo agregar el nuevo foro']}]
+    res = results[0]
+    print("TEST AGREG FORO: ",params)
+    return json.dumps(res)
+
 
 
 

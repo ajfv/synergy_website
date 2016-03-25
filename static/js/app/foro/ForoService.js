@@ -51,5 +51,13 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
+    
+    this.AgregForo = function(fForo) {
+        return  $http({
+          url: "foro/AgregForo",
+          data: fForo,
+          method: 'POST'
+        });
+    };
 
 }]);
