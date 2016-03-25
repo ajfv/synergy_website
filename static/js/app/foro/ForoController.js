@@ -8,7 +8,7 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VForos', {
                 controller: 'VForosController',
                 templateUrl: 'app/foro/VForos.html'
-            }).when('/VPublicacion/:idForo', {
+            }).when('/VPublicacion/:idHilo', {
                 controller: 'VPublicacionController',
                 templateUrl: 'app/foro/VPublicacion.html'
             });
@@ -77,6 +77,24 @@ socialModule.controller('VForoController',
                 $route.reload();
           });
         }
+      };
+      
+      $scope.AElimHilo1 = function(idHilo) {
+          //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
+          var arg = {};
+          //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+          arg['idHilo'] = ((typeof id === 'object')?JSON.stringify(idHilo):idHilo);
+          foroService.AElimHilo(arg).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+      };
+      
+      $scope.VHilo0 = function(idHilo){
+          $location.path('/VPublicacion/'+idHilo);
       };
       
      // $scope.VHilo0 = function(idHilo) {
@@ -159,7 +177,7 @@ socialModule.controller('VPublicacionController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, foroService) {
       $scope.msg = '';
-      foroService.VPublicacion({"idForo":$routeParams.idForo}).then(function (object) {
+      foroService.VPublicacion({"idHilo":$routeParams.idForo}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];

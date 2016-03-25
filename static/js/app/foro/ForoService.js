@@ -80,5 +80,18 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
+    
+    this.AElimHilo = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'foro/AElimHilo',
+          method: 'GET',
+          params: args
+        });
+    //    var res = {};
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
 
 }]);

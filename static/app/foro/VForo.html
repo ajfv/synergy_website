@@ -25,11 +25,11 @@
 
        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
-                <td data-title="'Titulo'" >{{row["titulo"]}}
-                    <!--<a href="" ng-click="VHilo0(row['titulo'])">{{row["titulo"]}}</a>-->
+                <td data-title="'Titulo'" >
+                    <a href="" ng-click="VHilo0(row['titulo'])">{{row["titulo"]}}</a>
                 </td>
                 <td data-title="'Fecha'" ng-bind="row['fecha']"></td>
-                <!--<td><a ng-click="AElimForo1(foro.titulo)">Eliminar</a></td>-->
+                <td><a ng-click="AElimHilo1(row['titulo'])">Eliminar</a></td>
             </tr>
         </table>
         
