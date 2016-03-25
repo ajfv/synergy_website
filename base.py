@@ -216,6 +216,8 @@ app.register_blueprint(paginas)
 from app.socal.chat import chat
 app.register_blueprint(chat)
 
+from app.socal.foro import foro
+app.register_blueprint(foro)
 
 if __name__ == '__main__':
     app.config.update(

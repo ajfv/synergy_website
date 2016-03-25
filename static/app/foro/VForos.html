@@ -12,14 +12,43 @@
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
+                
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+<li><a ng-click="VPrincipal0()">
+    Regresar</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
+    
+       <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Titulo'" ng-bind="row['titulo']"></td>
+                <td data-title="'Fecha'" ng-bind="row['fecha']"></td>
+                <!--<td><a ng-click="AElimForo1(foro.titulo)">Eliminar</a></td>-->
+            </tr>
+        </table>
+        
+        <hr />
+        <!--
+        <form name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.nombre.$invalid && fForoForm.nombre.$pristine && fForoSubmitted}">
+                <label for="fForo_nombre">Título</label>:&nbsp;
+                <select id="fForo_nombre" ng-model="fForo.nombre" required ng-options="item.key as item.value for item in fForo_opcionesNombre">
+                </select>
+                    <p ng-show="fForoSubmitted && fForoForm.nombre.$invalid" class="help-block">Error en campo Título.</p>
+            </div>
+                <button type="submit" class="btn btn-perso btn-lg btn-block">
+                    <span class="glyphicon glyphicon-flash"></span>Crear Foro
+                </button>
+        </form>
+        -->
+
+<div id="right"></div><script type="text/ng-template" id="ayuda_VAdminContactos.html">
 
 
-<div id="right"></div>
+</script>
