@@ -31,6 +31,9 @@ def VForo():
     #Action code goes here, res should be a JSON structure
     
     res['data'] = [{'titulo':'Mi_Hilo', 'fecha': '10/10/10'}, {'titulo':'Mi_Hilo2', 'fecha': '10/10/11'}]
+    res['titulo'] = idForo
+    
+    
     
     #Action code ends here
     return json.dumps(res)
@@ -44,8 +47,14 @@ def VForos():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
     
-    res['data'] = [{'titulo':'Mi_Foro', 'fecha': '10/10/10'}, {'titulo':'Mi_Foro2', 'fecha': '10/10/11'}]
-
+    #res['data'] = [{'titulo':'Mi_Foro', 'fecha': '10/10/10'}, {'titulo':'Mi_Foro2', 'fecha': '10/10/11'}]
+    
+    listaForos = []
+    for ftitulo, ffecha in db.session.query(Foro.titulo, Foro.fecha_creacion):
+        listaForos += [ {'titulo':ftitulo,'fecha': ffecha} ]
+    
+    res['data'] = listaForos
+    
     #Action code ends here
     return json.dumps(res)
 
@@ -69,6 +78,12 @@ def VPublicacion():
 def AgregForo():
     params = request.get_json()
     results = [{'label':'/VForos', 'msg':['Foro Agregado']}, {'label':'/VForos', 'msg':['No se pudo agregar el nuevo foro']}]
+    
+    titulo_nuevo_foro = params['texto']
+    nuevo_foro = Foro(titulo=titulo_nuevo_foro)
+    db.session.add(nuevo_foro)
+    db.session.commit()
+    
     res = results[0]
     print("TEST AGREG FORO: ",params)
     return json.dumps(res)

@@ -78,6 +78,10 @@ socialModule.controller('VForoController',
           });
         }
       };
+      
+     // $scope.VHilo0 = function(idHilo) {
+     //   $location.path('/VForo');
+     // };
         
 
       });
