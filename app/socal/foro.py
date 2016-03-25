@@ -97,7 +97,18 @@ def AgregHilo():
     print("TEST AGREG HILO: ",params)
     return json.dumps(res)
 
-
+@foro.route('/foro/AElimForo')
+def AElimForo():
+    res = {}
+    idForo = request.args['idForo']
+    results = [{'label':'/VForos', 'msg':['Foro eliminado']}, {'label':'/VForos', 'msg':['No se pudo eliminar Foro']}, ]
+    res = results[0]
+    
+    foro_a_eliminar = Foro.query.filter_by(titulo=idForo).first()
+    db.session.delete(foro_a_eliminar)
+    db.session.commit()
+    
+    return json.dumps(res)
 
 
 #Use case code starts here

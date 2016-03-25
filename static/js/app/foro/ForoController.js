@@ -137,6 +137,21 @@ socialModule.controller('VForosController',
       $scope.VForo0 = function(idForo){
           $location.path('/VForo/'+idForo);
       };
+      
+      
+      $scope.AElimForo1 = function(idForo) {
+          //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
+          var arg = {};
+          //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+          arg['idForo'] = ((typeof id === 'object')?JSON.stringify(idForo):idForo);
+          foroService.AElimForo(arg).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+      };
 
       });
     }]);
