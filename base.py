@@ -104,35 +104,36 @@ class Paginasitio(db.Model):
     
 #-------------------------------------------------------------------------------
 class Publicacion(db.Model):
-    #id = db.Column (db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String, primary_key=True)
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    titulo = db.Column(db.String)
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
     contenido = db.Column(db.Text)
     autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    responde_a = db.Column(db.String, db.ForeignKey('publicacion.titulo'))
     
+    padre_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'))
     padre = db.relationship('Publicacion',
-                            backref=db.backref('hijo'), remote_side=[titulo])
+                            backref=db.backref('hijos'), remote_side=[id])
     
-    hilo_id = db.Column(db.String, db.ForeignKey('hilo.titulo'))
     hilo = db.relationship('Hilo',
                             backref=db.backref('publicaciones'), uselist=False)
+    hilo_id = db.Column(db.Integer, db.ForeignKey('hilo.id'))
     
     
-    def __init__(self, titulo, contenido, usuario, respondido, hilo):
+    def __init__(self, titulo, contenido, usuario, hilo, padre = None):
         self.titulo = titulo
         self.contenido = contenido
         self.usuario = usuario
-        self.padre = padre
-        self.responde_a = respondido.titulo
+        #self.responde_a = respondido.titulo
         self.hilo = hilo
         self.hilo_id = hilo
+        self.padre = padre
     
     
 #-------------------------------------------------------------------------------
+
 class Hilo(db.Model):
-    #id = db.Column (db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String, primary_key=True)
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    titulo = db.Column(db.String)
     foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
     pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
     
@@ -143,8 +144,7 @@ class Hilo(db.Model):
     foro = db.relationship('Foro',
                             backref=db.backref('hilos'), uselist=False)
     
-    
-    
+
     def __init__(self, titulo, foro, pagina_sitio):
         self.titulo = titulo
         self.foro_id = foro.titulo

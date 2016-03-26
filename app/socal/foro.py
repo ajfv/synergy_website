@@ -31,11 +31,10 @@ def VForo():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
     
-    
     listaHilos = []
-    for htitulo, hfecha, hforo_id in db.session.query(Hilo.titulo, Hilo.fecha_creacion, Hilo.foro_id):
+    for hid, htitulo, hfecha, hforo_id in db.session.query(Hilo.id,Hilo.titulo, Hilo.fecha_creacion, Hilo.foro_id):
         if hforo_id == session['idForo']:
-            listaHilos += [ {'titulo':htitulo,'fecha': hfecha} ]
+            listaHilos += [ {'id':hid,'titulo':htitulo,'fecha': hfecha} ]
     
     res['data'] = listaHilos
     
@@ -146,7 +145,7 @@ def AElimHilo():
     results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo eliminado']}, {'label':'/VForo/'+session['idForo'], 'msg':['No se pudo eliminar el hilo']}, ]
     res = results[0]
     
-    hilo_a_eliminar = Hilo.query.filter_by(titulo=idHilo).first()
+    hilo_a_eliminar = Hilo.query.filter_by(id=idHilo).first()
     db.session.delete(hilo_a_eliminar)
     db.session.commit()
     
