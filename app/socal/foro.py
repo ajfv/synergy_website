@@ -86,7 +86,7 @@ def AgregForo():
 def VHilos():
     #GET parameter
     print("LOS ARGUMENTOS SON",request.args)
-    idForo = request.args['idHilo']
+    #idForo = request.args['idHilo']
     res = {}
     if "actor" in session:
         res['actor']=session['actor']

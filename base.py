@@ -115,17 +115,18 @@ class Publicacion(db.Model):
                             backref=db.backref('hijo'), remote_side=[titulo])
     
     hilo_id = db.Column(db.String, db.ForeignKey('hilo.titulo'))
-    #hilo = db.relationship('Hilo',
-    #                        backref=db.backref('publicaciones'), uselist=False)
+    hilo = db.relationship('Hilo',
+                            backref=db.backref('publicaciones'), uselist=False)
     
     
-    def __init__(self, titulo, contenido, usuario, padre):
+    def __init__(self, titulo, contenido, usuario, respondido, hilo):
         self.titulo = titulo
         self.contenido = contenido
         self.usuario = usuario
         self.padre = padre
-        #self.hilo = hilo
-        #self.hilo_id = hilo
+        self.responde_a = respondido.titulo
+        self.hilo = hilo
+        self.hilo_id = hilo
     
     
 #-------------------------------------------------------------------------------
