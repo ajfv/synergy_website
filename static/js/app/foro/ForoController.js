@@ -11,6 +11,9 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VPublicacion/:idHilo', {
                 controller: 'VPublicacionController',
                 templateUrl: 'app/foro/VPublicacion.html'
+            }).when('/VHilos/:idHilo', {
+                controller: 'VForoController',
+                templateUrl: 'app/foro/VHilos.html'
             });
 }]);
 
@@ -96,7 +99,7 @@ socialModule.controller('VForoController',
       };
       
       $scope.VHilo0 = function(idHilo){
-          $location.path('/VPublicacion/'+idHilo);
+          $location.path('/VHilos/'+idHilo);
       };
       
      // $scope.VHilo0 = function(idHilo) {

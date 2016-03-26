@@ -51,7 +51,16 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
-    
+
+    this.VHilos = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'foro/VHilos',
+          method: 'GET',
+          params: args
+        });
+    };
+
     this.AgregForo = function(fForo) {
         return  $http({
           url: "foro/AgregForo",

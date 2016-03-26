@@ -4,7 +4,6 @@ foro = Blueprint('foro', __name__)
 from sqlalchemy.orm import sessionmaker
 from base import Foro, Hilo, db, Publicacion, Usuario, Paginasitio
 
-
 @foro.route('/foro/VComentariosPagina')
 def VComentariosPagina():
     #GET parameter
@@ -18,7 +17,9 @@ def VComentariosPagina():
     #Action code ends here
     return json.dumps(res)
 
-
+#------------------------------------------------------------------------------#
+#                                    FORO                                      #
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/VForo')
 def VForo():
@@ -41,7 +42,7 @@ def VForo():
     #Action code ends here
     return json.dumps(res)
 
-
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/VForos')
 def VForos():
@@ -61,21 +62,7 @@ def VForos():
     #Action code ends here
     return json.dumps(res)
 
-
-
-@foro.route('/foro/VPublicacion')
-def VPublicacion():
-    #GET parameter
-    idForo = request.args['idHilo']
-    res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
-    #Action code goes here, res should be a JSON structure
-
-
-    #Action code ends here
-    return json.dumps(res)
-
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/AgregForo', methods=['POST'])
 def AgregForo():
@@ -91,6 +78,25 @@ def AgregForo():
     print("TEST AGREG FORO: ",params)
     return json.dumps(res)
 
+#------------------------------------------------------------------------------#
+#                                    HILO                                      #
+#------------------------------------------------------------------------------#
+
+@foro.route('/foro/VHilos')
+def VHilos():
+    #GET parameter
+    print("LOS ARGUMENTOS SON",request.args)
+    idForo = request.args['idHilo']
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
+    print("estoy aqui")
+
+    #Action code ends here
+    return json.dumps(res)
+
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/AgregHilo', methods=['POST'])
 def AgregHilo():
@@ -116,6 +122,7 @@ def AgregHilo():
     print("TEST AGREG FORO: ",params)
     return json.dumps(res)
 
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/AElimForo')
 def AElimForo():
@@ -130,6 +137,7 @@ def AElimForo():
     
     return json.dumps(res)
 
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/AElimHilo')
 def AElimHilo():
@@ -144,8 +152,19 @@ def AElimHilo():
     
     return json.dumps(res)
 
-#Use case code starts here
+#------------------------------------------------------------------------------#
+#                                 PUBLICACIÒN                                  #
+#------------------------------------------------------------------------------#
+
+@foro.route('/foro/VPublicacion')
+def VPublicacion():
+    #GET parameter
+    idForo = request.args['idHilo']
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
 
 
-#Use case code ends here
-
+    #Action code ends here
+    return json.dumps(res)
