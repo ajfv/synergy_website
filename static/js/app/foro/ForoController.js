@@ -98,10 +98,10 @@ socialModule.controller('VForoController',
           });
       };
       
-      $scope.VHilo0 = function(idHilo){
-          foroService.VHilos({"idHilo":$routeParams.idHilo}).then(function () {
-          $location.path('/VHilos/'+idHilo);
-          };
+      $scope.VHilo0 = function(idHilo){      
+          //aca deberia haber algo... pero muere si pones ese algo RIP
+          $location.path('/VHilos/'+idHilo);    
+
       };
       
       
