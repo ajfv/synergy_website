@@ -60,7 +60,7 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
           params: args
         });
     };
-
+    
     this.AgregForo = function(fForo) {
         return  $http({
           url: "foro/AgregForo",
