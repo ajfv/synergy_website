@@ -11,6 +11,9 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VPublicacion/:idForo', {
                 controller: 'VPublicacionController',
                 templateUrl: 'app/foro/VPublicacion.html'
+            }).when('/VHilos/:idHilo', {
+                controller: 'VForoController',
+                templateUrl: 'app/foro/VHilos.html'
             });
 }]);
 
@@ -43,6 +46,38 @@ socialModule.controller('VForoController',
             $location.path('/');
         }
 
+                foroService.AgregHilo($scope.fHilo).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+          });
+        }
+      };
+      
+      $scope.AElimHilo1 = function(idHilo) {
+          //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
+          var arg = {};
+          //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+          arg['idHilo'] = ((typeof id === 'object')?JSON.stringify(idHilo):idHilo);
+          foroService.AElimHilo(arg).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+      };
+      
+      $scope.VHilo0 = function(idHilo){
+          $location.path('/VHilos/'+idHilo);
+      };
+      
+     // $scope.VHilo0 = function(idHilo) {
+     //   $location.path('/VForo');
+     // };
+        
 
       });
     }]);
