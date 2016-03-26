@@ -104,28 +104,33 @@ class Paginasitio(db.Model):
     
 #-------------------------------------------------------------------------------
 class Publicacion(db.Model):
+    #id = db.Column (db.Integer, primary_key=True, autoincrement=True)
     titulo = db.Column(db.String, primary_key=True)
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
     contenido = db.Column(db.Text)
     autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
     responde_a = db.Column(db.String, db.ForeignKey('publicacion.titulo'))
     
+    padre = db.relationship('Publicacion',
+                            backref=db.backref('hijo'), remote_side=[titulo])
+    
     hilo_id = db.Column(db.String, db.ForeignKey('hilo.titulo'))
-    hilo = db.relationship('Hilo',
-                            backref=db.backref('publicaciones'), uselist=False)
+    #hilo = db.relationship('Hilo',
+    #                        backref=db.backref('publicaciones'), uselist=False)
     
     
-    def __init__(self, titulo, contenido, usuario, respondido, hilo):
+    def __init__(self, titulo, contenido, usuario, padre):
         self.titulo = titulo
         self.contenido = contenido
-        self.usuario = usuario.nombre_usuario
-        self.responde_a = respondido.titulo
-        self.hilo = hilo
-        self.hilo_id = hilo.titulo
+        self.usuario = usuario
+        self.padre = padre
+        #self.hilo = hilo
+        #self.hilo_id = hilo
     
     
 #-------------------------------------------------------------------------------
 class Hilo(db.Model):
+    #id = db.Column (db.Integer, primary_key=True, autoincrement=True)
     titulo = db.Column(db.String, primary_key=True)
     foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
     pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
