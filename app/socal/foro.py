@@ -95,10 +95,11 @@ def VHilos():
     res['foroPadre'] =  hilo.foro_id
 
     res['respuesta'] = hilo.raiz.contenido
-    publicaciones = Hilo.query.filter_by(id=idHilo).first().publicaciones
+    publicaciones = Hilo.query.filter_by(id=idHilo).first().raiz
+    publicacionesHijo = publicaciones.hijos
     listaPublicaciones = []
 
-    for p in publicaciones:
+    for p in publicacionesHijo:
         listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,'contenido': p.contenido, 'eliminada':p.eliminada}]
 
     print("LA LISTA ES",listaPublicaciones)
