@@ -83,17 +83,18 @@ def AgregForo():
 @foro.route('/foro/VHilos')
 def VHilos():
     #GET parameter
-    idHilo = request.args['idHilo']
     res = {}
+    idHilo = request.args['idHilo']
+    session['idHilo'] = idHilo
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
-    #res['titulo'] = hilo.titulo
+    res['titulo'] = hilo.raiz.titulo
     res['foroPadre'] =  hilo.foro_id
-    res['respuesta'] = "HEY"
 
+    res['respuesta'] = hilo.raiz.contenido
     publicaciones = Hilo.query.filter_by(id=idHilo).first().publicaciones
     listaPublicaciones = []
 
@@ -191,6 +192,33 @@ def VPublicacion():
     #Action code ends here
     return json.dumps(res)
 
+@foro.route('/foro/AgregPublicacion',methods=['POST'])
+def AgregPublicacion():
+    #GET parameter
+    params = request.get_json()
+
+    results = [{'label':'/VHilos/'+session['idHilo'], 'msg':['Respuesta enviada']},
+     {'label':'/VHilos/'+session['idHilo'], 'msg':['No se pudo enviar la respuesta']}]
+    respuesta = params['texto']
+
+    # Si la publicacion es hija directa de la publicacion raiz
+    hiloPrincipal = Hilo.query.filter_by(id=session['idHilo']).first()
+    publicacionPadre = hiloPrincipal.raiz
+
+    titulo = "RE: "+publicacionPadre.titulo
+
+    # Crear nueva publicacion hijo
+    nueva_publicacion = Publicacion(titulo,respuesta,session['nombre_usuario'],
+                                   hiloPrincipal,publicacionPadre)
+    db.session.add(nueva_publicacion)
+    db.session.commit()
+
+    print(respuesta)
+
+    res = results[0]
+    #Action code ends here
+    return json.dumps(res)
+
 #------------------------------------------------------------------------------#
 
 @foro.route('/foro/AElimPublicacion')
@@ -208,3 +236,5 @@ def AElimPublicacion():
     db.session.commit()
 
     return json.dumps(res)
+
+

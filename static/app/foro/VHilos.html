@@ -22,7 +22,28 @@
     </div>
 </nav>
 
-<h1> {{respuesta}} </h1>
+<h2> {{respuesta}} </h2>
+
+
+ <hr />
+        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+                <label for="fpublicacion_texto">
+                    Tu respuesta:
+                </label>
+                <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
+                    
+                </textarea >
+                <p ng-show="fpublicacionSubmitted && fpublicacionForm.texto.$invalid" class="help-block">
+                    Error en campo Texto.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-perso btn-lg btn-block">
+                <span class="glyphicon glyphicon-pencil"></span>Responder
+            </button>
+        </form>
+        
+        <hr />
 
 <table ng-table="tableParams1" template-pagination="pager.html" class="table">
     <tr ng-repeat="row in publicaciones">
