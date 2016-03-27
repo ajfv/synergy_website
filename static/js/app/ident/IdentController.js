@@ -49,8 +49,8 @@ socialModule.controller('VLoginController',
 
     }]);
 socialModule.controller('VPrincipalController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService) {
       $scope.msg = '';
       identService.VPrincipal().then(function (object) {
         $scope.res = object.data;
@@ -67,7 +67,7 @@ socialModule.controller('VPrincipalController',
         $location.path('/VLogin');
       };
       $scope.APagina1 = function(idPagina) {
-          
+         
         paginasService.APagina({"idPagina":((typeof idPagina === 'object')?JSON.stringify(idPagina):idPagina)}).then(function (object) {
           var msg = object.data["msg"];
           if (msg) flash(msg);
@@ -77,6 +77,12 @@ socialModule.controller('VPrincipalController',
         });};
       $scope.VContactos2 = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
+      };
+      
+      $scope.VForos = function(){
+        foroService.VForos().then(function (object){
+          $location.path('/VForos');
+        });
       };
 
     }]);

@@ -8,18 +8,50 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" >Foro</span>
+            <span class="navbar-brand" >{{idForo}}</span>
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="VForos1()">
+    Regresar</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 
+       <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Titulo'" >
+                    <a href="" ng-click="VHilo0(row['titulo'])">{{row["titulo"]}}</a>
+                </td>
+                <td data-title="'Fecha'" ng-bind="row['fecha']"></td>
+                <td><a ng-click="AElimHilo1(row['titulo'])">Eliminar</a></td>
+            </tr>
+        </table>
+        
+        <hr />
+        
+        <form name="fHiloForm" ng-submit="AgregHilo3(fHiloForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fHiloSubmitted && fHiloForm.texto.$invalid && fHiloForm.texto.$pristine && fHiloSubmitted}">
+                <label for="fHilo_texto">
+                    Título del Hilo
+                </label>
+                <input type="text" id="fHilo_texto" name="texto" class="form-control" ng-model="fHilo.texto" placeholder="Texto" required>
+                    
+                </input>
+                <p ng-show="fHiloSubmitted && fHiloForm.texto.$invalid" class="help-block">
+                    Error en campo Texto.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-perso btn-lg btn-block">
+                <span class="glyphicon glyphicon-flash"></span>Crear Hilo
+            </button>
+        </form>
+        
+        <hr />
 
 <div id="right"></div>
