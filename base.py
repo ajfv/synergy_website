@@ -133,7 +133,6 @@ class Publicacion(db.Model):
 
 class Hilo(db.Model):
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String)
     foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
     pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
     
@@ -145,8 +144,7 @@ class Hilo(db.Model):
                             backref=db.backref('hilos'), uselist=False)
     
 
-    def __init__(self, titulo, foro, pagina_sitio):
-        self.titulo = titulo
+    def __init__(self, foro, pagina_sitio):
         self.foro_id = foro.titulo
         self.foro = foro
         self.pagina_sitio_id = pagina_sitio.url

@@ -33,7 +33,14 @@ def VForo():
     
     listaHilos = []
     for h in Hilo.query.filter_by(foro_id=idForo):
-        listaHilos += [{'id':h.id, 'titulo':h.titulo, 'fecha': h.fecha_creacion}]
+        titulo = ""
+        for p in h.publicaciones :
+            print(p.titulo)
+            if (p.padre == None):
+                titulo = p.titulo
+                break
+
+        listaHilos += [{'id':h.id, 'titulo':titulo,'fecha': h.fecha_creacion}]
 
     res['data'] = listaHilos
 
@@ -104,8 +111,10 @@ def AgregHilo():
     params = request.get_json()
     results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo Agregado']}, {'label':'/VForos/'+session['idForo'], 'msg':['No se pudo agregar el nuevo hilo']}]
 
-    titulo_nuevo_hilo = params['texto']
+    titulo_publicacion  = params['titulo']
+    contenido_publicacion = params['contenido']
 
+    # Siento que esto no va
     pagina_sitio_test = Paginasitio.query.filter_by(url="www").first()
     if pagina_sitio_test is None :
         pagina_sitio_test = Paginasitio(url="www", usuario=Usuario.query.filter_by(nombre_usuario=session['nombre_usuario']).first())
@@ -113,11 +122,20 @@ def AgregHilo():
         db.session.commit()
 
 
+    # Se crean hilos
     foro_actual = Foro.query.filter_by(titulo=session['idForo']).first()
 
-    nuevo_hilo = Hilo(titulo=titulo_nuevo_hilo, foro=foro_actual, pagina_sitio=pagina_sitio_test)
+    nuevo_hilo = Hilo(foro=foro_actual,pagina_sitio=pagina_sitio_test)
     db.session.add(nuevo_hilo)
     db.session.commit()
+
+    # Crear nueva publicacion:
+    nueva_publicacion = Publicacion(contenido_publicacion,contenido_publicacion,
+                                    session['nombre_usuario'],nuevo_hilo)
+
+    db.session.add(nueva_publicacion)
+    db.session.commit()
+
 
     res = results[0]
     print("TEST AGREG FORO: ",params)
