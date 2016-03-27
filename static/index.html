@@ -1,85 +1,251 @@
 <!DOCTYPE html>
-<html ng-app="social">
-    <head><title>social</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="css/bsPerso.css">
-        <link rel="stylesheet" href="css/angular/ngDialog.min.css">
-        <link rel="stylesheet" href="css/angular/ngDialog-theme-default.min.css">
-        <link rel="stylesheet" href="css/angular/ng-table.min.css">
-        <link rel="stylesheet" href="css/app/style.css">
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-    </head>
-<body ng-controller="socialController_">
-    <div class="container">
-        <flash:messages class="alert-perso"></flash:messages>
-        <div ng-view class="fade"></div>
-    </div>
-    <footer class="footer">
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12" style="background-color: #333333; height: 2px;"></div>
-          </div>
-          <div class="row">
-              <div class="col-xs-10 text-inverse" ng-bind="title"></div>
-              <div class="col-xs-2" style="text-align: right"><img alt="Logo" src="img/logo.png" height="30" /></div>
-          </div>
-      </div>
-    </footer>
-    <!-- LOAD JQUERY -->
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/d3.v3.min.js"></script>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--<a href='http://www.freepik.com/free-vector/assorted-round-icons_745439.htm'>Designed by Freepik</a>-->
+	<!--[if lt IE 9]>
+	<script src="js2/html5shiv.js"></script>
+	<script src="js2/respond.min.js"></script>
+	<![endif]-->       
+	<!-- SECCION NUEVA -->
+	<link href="css2/bootstrap.min.css" rel="stylesheet">
+	<link href="css2/font-awesome.min.css" rel="stylesheet">
+	<link href="css2/prettyPhoto.css" rel="stylesheet">
+	<link href="css2/animate.css" rel="stylesheet">
+	<link href="css2/main.css" rel="stylesheet">
+	<link href="css2/cambios.css" rel="stylesheet">
+	<link rel="shortcut icon" href="img2/ico/synergy.png">
+	<link rel="synergy-icon" sizes="64x64" href="img2/ico/synergy.png">
+	<!-- SECCION NUEVA -->
+	<link rel="shortcut icon" href="img2/ico/synergy.png">
+	<link rel="synergy-icon" sizes="64x64" href="img2/ico/synergy.png">
+</head>
 
-    <!-- LOAD ANGULAR -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular/angular.min.js"></script>
-    <script src="js/angular/angular-animate.min.js"></script>
-    <script src="js/angular/angular-resource.min.js"></script>
-    <script src="js/angular/angular-route.min.js"></script>
-    <script src="js/angular/angular-sanitize.js"></script>
-    <script src="js/angular/textAngular-sanitize.min.js"></script>
-    <script src="js/angular/textAngular.min.js"></script>
-    <script src="js/angular/ngDialog.min.js"></script>
-    <script src="js/jquery.layout-latest.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/angular/ng-flash.js"></script>
-    <!-- LOAD APP -->
-    <script src="js/app/app.js"></script>
-    <script src="js/app/ident/IdentService.js"></script>
-    <script src="js/app/ident/IdentController.js"></script>
-    <script src="js/app/paginas/PaginasService.js"></script>
-    <script src="js/app/paginas/PaginasController.js"></script>
-    <script src="js/app/chat/ChatService.js"></script>
-    <script src="js/app/chat/ChatController.js"></script>
-    <script src="js/app/foro/ForoService.js"></script>
-    <script src="js/app/foro/ForoController.js"></script>
+<body class="fondo">
+	<header class=" container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+	<div class="container">
+		<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="index.html"><img style="max-width:300px;" src="img2/logo.png" alt="logo"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+		<ul class="nav navbar-nav navbar-right lista headerNavBar">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="about-us.html">Perfil</a></li>
+			<li class="dropdown">
+			</li>
+			<li><a href="blog.html">Registrate</a></li> 
+			<li><a href="contact-us.html">Foro</a></li>
+		</ul>
+		</div>
+	</div>
+	</header><!--/header-->
 
-    <!-- LOAD NGTABLE -->
-    <script src="js/angular/ng-table.min.js"></script>
-<script type="text/ng-template" id="pager.html">
-<ul class="pager ng-cloak" ng-show="pages.length>1">
-    <li ng-repeat="page in pages"
-          ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
-          ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
-      <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
-      <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
-    </li>
-      <li> 
-      <div class="btn-group">
-          <button type="button" ng-class="{'active':params.count() == 10}" ng-click="params.count(10)" class="btn btn-default">10</button>
-          <button type="button" ng-class="{'active':params.count() == 25}" ng-click="params.count(25)" class="btn btn-default">25</button>
-          <button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
-          <button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
-      </div>
-      </li>
-  </ul>
-</script>
+	<section id="features" class="container">
+	<div>
+		<div class="row row-centered">
+		<div class="col-md-4 col-sm-6">
+			<div class="media">
+			<div class="pull-left logo-features">
+				<i class="icon-group icon-md icon-color"></i>
+			</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="media">
+			<div class="pull-left logo-features">
+				<i class="icon-comments icon-md icon-color"></i>
+			</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="media">
+			<div class="pull-left logo-features">
+				<i class="icon-file-text icon-md icon-color"></i>
+			</div>
+			</div>
+		</div>
+		<div class="row row-centered ">
+		<div class="col-md-4 col-sm-6">
+			<div class="media-body">
+				<h3 class="media-heading">Haz nuevas amistades</h3>
+				<p>Registrate o accede a tu cuenta para encontrar nuevos amigos.</p>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="media-body">
+				<h3 class="media-heading">Chatea</h3>
+				<p>Comunicate con tus amigos y con los miembros de los grupos a los que perteneces.</p>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="media-body">
+				<h3 class="media-heading">Participa en foros</h3>
+				<p>Crea foros, postea tus opiniones y descubre temas de tu interes.</p>
+			</div>
+		</div>
+		</div>
+	</div>
+	</section>
 
+	<section>
+	<div id="contenidos" class="container">
+		<div class="center-column row">
+			<div>
+				<div id="cloud-color"class="portfolio-item">
+					<div id="social-cloud" class="item-inner">
+					<img id="cloud" src="img2/social.gif">
+					</div>
+				</div>
+			</div>                            
+		</div>
+	</div>
+	</section>
+
+	<section id="recent-works">
+	<div class="container">
+		<div class="row">
+		<div class="col-md-3">
+			<h3>Agrega contenido social a tu pagina</h3>
+			<p>Estos son algunos de los sitios web a los cuales hemos agregado social content.</p>
+			<div class="btn-group">
+			<a class="btn btn-danger" href="#scroller" data-slide="prev"><i class="icon-angle-left"></i></a>
+			<a class="btn btn-danger" href="#scroller" data-slide="next"><i class="icon-angle-right"></i></a>
+			</div>
+			<p class="gap"></p>
+		</div>
+		<div class="col-md-9">
+			<div id="scroller" class="carousel slide">
+			<div class="carousel-inner">
+				<div class="item active">
+				<div class="row">
+					<div class="col-xs-4">
+					<div class="portfolio-item">
+						<div class="item-inner">
+						<img class="img-responsive" src="img2/portfolio/recent/item1.png" alt="">
+						<h5>
+							Nova - Corporate site
+						</h5>
+						<div class="overlay">
+							<a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="img2/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+						</div>
+						</div>
+					</div>
+					</div>                            
+					<div class="col-xs-4">
+					<div class="portfolio-item">
+						<div class="item-inner">
+						<img class="img-responsive" src="img2/portfolio/recent/item3.png" alt="">
+						<h5>
+							Fornax - Apps site
+						</h5>
+						<div class="overlay">
+							<a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="img2/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+						</div>
+						</div>
+					</div>
+					</div>                            
+					<div class="col-xs-4">
+					<div class="portfolio-item">
+						<div class="item-inner">
+						<img class="img-responsive" src="img2/portfolio/recent/item2.png" alt="">
+						<h5>
+							Flat - Business site
+						</h5>
+						<div class="overlay">
+							<a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="img2/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+						</div>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>
+				<div class="item">
+				<div class="row">
+					<div class="col-xs-4">
+					<div class="portfolio-item">
+						<div class="item-inner">
+						<img class="img-responsive" src="img2/portfolio/recent/item2.png" alt="">
+						<h5>
+							Flat Theme - Business
+						</h5>
+						<div class="overlay">
+							<a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="img2/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+						</div>
+						</div>
+					</div>
+					</div>
+					<div class="col-xs-4">
+					<div class="portfolio-item">
+						<div class="item-inner">
+						<img class="img-responsive" src="img2/portfolio/recent/item1.png" alt="">
+						<h5>
+							Nova - Corporate site
+						</h5>
+						<div class="overlay">
+							<a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="img2/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+						</div>
+						</div>
+					</div>
+					</div>                            
+					<div class="col-xs-4">
+					<div class="portfolio-item">
+						<div class="item-inner">
+						<img class="img-responsive" src="img2/portfolio/recent/item3.png" alt="">
+						<h5>
+							Fornax - Apps site
+						</h5>
+						<div class="overlay">
+							<a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="img2/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+						</div>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	</section>
+
+	<footer id="footer" class="container midnight-blue">
+	<div class="container">
+		<div class="row">
+		<div id="derechos" class="col-sm-6">
+			&copy; 2016 <span target="_blank">Synergy. All Rights Reserved. </span>
+		</div>
+		<div class="icono col-sm-2 hidden-xs">
+			<div class="pull-left">
+				<i class="icon-twitter icon-md"></i>
+			</div>
+		</div>
+		<div class="icono col-sm-2 hidden-xs">
+			<div class="pull-left">
+				<i class="icon-facebook icon-md"></i>
+			</div>
+		</div>
+		<div class="icono col-sm-2 hidden-xs">
+			<div class="media">
+				<div class="pull-left">
+					<i class="icon-google-plus icon-md"></i>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	</footer><!--/#footer-->
+
+	<script src="js2/jquery.js"></script>
+	<script src="js2/bootstrap.min.js"></script>
+	<script src="js2/jquery.prettyPhoto.js"></script>
+	<script src="js2/main.js"></script>
 </body>
 </html>
