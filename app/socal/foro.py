@@ -99,7 +99,7 @@ def VHilos():
     listaPublicaciones = []
 
     for p in publicaciones:
-        listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,'contenido': p.contenido}]
+        listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,'contenido': p.contenido, 'eliminada':p.eliminada}]
 
     print("LA LISTA ES",listaPublicaciones)
 
@@ -235,6 +235,7 @@ def AElimPublicacion():
     res = results[0]
 
     publicacion_a_eliminar.contenido = 'Esta Publicacion fue eliminada =('
+    publicacion_a_eliminar.eliminada = True
     db.session.commit()
 
     return json.dumps(res)

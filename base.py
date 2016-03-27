@@ -109,7 +109,7 @@ class Publicacion(db.Model):
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
     contenido = db.Column(db.Text)
     autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-
+    eliminada = db.Column(db.Boolean, default=False)
     padre_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'))
     padre = db.relationship('Publicacion',
                             backref=db.backref('hijos'), remote_side=[id])

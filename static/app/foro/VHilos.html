@@ -50,8 +50,10 @@
         <td data-title="'Titulo'" >
             <p>{{row["titulo"]}}</p>
             <p>{{row["contenido"]}}</p>
+            <p>{{row["eliminada"]}}</p>
         </td>
-        <td><a ng-click="AElimPublicacion1(row['id'])">Eliminar</a></td>
+        <td ng-if ="row['eliminada'] === false"><a ng-click="AElimPublicacion1(row['id'])">Eliminar</a>
+        </td>
     </tr>
 </table>
 
