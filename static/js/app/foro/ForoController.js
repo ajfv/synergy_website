@@ -12,12 +12,12 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
                 controller: 'VPublicacionController',
                 templateUrl: 'app/foro/VPublicacion.html'
             }).when('/VHilos/:idHilo', {
-                controller: 'VForoController',
+                controller: 'VHilosController',
                 templateUrl: 'app/foro/VHilos.html'
             });
 }]);
 
-socialModule.controller('VComentariosPaginaController', 
+socialModule.controller('VComentariosPaginaController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService','identService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, foroService, identService) {
       $scope.msg = '';
@@ -33,7 +33,7 @@ socialModule.controller('VComentariosPaginaController',
 
       });
     }]);
-socialModule.controller('VForoController', 
+socialModule.controller('VForoController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService', 'ngTableParams',
     function ($scope, $location, $route, $timeout, flash, $routeParams, foroService, ngTableParams) {
       $scope.msg = '';
@@ -45,13 +45,13 @@ socialModule.controller('VForoController',
         if ($scope.logout) {
             $location.path('/');
         }
-        
+
         $scope.VForos1 = function(){
-          $location.path('/VForos');  
+          $location.path('/VForos');
         };
-        
+
         $scope.idForo = $routeParams.idForo;
-        
+
         var VHilo2Data = $scope.res.data;
         if(typeof VHilo2Data === 'undefined') VHilo2Data=[];
         $scope.tableParams1 = new ngTableParams({
@@ -63,12 +63,12 @@ socialModule.controller('VForoController',
                       $defer.resolve(VHilo2Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                   }
         });
-        
+
         $scope.__ayuda = function() {
             ngDialog.open({ template: 'ayuda_VForo.html',
             showClose: true, closeByDocument: true, closeByEscape: true});
         };
-      
+
         $scope.fHiloSubmitted = false;
         $scope.AgregHilo3 = function(isValid) {
             $scope.fHiloSubmitted = true;
@@ -83,7 +83,7 @@ socialModule.controller('VForoController',
           });
         }
       };
-      
+
       $scope.AElimHilo1 = function(idHilo) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
@@ -97,22 +97,21 @@ socialModule.controller('VForoController',
               $route.reload();
           });
       };
-      
-      $scope.VHilo0 = function(idHilo){      
-          //aca deberia haber algo... pero muere si pones ese algo RIP
-          $location.path('/VHilos/'+idHilo);    
+
+      $scope.VHilo0 = function(idHilo){
+          $location.path('/VHilos/'+idHilo);
 
       };
-      
-      
+
+
      // $scope.VHilo0 = function(idHilo) {
      //   $location.path('/VForo');
      // };
-        
+
 
       });
     }]);
-socialModule.controller('VForosController', 
+socialModule.controller('VForosController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'foroService', 'ngTableParams',
     function ($scope, $location, $route, $timeout, flash, foroService, ngTableParams) {
       $scope.msg = '';
@@ -144,7 +143,7 @@ socialModule.controller('VForosController',
         ngDialog.open({ template: 'ayuda_VForos.html',
         showClose: true, closeByDocument: true, closeByEscape: true});
       };
-      
+
       $scope.fForoSubmitted = false;
       $scope.AgregForo3 = function(isValid) {
         $scope.fForoSubmitted = true;
@@ -159,12 +158,12 @@ socialModule.controller('VForosController',
           });
         }
       };
-      
+
       $scope.VForo0 = function(idForo){
           $location.path('/VForo/'+idForo);
       };
-      
-      
+
+
       $scope.AElimForo1 = function(idForo) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
@@ -181,11 +180,11 @@ socialModule.controller('VForosController',
 
       });
     }]);
-socialModule.controller('VPublicacionController', 
+socialModule.controller('VHilosController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService',
     function ($scope, $location, $route, $timeout, flash, $routeParams, foroService) {
       $scope.msg = '';
-      foroService.VPublicacion({"idHilo":$routeParams.idForo}).then(function (object) {
+      foroService.VHilos({"idHilo":$routeParams.idHilo}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
@@ -194,6 +193,9 @@ socialModule.controller('VPublicacionController',
             $location.path('/');
         }
 
+        $scope.VForo1 = function(){
+          $location.path('/VForo/' + $scope.foroPadre);
+        };
 
       });
     }]);

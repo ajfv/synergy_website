@@ -1,26 +1,27 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" 
-                    data-toggle="collapse" 
+            <button type="button" class="navbar-toggle"
+                    data-toggle="collapse"
                     data-target="#contenido-plegable">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" >Hilo: Nombre del hilo</span>
+            <span class="navbar-brand" >Hilo: {{titulo}}</span>
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="VForos1()">
+<li><a ng-click="VForo1()">
     Regresar</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<h1> Listar las publicaciones de los hilos y agregar una nueva publicacion 
-y las opciones de agregar una nueva publicacion </h1>
+<h1> {{respuesta}} </h1>
+
+<div id="right"></div>
