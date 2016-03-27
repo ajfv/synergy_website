@@ -25,6 +25,19 @@
 <h2> {{respuesta}} </h2>
 
 
+
+<table ng-table="tableParams1" template-pagination="pager.html" class="table">
+    <tr ng-repeat="row in publicaciones">
+        <td data-title="'Titulo'" >
+            <p>{{row["titulo"]}}</p>
+            <p>{{row["contenido"]}}</p>
+            <p>{{row["eliminada"]}}</p>
+        </td>
+        <td ng-if ="row['eliminada'] === false"><a ng-click="AElimPublicacion1(row['id'])">Eliminar</a>
+        </td>
+    </tr>
+</table>
+
  <hr />
         <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
@@ -44,17 +57,5 @@
         </form>
         
         <hr />
-
-<table ng-table="tableParams1" template-pagination="pager.html" class="table">
-    <tr ng-repeat="row in publicaciones">
-        <td data-title="'Titulo'" >
-            <p>{{row["titulo"]}}</p>
-            <p>{{row["contenido"]}}</p>
-            <p>{{row["eliminada"]}}</p>
-        </td>
-        <td ng-if ="row['eliminada'] === false"><a ng-click="AElimPublicacion1(row['id'])">Eliminar</a>
-        </td>
-    </tr>
-</table>
 
 <div id="right"></div>
