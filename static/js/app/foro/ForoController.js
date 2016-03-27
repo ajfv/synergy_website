@@ -103,6 +103,24 @@ socialModule.controller('VForoController',
 
       };
 
+      $scope.AElimPublicacion = function(idPublicacion) {
+          //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
+          var arg = {};
+          //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+          arg['idPublicacion'] = ((typeof id === 'object')?JSON.stringify(idPublicacion):idPublicacion);
+          foroService.AElimPublicacion(arg).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+      };
+
+
+
+
+
 
      // $scope.VHilo0 = function(idHilo) {
      //   $location.path('/VForo');

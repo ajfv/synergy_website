@@ -24,4 +24,13 @@
 
 <h1> {{respuesta}} </h1>
 
+<table ng-table="tableParams1" template-pagination="pager.html" class="table">
+    <tr ng-repeat="row in publicaciones">
+        <td data-title="'Titulo'" >
+            <p>{{row["titulo"]}}</p>
+        </td>
+        <td><a ng-click="AElimPublicacion(row['id'])">Eliminar</a></td>
+    </tr>
+</table>
+
 <div id="right"></div>

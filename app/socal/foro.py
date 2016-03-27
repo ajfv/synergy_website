@@ -90,9 +90,19 @@ def VHilos():
     #Action code goes here, res should be a JSON structure
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
-    res['titulo'] = hilo.titulo
+    #res['titulo'] = hilo.titulo
     res['foroPadre'] =  hilo.foro_id
     res['respuesta'] = "HEY"
+
+    publicaciones = Hilo.query.filter_by(id=idHilo).first().publicaciones
+    listaPublicaciones = []
+
+    for p in publicaciones:
+        listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,'contenido': p.contenido}]
+
+    print("LA LISTA ES",listaPublicaciones)
+
+    res['publicaciones'] = listaPublicaciones
 
     #Action code ends here
     return json.dumps(res)
@@ -179,4 +189,22 @@ def VPublicacion():
 
 
     #Action code ends here
+    return json.dumps(res)
+
+#------------------------------------------------------------------------------#
+
+@foro.route('/foro/AElimPublicacion')
+def AElimPublicacion():
+
+    print("no llego aca")
+    res = {}
+    idPublicacion = request.args['idPublicacion']
+
+    results = [{'label':'/VHilos/'+'1', 'msg':['Publicacion eliminada']}, {'label':'/VForo/'+'1', 'msg':['No se pudo eliminar la publicacion']}, ]
+    res = results[0]
+
+    publicacion_a_eliminar = Publicacion.query.filter_by(id=idPublicacion).first()
+    db.session.delete(hilo_a_eliminar)
+    db.session.commit()
+
     return json.dumps(res)
