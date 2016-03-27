@@ -93,15 +93,15 @@ class Pagina(db.Model):
 class Paginasitio(db.Model):
     url = db.Column(db.String, primary_key=True)
     usuario_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    usuario = db.relationship('Usuario', 
+    usuario = db.relationship('Usuario',
                             backref=db.backref('pagina_sitio'), uselist=False)
-    
+
     def __init__(self, url, usuario):
         self.url = url
         self.id_usuario = usuario.nombre_usuario
         self.usuario = usuario
-    
-    
+
+
 #-------------------------------------------------------------------------------
 class Publicacion(db.Model):
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
@@ -109,16 +109,16 @@ class Publicacion(db.Model):
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
     contenido = db.Column(db.Text)
     autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    
+
     padre_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'))
     padre = db.relationship('Publicacion',
                             backref=db.backref('hijos'), remote_side=[id])
-    
+
     hilo = db.relationship('Hilo',
                             backref=db.backref('publicaciones'), uselist=False)
     hilo_id = db.Column(db.Integer, db.ForeignKey('hilo.id'))
-    
-    
+
+
     def __init__(self, titulo, contenido, usuario, hilo, padre = None):
         self.titulo = titulo
         self.contenido = contenido
@@ -127,40 +127,46 @@ class Publicacion(db.Model):
         self.hilo = hilo
         self.hilo_id = hilo
         self.padre = padre
-    
-    
+
+
 #-------------------------------------------------------------------------------
 
 class Hilo(db.Model):
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
     foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
     pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
-    
+
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
-    
+
     pagina_sitio = db.relationship('Paginasitio',
                             backref=db.backref('hilo', uselist=False), uselist=False)
     foro = db.relationship('Foro',
                             backref=db.backref('hilos'), uselist=False)
-    
+
 
     def __init__(self, foro, pagina_sitio):
         self.foro_id = foro.titulo
         self.foro = foro
         self.pagina_sitio_id = pagina_sitio.url
         self.pagina_sitio = pagina_sitio
-    
+
+    @property
+    def raiz(self):
+        for p in self.publicaciones:
+            if p.padre is None:
+                return p
+
 #-------------------------------------------------------------------------------
 class Foro(db.Model):
     titulo = db.Column(db.String, primary_key=True)
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
-    
+
     autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    
+
     def __init__(self, titulo, nombre_usuario):
         self.titulo = titulo
         self.autor_id = nombre_usuario
-    
+
 #-------------------------------------------------------------------------------
 
 class Chat(db.Model):

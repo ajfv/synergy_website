@@ -33,14 +33,7 @@ def VForo():
     
     listaHilos = []
     for h in Hilo.query.filter_by(foro_id=idForo):
-        titulo = ""
-        for p in h.publicaciones :
-            print(p.titulo)
-            if (p.padre == None):
-                titulo = p.titulo
-                break
-
-        listaHilos += [{'id':h.id, 'titulo':titulo,'fecha': h.fecha_creacion}]
+        listaHilos += [{'id':h.id, 'titulo':h.raiz.titulo,'fecha': h.fecha_creacion}]
 
     res['data'] = listaHilos
 
@@ -130,7 +123,7 @@ def AgregHilo():
     db.session.commit()
 
     # Crear nueva publicacion:
-    nueva_publicacion = Publicacion(contenido_publicacion,contenido_publicacion,
+    nueva_publicacion = Publicacion(titulo_publicacion,contenido_publicacion,
                                     session['nombre_usuario'],nuevo_hilo)
 
     db.session.add(nueva_publicacion)
