@@ -48,9 +48,6 @@ def VForos():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
-    #res['data'] = [{'titulo':'Mi_Foro', 'fecha': '10/10/10'}, {'titulo':'Mi_Foro2', 'fecha': '10/10/11'}]
-
     listaForos = []
     for ftitulo, ffecha in db.session.query(Foro.titulo, Foro.fecha_creacion):
         listaForos += [ {'titulo':ftitulo,'fecha': ffecha} ]
@@ -65,7 +62,8 @@ def VForos():
 @foro.route('/foro/AgregForo', methods=['POST'])
 def AgregForo():
     params = request.get_json()
-    results = [{'label':'/VForos', 'msg':['Foro Agregado']}, {'label':'/VForos', 'msg':['No se pudo agregar el nuevo foro']}]
+    results = [{'label':'/VForos', 'msg':['Foro Agregado']}, 
+    {'label':'/VForos', 'msg':['No se pudo agregar el nuevo foro']}]
 
     titulo_nuevo_foro = params['texto']
     nuevo_foro = Foro(titulo=titulo_nuevo_foro, nombre_usuario=session['nombre_usuario'])
@@ -91,16 +89,19 @@ def VHilos():
     #Action code goes here, res should be a JSON structure
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
-    res['titulo'] = hilo.raiz.titulo
+    publicacionRaiz = hilo.raiz
+    res['titulo'] = publicacionRaiz.titulo
     res['foroPadre'] =  hilo.foro_id
+    res['respuesta'] = publicacionRaiz.contenido
+    res['tituloNuevaPublicacion'] = "RE : " + publicacionRaiz.titulo
 
-    res['respuesta'] = hilo.raiz.contenido
     publicaciones = Hilo.query.filter_by(id=idHilo).first().raiz
     publicacionesHijo = publicaciones.hijos
     listaPublicaciones = []
 
     for p in publicacionesHijo:
-        listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,'contenido': p.contenido, 'eliminada':p.eliminada}]
+        listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,
+        'contenido': p.contenido, 'eliminada':p.eliminada}]
 
     print("LA LISTA ES",listaPublicaciones)
 
@@ -114,7 +115,8 @@ def VHilos():
 @foro.route('/foro/AgregHilo', methods=['POST'])
 def AgregHilo():
     params = request.get_json()
-    results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo Agregado']}, {'label':'/VForos/'+session['idForo'], 'msg':['No se pudo agregar el nuevo hilo']}]
+    results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo Agregado']}, 
+    {'label':'/VForos/'+session['idForo'], 'msg':['No se pudo agregar el nuevo hilo']}]
 
     titulo_publicacion  = params['titulo']
     contenido_publicacion = params['contenido']
@@ -122,7 +124,8 @@ def AgregHilo():
     # Siento que esto no va
     pagina_sitio_test = Paginasitio.query.filter_by(url="www").first()
     if pagina_sitio_test is None :
-        pagina_sitio_test = Paginasitio(url="www", usuario=Usuario.query.filter_by(nombre_usuario=session['nombre_usuario']).first())
+        pagina_sitio_test = Paginasitio(url="www",
+            usuario=Usuario.query.filter_by(nombre_usuario=session['nombre_usuario']).first())
         db.session.add(pagina_sitio_test)
         db.session.commit()
 
@@ -151,7 +154,8 @@ def AgregHilo():
 def AElimForo():
     res = {}
     idForo = request.args['idForo']
-    results = [{'label':'/VForos', 'msg':['Foro eliminado']}, {'label':'/VForos', 'msg':['No se pudo eliminar el foro']}, ]
+    results = [{'label':'/VForos', 'msg':['Foro eliminado']},
+     {'label':'/VForos', 'msg':['No se pudo eliminar el foro']}, ]
     res = results[0]
 
     foro_a_eliminar = Foro.query.filter_by(titulo=idForo).first()
@@ -166,7 +170,8 @@ def AElimForo():
 def AElimHilo():
     res = {}
     idHilo = request.args['idHilo']
-    results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo eliminado']}, {'label':'/VForo/'+session['idForo'], 'msg':['No se pudo eliminar el hilo']}, ]
+    results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo eliminado']},
+     {'label':'/VForo/'+session['idForo'], 'msg':['No se pudo eliminar el hilo']}, ]
     res = results[0]
 
     hilo_a_eliminar = Hilo.query.filter_by(id=idHilo).first()
@@ -200,12 +205,11 @@ def AgregPublicacion():
     results = [{'label':'/VHilos/'+session['idHilo'], 'msg':['Respuesta enviada']},
      {'label':'/VHilos/'+session['idHilo'], 'msg':['No se pudo enviar la respuesta']}]
     respuesta = params['texto']
+    titulo = params['titulo']
 
     # Si la publicacion es hija directa de la publicacion raiz
     hiloPrincipal = Hilo.query.filter_by(id=session['idHilo']).first()
     publicacionPadre = hiloPrincipal.raiz
-
-    titulo = "RE: "+publicacionPadre.titulo
 
     # Crear nueva publicacion hijo
     nueva_publicacion = Publicacion(titulo,respuesta,session['nombre_usuario'],

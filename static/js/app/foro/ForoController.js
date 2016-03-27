@@ -197,7 +197,7 @@ socialModule.controller('VHilosController',
         $scope.VForo1 = function(){
           $location.path('/VForo/' + $scope.foroPadre);
         };
-        
+      
         $scope.AElimPublicacion1 = function(idPublicacion) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
@@ -212,8 +212,8 @@ socialModule.controller('VHilosController',
           });
       };
         
-        
-
+      
+        $scope.fpublicacion = { titulo: $scope.res['tituloNuevaPublicacion']};
         $scope.fpublicacionFormSubmitted = false;
         $scope.AgregPublicacion3 = function(isValid) {
           $scope.fpublicacionFormSubmitted = true;

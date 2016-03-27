@@ -41,6 +41,16 @@
  <hr />
         <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+                <label for="fpublicacion_titulo">
+                    Título del la respuesta.
+                </label>
+                <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
+
+                </input>
+                <p ng-show="fpublicacionSubmitted && fpublicacionForm.titulo.$invalid" class="help-block">
+                    Error en campo Título.
+                </p>
+                <br>
                 <label for="fpublicacion_texto">
                     Tu respuesta:
                 </label>
