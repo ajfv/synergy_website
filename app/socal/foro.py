@@ -11,6 +11,7 @@ def VComentariosPagina():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
 
@@ -29,6 +30,7 @@ def VForo():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
     
     listaHilos = []
@@ -47,6 +49,7 @@ def VForos():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
     listaForos = []
     for ftitulo, ffecha in db.session.query(Foro.titulo, Foro.fecha_creacion):
@@ -86,26 +89,14 @@ def VHilos():
     session['idHilo'] = idHilo
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
-    publicacionRaiz = hilo.raiz
-    res['titulo'] = publicacionRaiz.titulo
+    raiz = hilo.raiz
     res['foroPadre'] =  hilo.foro_id
-    res['respuesta'] = publicacionRaiz.contenido
-    res['tituloNuevaPublicacion'] = "RE : " + publicacionRaiz.titulo
-
-    publicaciones = Hilo.query.filter_by(id=idHilo).first().raiz
-    publicacionesHijo = publicaciones.hijos
-    listaPublicaciones = []
-
-    for p in publicacionesHijo:
-        listaPublicaciones += [{'id':p.id, 'titulo':p.titulo,
-        'contenido': p.contenido, 'eliminada':p.eliminada}]
-
-    print("LA LISTA ES",listaPublicaciones)
-
-    res['publicaciones'] = listaPublicaciones
+    res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
+    res['publicaciones'] = raiz.a_diccionario()
 
     #Action code ends here
     return json.dumps(res)
@@ -191,6 +182,7 @@ def VPublicacion():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
 
@@ -239,10 +231,8 @@ def AElimPublicacion():
     results = [{'label':'/VHilos/'+str(idHilo), 'msg':['Publicacion eliminada']}, {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}, ]
     res = results[0]
 
-    publicacion_a_eliminar.contenido = 'Esta Publicacion fue eliminada =('
+    publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
     publicacion_a_eliminar.eliminada = True
     db.session.commit()
 
     return json.dumps(res)
-
-

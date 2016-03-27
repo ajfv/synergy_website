@@ -128,6 +128,16 @@ class Publicacion(db.Model):
         self.hilo = hilo
         self.hilo_id = hilo
         self.padre = padre
+        
+    def a_diccionario(self):
+        return {
+            'id' : self.id,
+            'titulo' : self.titulo,
+            'contenido' : self.contenido,
+            'autor' : self.autor_id,
+            'eliminada' : self.eliminada,
+            'hijos' : [hijo.a_diccionario() for hijo in self.hijos]
+        }
 
 
 #-------------------------------------------------------------------------------

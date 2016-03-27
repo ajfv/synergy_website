@@ -182,8 +182,8 @@ socialModule.controller('VForosController',
     }]);
     
 socialModule.controller('VHilosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, foroService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService) {
       $scope.msg = '';
       foroService.VHilos({"idHilo":$routeParams.idHilo}).then(function (object) {
         $scope.res = object.data;
@@ -226,6 +226,17 @@ socialModule.controller('VHilosController',
                 $route.reload();
             });
           }
+        };
+        
+        $scope.responderPublicacion = function(publicacion) {
+        var nuevoScope = $scope.$new(true);
+        nuevoScope.publicacion = publicacion;
+        nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
+        ngDialog.open({ template: 'responder_Publicacion.html',
+        showClose: true, closeByDocument: true, closeByEscape: true,
+        scope: nuevoScope
+        });
+
         };
 
       });

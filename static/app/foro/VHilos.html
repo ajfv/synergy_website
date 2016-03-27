@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" >Hilo: {{titulo}}</span>
+            <span class="navbar-brand" >Hilo: {{publicaciones.titulo}}</span>
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
@@ -22,23 +22,23 @@
     </div>
 </nav>
 
-<h2> {{respuesta}} </h2>
+<h2> {{publicaciones.contenido}} </h2>
 
+<script type="text/ng-template"  id="tree_item_renderer.html">
+    <h3>{{publicacion.titulo}}</h3>
+    <p>{{publicacion.contenido}} - <em>{{publicacion.autor}}</em></p>
+    <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == usuario.nombre">Eliminar</button>
+    <button ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
+    <ul>
+        <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+    </ul>
+</script>
 
+<ul>
+    <li ng-repeat="publicacion in publicaciones.hijos" ng-include="'tree_item_renderer.html'"></li>
+</ul>
 
-<table ng-table="tableParams1" template-pagination="pager.html" class="table">
-    <tr ng-repeat="row in publicaciones">
-        <td data-title="'Titulo'" >
-            <p>{{row["titulo"]}}</p>
-            <p>{{row["contenido"]}}</p>
-            <p>{{row["eliminada"]}}</p>
-        </td>
-        <td ng-if ="row['eliminada'] === false"><a ng-click="AElimPublicacion1(row['id'])">Eliminar</a>
-        </td>
-    </tr>
-</table>
-
- <hr />
+<hr>
         <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
                 <label for="fpublicacion_titulo">
@@ -65,7 +65,36 @@
                 <span class="glyphicon glyphicon-pencil"></span>Responder
             </button>
         </form>
-        
-        <hr />
+<hr>
+
+<script type="text/ng-template" id="responder_Publicacion.html">
+        <p>EL ID DE LA PUBLICACION ES: {{publicacion.id}}</p>
+        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+                <label for="fpublicacion_titulo">
+                    Título del la respuesta.
+                </label>
+                <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
+
+                </input>
+                <p ng-show="fpublicacionSubmitted && fpublicacionForm.titulo.$invalid" class="help-block">
+                    Error en campo Título.
+                </p>
+                <br>
+                <label for="fpublicacion_texto">
+                    Tu respuesta:
+                </label>
+                <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
+                    
+                </textarea >
+                <p ng-show="fpublicacionSubmitted && fpublicacionForm.texto.$invalid" class="help-block">
+                    Error en campo Texto.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-perso btn-lg btn-block">
+                <span class="glyphicon glyphicon-pencil"></span>Responder
+            </button>
+        </form>
+</script>
 
 <div id="right"></div>
