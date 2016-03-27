@@ -103,4 +103,17 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
     //    return deferred.promise;
     };
 
+    this.AgregPublicacion = function(fpublicacion) {
+        return  $http({
+          url: "foro/AgregPublicacion",
+          data: fpublicacion,
+          method: 'POST',
+        });
+    //    var labels = ["/VPagina", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
 }]);

@@ -197,5 +197,19 @@ socialModule.controller('VHilosController',
           $location.path('/VForo/' + $scope.foroPadre);
         };
 
+        $scope.fpublicacionFormSubmitted = false;
+        $scope.AgregPublicacion3 = function(isValid) {
+          $scope.fpublicacionFormSubmitted = true;
+          if (isValid) {
+            foroService.AgregPublicacion($scope.fpublicacion).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+            });
+          }
+        };
+
       });
     }]);
