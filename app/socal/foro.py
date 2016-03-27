@@ -140,7 +140,6 @@ def AgregHilo():
     db.session.add(nueva_publicacion)
     db.session.commit()
 
-
     res = results[0]
     print("TEST AGREG FORO: ",params)
     return json.dumps(res)
@@ -227,12 +226,15 @@ def AElimPublicacion():
     print("no llego aca")
     res = {}
     idPublicacion = request.args['idPublicacion']
+    
+    publicacion_a_eliminar = Publicacion.query.filter_by(id=idPublicacion).first()
+    
+    idHilo = publicacion_a_eliminar.hilo_id
 
-    results = [{'label':'/VHilos/'+'1', 'msg':['Publicacion eliminada']}, {'label':'/VForo/'+'1', 'msg':['No se pudo eliminar la publicacion']}, ]
+    results = [{'label':'/VHilos/'+str(idHilo), 'msg':['Publicacion eliminada']}, {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}, ]
     res = results[0]
 
-    publicacion_a_eliminar = Publicacion.query.filter_by(id=idPublicacion).first()
-    db.session.delete(hilo_a_eliminar)
+    publicacion_a_eliminar.contenido = 'Esta Publicacion fue eliminada =('
     db.session.commit()
 
     return json.dumps(res)

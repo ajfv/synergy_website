@@ -49,8 +49,9 @@
     <tr ng-repeat="row in publicaciones">
         <td data-title="'Titulo'" >
             <p>{{row["titulo"]}}</p>
+            <p>{{row["contenido"]}}</p>
         </td>
-        <td><a ng-click="AElimPublicacion(row['id'])">Eliminar</a></td>
+        <td><a ng-click="AElimPublicacion1(row['id'])">Eliminar</a></td>
     </tr>
 </table>
 
