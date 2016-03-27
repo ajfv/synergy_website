@@ -103,6 +103,7 @@ class Paginasitio(db.Model):
 
 
 #-------------------------------------------------------------------------------
+
 class Publicacion(db.Model):
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
     titulo = db.Column(db.String)
@@ -122,7 +123,7 @@ class Publicacion(db.Model):
     def __init__(self, titulo, contenido, usuario, hilo, padre = None):
         self.titulo = titulo
         self.contenido = contenido
-        self.usuario = usuario
+        self.autor_id = usuario
         #self.responde_a = respondido.titulo
         self.hilo = hilo
         self.hilo_id = hilo
