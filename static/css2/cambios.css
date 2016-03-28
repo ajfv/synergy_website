@@ -1,0 +1,127 @@
+.lista {
+	padding-top: 4px;
+}
+
+.fondo{
+	background-color: #B0B0B0;
+}
+
+.headerNavBar{
+	background-color: #3B3F44;
+	border-radius: 5px;
+	font-size: 20px; 
+	font-family: NavFont, verdana;
+	padding-top: 5px
+}
+
+#footer{
+	background-color: #3B3F44;
+}
+
+#footer i:hover{
+	color:#3B3F44;
+	border-radius: 10%;
+  	background-color: #e67e22;
+	transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+	-moz-transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+	-webkit-transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+}
+
+#footer i{
+	border-radius: 50%;
+	transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+	-moz-transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+	-webkit-transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+}
+
+.icono{
+	padding-top: 10px;
+}
+
+#derechos{
+	padding-top: 35px;
+}
+
+#contenidos {
+	width: 100%;
+	height: 350px;
+	background-color: #B0B0B0;
+}
+
+#recent-works{
+	height: 550px;
+}
+
+.btn-danger{
+	background-color:#e67e22;
+	border-color: #e67e22;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #B4B4B4;
+}
+
+.navbar-brand{
+	font-weight: 200;
+}
+
+#features > div{
+	padding-top: 70px;
+}
+
+.logo-features {
+	margin-left: 150px;
+	padding-bottom: 50px;
+}
+
+.media-body {
+	text-align: center;
+}
+
+.icon-color:hover{
+	color:#e67e22;
+	background-color: #3B3F44;
+	transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+	-moz-transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+	-webkit-transition: border-radius .5s ease, background-color .5s ease, color .5s ease;
+}
+
+.icon-color{
+	color: #FFFFFF;
+	background-color: #3B3F44;
+	transition: background-color .5s ease, color .5s ease;
+	-moz-transition: ease, background-color .5s ease, color .5s ease;
+	-webkit-transition: ease, background-color .5s ease, color .5s ease;
+}
+
+#center-column{
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#social-cloud{
+	background: #3B3F44;
+	max-width:350px;
+	padding:0px 10px 0px 0px;
+	border:0px; 
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:0px;
+	margin-bottom: 0px;
+}
+
+#cloud-color{
+	background-color: #3B3F44;
+}
+
+#cloud{
+	background-color: #3B3F44;
+	padding-top: 10px;
+}
+
+@font-face {
+	font-family: 'NavFont';
+	src: url('../fonts2/fuente.ttf');
+}

@@ -2,6 +2,9 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/VLogin', {
                 controller: 'VLoginController',
                 templateUrl: 'app/ident/VLogin.html'
+            }).when('/VInicio', {
+                controller: 'VInicioController',
+                templateUrl: 'app/ident/VInicio.html'
             }).when('/VPrincipal', {
                 controller: 'VPrincipalController',
                 templateUrl: 'app/ident/VPrincipal.html'
@@ -9,6 +12,20 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
                 controller: 'VRegistroController',
                 templateUrl: 'app/ident/VRegistro.html'
             });
+}]);
+
+socialModule.controller('VInicioController', 
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
+
+      $scope.VLogin0 = function() {
+        $location.path('/VLogin');
+      };
+
+      $scope.VRegistro1 = function() {
+        $location.path('/VRegistro');
+      };
+
 }]);
 
 socialModule.controller('VLoginController', 
@@ -48,6 +65,8 @@ socialModule.controller('VLoginController',
       };
 
     }]);
+
+
 socialModule.controller('VPrincipalController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService) {
