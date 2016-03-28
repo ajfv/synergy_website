@@ -215,23 +215,38 @@ socialModule.controller('VHilosController',
       
         $scope.fpublicacion = { titulo: $scope.res['tituloNuevaPublicacion']};
         $scope.fpublicacionFormSubmitted = false;
-        $scope.AgregPublicacion3 = function(isValid) {
-          $scope.fpublicacionFormSubmitted = true;
+        
+        var agregarPublicacion = function(scope, isValid, idPublicacion) {
+          scope.fpublicacionFormSubmitted = true;
           if (isValid) {
-            foroService.AgregPublicacion($scope.fpublicacion).then(function (object) {
+            args = {}
+            args['id'] = idPublicacion;
+            args['titulo'] = scope.fpublicacion.titulo;
+            args['contenido'] = scope.fpublicacion.texto;
+            foroService.AgregPublicacion(args).then(function (object) {
                 var msg = object.data["msg"];
                 if (msg) flash(msg);
                 var label = object.data["label"];
+                ngDialog.closeAll();
                 $location.path(label);
                 $route.reload();
             });
           }
         };
         
+        $scope.AgregPublicacion3 = function(isValid, id) {
+            agregarPublicacion($scope, isValid, id);
+        };
+        
         $scope.responderPublicacion = function(publicacion) {
         var nuevoScope = $scope.$new(true);
         nuevoScope.publicacion = publicacion;
         nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
+        nuevoScope.fpublicacionFormSubmitted = false;
+        nuevoScope.AgregPublicacion3 = function(isValid, id) {
+            agregarPublicacion(nuevoScope, isValid, id);
+        };
+        
         ngDialog.open({ template: 'responder_Publicacion.html',
         showClose: true, closeByDocument: true, closeByEscape: true,
         scope: nuevoScope

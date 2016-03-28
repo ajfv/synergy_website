@@ -86,7 +86,6 @@ def VHilos():
     #GET parameter
     res = {}
     idHilo = request.args['idHilo']
-    session['idHilo'] = idHilo
     if "actor" in session:
         res['actor']=session['actor']
         res['usuario'] = {'nombre': session['nombre_usuario']}
@@ -193,24 +192,21 @@ def VPublicacion():
 def AgregPublicacion():
     #GET parameter
     params = request.get_json()
-
-    results = [{'label':'/VHilos/'+session['idHilo'], 'msg':['Respuesta enviada']},
-     {'label':'/VHilos/'+session['idHilo'], 'msg':['No se pudo enviar la respuesta']}]
-    respuesta = params['texto']
+    
+    idPadre = params['id']
     titulo = params['titulo']
+    contenido = params['contenido']
 
-    # Si la publicacion es hija directa de la publicacion raiz
-    hiloPrincipal = Hilo.query.filter_by(id=session['idHilo']).first()
-    publicacionPadre = hiloPrincipal.raiz
-
+    padre = Publicacion.query.filter_by(id=idPadre).first()
+    
     # Crear nueva publicacion hijo
-    nueva_publicacion = Publicacion(titulo,respuesta,session['nombre_usuario'],
-                                   hiloPrincipal,publicacionPadre)
+    nueva_publicacion = Publicacion(titulo,contenido,session['nombre_usuario'],
+                                    padre.hilo,padre)
     db.session.add(nueva_publicacion)
     db.session.commit()
 
-    print(respuesta)
-
+    results = [{'label':'/VHilos/'+str(padre.hilo_id), 'msg':['Respuesta enviada']},
+    {'label':'/VHilos/'+str(padre.hilo_id), 'msg':['No se pudo enviar la respuesta']}]
     res = results[0]
     #Action code ends here
     return json.dumps(res)

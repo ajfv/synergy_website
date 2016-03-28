@@ -103,10 +103,10 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
     //    return deferred.promise;
     };
 
-    this.AgregPublicacion = function(fpublicacion) {
+    this.AgregPublicacion = function(args) {
         return  $http({
           url: "foro/AgregPublicacion",
-          data: fpublicacion,
+          data: args,
           method: 'POST',
         });
     //    var labels = ["/VPagina", ];

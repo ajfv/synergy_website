@@ -113,7 +113,10 @@ class Publicacion(db.Model):
     eliminada = db.Column(db.Boolean, default=False)
     padre_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'))
     padre = db.relationship('Publicacion',
-                            backref=db.backref('hijos'), remote_side=[id])
+                            backref=db.backref(
+                                'hijos', 
+                                order_by=lambda: db.asc(Publicacion.fecha_creacion)),
+                            remote_side=[id])
 
     hilo = db.relationship('Hilo',
                             backref=db.backref('publicaciones'), uselist=False)
@@ -126,7 +129,6 @@ class Publicacion(db.Model):
         self.autor_id = usuario
         #self.responde_a = respondido.titulo
         self.hilo = hilo
-        self.hilo_id = hilo
         self.padre = padre
         
     def a_diccionario(self):
