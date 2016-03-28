@@ -252,6 +252,7 @@ def VAdminContactos():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     res['idContacto'] = idUsuario
@@ -300,6 +301,7 @@ def VChat():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     res['idChat'] = idChat
@@ -330,6 +332,7 @@ def VContactos():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     res['idContacto'] = 1
@@ -362,6 +365,7 @@ def VGrupo():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     #Para que el botón de regresar cuando se modifique un grupo funcione.
@@ -369,9 +373,10 @@ def VGrupo():
     session['idGrupo']=idGrupo
     res['idGrupo'] = idGrupo
 
-
     #En data3 van los miembros del grupo.
     grupoModificar = Grupo.query.filter_by(id = idGrupo).first()
+    res['admin'] = grupoModificar.id_admin
+    
     miembrosGrupo = []
     idMiembros =[]
     if (grupoModificar.miembros):
