@@ -51,6 +51,15 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
+
+    this.VHilos = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'foro/VHilos',
+          method: 'GET',
+          params: args
+        });
+    };
     
     this.AgregForo = function(fForo) {
         return  $http({
@@ -85,6 +94,32 @@ socialModule.service('foroService', ['$q', '$http', function($q, $http) {
         if(typeof args == 'undefined') args={};
         return $http({
           url: 'foro/AElimHilo',
+          method: 'GET',
+          params: args
+        });
+    //    var res = {};
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
+    this.AgregPublicacion = function(args) {
+        return  $http({
+          url: "foro/AgregPublicacion",
+          data: args,
+          method: 'POST',
+        });
+    //    var labels = ["/VPagina", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
+    this.AElimPublicacion = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'foro/AElimPublicacion',
           method: 'GET',
           params: args
         });
