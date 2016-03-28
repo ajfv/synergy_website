@@ -712,6 +712,10 @@ ul.tag-cloud li {
 .navbar-inverse {
   border: none;
 }
+.navbar-nav.navbar-right{
+    margin-right: 20px;
+    margin-bottom: 17px;
+}
 .navbar-inverse .navbar-brand {
   font-family: 'Bubbler One', sans-serif;
   font-size: 36px;

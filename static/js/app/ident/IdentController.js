@@ -17,8 +17,6 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 socialModule.controller('VInicioController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
-      $scope.msg = '';
-      $scope.fLogin = {};
 
       $scope.VLogin0 = function() {
         $location.path('/VLogin');
