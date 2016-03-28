@@ -26,13 +26,17 @@
 
 
 <script type="text/ng-template"  id="tree_item_renderer.html">
-    <h4>{{publicacion.titulo}}</h4>
+    <h4>{{publicacion.titulo}} 
+        <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}">[-]</span>
+    </h4>
+    <div id="{{'publicacion' + publicacion.id}}">
     <p>{{publicacion.contenido}} - <em>{{publicacion.autor}}</em></p>
     <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == usuario.nombre">Eliminar</button>
     <button ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
     <ul>
         <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
     </ul>
+    </div>
 </script>
 
 <ul>

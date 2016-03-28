@@ -26,7 +26,7 @@ def root():
 #Application code starts here
 
 # Código para la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db?client_encoding=utf8'
 app.config['TESTING']=True
 app.config.update(SECRET_KEY = repr(SystemRandom().random()))
 db = SQLAlchemy(app)

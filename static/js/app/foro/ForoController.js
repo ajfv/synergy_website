@@ -239,19 +239,29 @@ socialModule.controller('VHilosController',
         };
         
         $scope.responderPublicacion = function(publicacion) {
-        var nuevoScope = $scope.$new(true);
-        nuevoScope.publicacion = publicacion;
-        nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
-        nuevoScope.fpublicacionFormSubmitted = false;
-        nuevoScope.AgregPublicacion3 = function(isValid, id) {
-            agregarPublicacion(nuevoScope, isValid, id);
+            var nuevoScope = $scope.$new(true);
+            nuevoScope.publicacion = publicacion;
+            nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
+            nuevoScope.fpublicacionFormSubmitted = false;
+            nuevoScope.AgregPublicacion3 = function(isValid, id) {
+                agregarPublicacion(nuevoScope, isValid, id);
+            };
+            ngDialog.open({ template: 'responder_Publicacion.html',
+            showClose: true, closeByDocument: true, closeByEscape: true,
+            scope: nuevoScope
+            });
         };
         
-        ngDialog.open({ template: 'responder_Publicacion.html',
-        showClose: true, closeByDocument: true, closeByEscape: true,
-        scope: nuevoScope
-        });
-
+        $scope.colapsar = function (id) {
+            var element = document.getElementById('publicacion' + id);
+            var boton = document.getElementById('boton' + id);
+            if (element.style.display == 'none') {
+                element.style.display = 'initial';
+                boton.innerHTML = "[-]";
+            } else {
+                element.style.display = 'none';
+                boton.innerHTML = "[+]";
+            }
         };
 
       });
