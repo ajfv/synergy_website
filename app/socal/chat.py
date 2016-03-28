@@ -373,9 +373,10 @@ def VGrupo():
     session['idGrupo']=idGrupo
     res['idGrupo'] = idGrupo
 
-
     #En data3 van los miembros del grupo.
     grupoModificar = Grupo.query.filter_by(id = idGrupo).first()
+    res['admin'] = grupoModificar.id_admin
+    
     miembrosGrupo = []
     idMiembros =[]
     if (grupoModificar.miembros):

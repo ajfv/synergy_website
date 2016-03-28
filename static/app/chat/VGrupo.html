@@ -36,7 +36,7 @@
     <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
-                <td ng-show="row['nombre']"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
+                <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
             </tr>
         </table>
 
