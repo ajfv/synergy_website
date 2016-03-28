@@ -33,9 +33,12 @@ def VForo():
         res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
     
-    listaHilos = []
-    for h in Hilo.query.filter_by(foro_id=idForo):
-        listaHilos += [{'id':h.id, 'titulo':h.raiz.titulo,'fecha': h.fecha_creacion}]
+    listaHilos = [{
+        'id': h.id, 
+        'titulo': h.raiz.titulo,
+        'fecha': h.fecha_creacion,
+        'autor': h.raiz.autor_id}
+        for h in Hilo.query.filter_by(foro_id=idForo)]
 
     res['data'] = listaHilos
 
@@ -53,7 +56,7 @@ def VForos():
     #Action code goes here, res should be a JSON structure
     listaForos = []
     for ftitulo, ffecha,fautor in db.session.query(Foro.titulo, Foro.fecha_creacion,Foro.autor_id):
-        listaForos += [ {'titulo':ftitulo,'fecha': ffecha,'autor':fautor} ]
+        listaForos.append({'titulo':ftitulo,'fecha': ffecha,'autor':fautor})
 
     res['data'] = listaForos
 
@@ -146,11 +149,14 @@ def AElimForo():
     idForo = request.args['idForo']
     results = [{'label':'/VForos', 'msg':['Foro eliminado']},
      {'label':'/VForos', 'msg':['No se pudo eliminar el foro']}, ]
-    res = results[0]
-
+    
     foro_a_eliminar = Foro.query.filter_by(titulo=idForo).first()
-    db.session.delete(foro_a_eliminar)
-    db.session.commit()
+    if foro_a_eliminar.autor_id == session['nombre_usuario']:
+        db.session.delete(foro_a_eliminar)
+        db.session.commit()
+        res = results[0]
+    else:
+        res = results[1]
 
     return json.dumps(res)
 
@@ -162,11 +168,14 @@ def AElimHilo():
     idHilo = request.args['idHilo']
     results = [{'label':'/VForo/'+session['idForo'], 'msg':['Hilo eliminado']},
      {'label':'/VForo/'+session['idForo'], 'msg':['No se pudo eliminar el hilo']}, ]
-    res = results[0]
-
+    
     hilo_a_eliminar = Hilo.query.filter_by(id=idHilo).first()
-    db.session.delete(hilo_a_eliminar)
-    db.session.commit()
+    if hilo_a_eliminar.raiz.autor_id == session['nombre_usuario']:
+        db.session.delete(hilo_a_eliminar)
+        db.session.commit()
+        res = results[0]
+    else:
+        res = results[1]
 
     return json.dumps(res)
 
@@ -216,19 +225,19 @@ def AgregPublicacion():
 @foro.route('/foro/AElimPublicacion')
 def AElimPublicacion():
 
-    print("no llego aca")
     res = {}
     idPublicacion = request.args['idPublicacion']
-    
     publicacion_a_eliminar = Publicacion.query.filter_by(id=idPublicacion).first()
-    
     idHilo = publicacion_a_eliminar.hilo_id
-
-    results = [{'label':'/VHilos/'+str(idHilo), 'msg':['Publicacion eliminada']}, {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}, ]
-    res = results[0]
-
-    publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
-    publicacion_a_eliminar.eliminada = True
-    db.session.commit()
-
+    results = [{'label':'/VHilos/'+str(idHilo), 'msg':['Publicacion eliminada']}, 
+    {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}]
+    
+    if publicacion_a_eliminar.autor_id == session['nombre_usuario']:
+        publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
+        publicacion_a_eliminar.eliminada = True
+        db.session.commit()
+        res = results[0]
+    else:
+        res = results[1]
+    
     return json.dumps(res)
