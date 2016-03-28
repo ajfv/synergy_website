@@ -3,8 +3,8 @@ var socialModule = angular.module('social', ['ngRoute', 'ngAnimate', 'ngTable', 
 socialModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
-                controller: 'VLoginController',
-                templateUrl: 'app/ident/VLogin.html'
+                controller: 'VInicioController',
+                templateUrl: 'app/ident/VInicio.html'
             });
 }]);
 socialModule.controller('socialController_',  ['$scope', '$http', '$location',
