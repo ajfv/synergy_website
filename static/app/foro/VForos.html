@@ -30,7 +30,7 @@
                     <a href="" ng-click="VForo0(row['titulo'])">{{row["titulo"]}}</a>
                 </td>
                 <td data-title="'Fecha'" ng-bind="row['fecha']"></td>
-                <td><a ng-click="AElimForo1(row['titulo'])">Eliminar</a></td>
+                <td><a ng-click="AElimForo1(row['titulo'])" ng-show="row['titulo']==usuario.nombre">Eliminar</a></td>
             </tr>
         </table>
         

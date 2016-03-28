@@ -52,8 +52,8 @@ def VForos():
         res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
     listaForos = []
-    for ftitulo, ffecha in db.session.query(Foro.titulo, Foro.fecha_creacion):
-        listaForos += [ {'titulo':ftitulo,'fecha': ffecha} ]
+    for ftitulo, ffecha,fautor in db.session.query(Foro.titulo, Foro.fecha_creacion,Foro.autor_id):
+        listaForos += [ {'titulo':ftitulo,'fecha': ffecha,'autor':fautor} ]
 
     res['data'] = listaForos
 
