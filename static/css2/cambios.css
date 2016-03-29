@@ -120,6 +120,11 @@
 	padding-top: 10px;
 }
 
+#body{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
 @font-face {
 	font-family: 'NavFont';
 	src: url('../fonts2/fuente.ttf');
