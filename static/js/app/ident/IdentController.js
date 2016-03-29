@@ -78,7 +78,6 @@ socialModule.controller('VLoginController',
 
     }]);
 
-// Hay que mezclar esto con VInicioController?
 socialModule.controller('VPrincipalController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService) {
