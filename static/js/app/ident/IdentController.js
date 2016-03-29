@@ -18,6 +18,10 @@ socialModule.controller('VInicioController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
 
+      $scope.VInicio2 = function() {
+        $location.path('/VInicio');
+      };
+
       $scope.VLogin0 = function() {
         $location.path('/VLogin');
       };
@@ -45,6 +49,11 @@ socialModule.controller('VLoginController',
 
 
       });
+
+      $scope.VInicio0 = function() {
+        $location.path('/VInicio');
+      };
+
       $scope.VRegistro1 = function() {
         $location.path('/VRegistro');
       };
