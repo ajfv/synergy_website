@@ -88,13 +88,14 @@ socialModule.controller('VAdminContactosController',
           var tableFields = [["idContacto","id"],["nombre","Nombre"],["tipo","Tipo"]];
           var arg = {};
           arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
-          chatService.AElimContacto(arg).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
+          if (confirm("Se eliminará el usuario "+"\'"+id+"\'") == true){
+            chatService.AElimContacto(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();   
+          })};
       };
       $scope.VGrupo2 = function(idGrupo) {
         $location.path('/VGrupo/'+((typeof idGrupo === 'object')?JSON.stringify(idGrupo):idGrupo));
@@ -265,13 +266,14 @@ socialModule.controller('VGrupoController',
           var tableFields = [["idContacto","id"],["nombre","Nombre"]];
           var arg = {};
           arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
-          chatService.AElimMiembro(arg).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
+          if (confirm("Se eliminará el miembro "+"\'"+id+"\'") == true){
+            chatService.AElimMiembro(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+          })};
       };
 
 $scope.__ayuda = function() {
