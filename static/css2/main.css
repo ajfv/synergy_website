@@ -78,21 +78,24 @@ body > section {
   padding: 50px 0;
 }
 /* intento de login */
+
 #conectate{
+
     display: inline-block;
     padding: .5em 2em;
-    margin-left: 65px;
+    margin-left: 100px;
     background-color: #2c3e50;
+    border-color: #2c3e50;
+
 }
 
 .form-signin {
   border-radius: 10px;
-  max-width: 330px;
+  max-width: 380px;
   padding: 15px;
   margin: 0 auto;
   display: block;
   width: 100%;
-  padding: 2em;
   position: absolute;
   top: 45%;
   left: 50%;
@@ -129,7 +132,6 @@ body > section {
   border-bottom-left-radius: 0;
 }
 .form-signin input[type="password"] {
-  margin-bottom: 25px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
