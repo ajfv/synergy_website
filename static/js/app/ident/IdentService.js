@@ -2,10 +2,10 @@ socialModule.service('identService', ['$q', '$http', function($q, $http) {
 
 
 
-  this.APaginaSitio = function(args) {
+  this.VSecundaria = function(args) {
         if(typeof args == 'undefined') args={};
         return $http({
-          url: 'ident/APaginaSitio',
+          url: 'ident/VSecundaria',
           method: 'GET',
           params: args
         });

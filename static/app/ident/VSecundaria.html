@@ -19,17 +19,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="navbar-text" ng-show="idUsuario" ng-bind="idUsuario"></li>
                 <li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-                <li><a ng-click="VLogin0()">Salir</a></li>
+                <li><a ng-click="VPrincipal0()">Regresar</a></li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="row" >
+  <div class="col-md-6">{{pag.contenido}}</div>
+  <div class="col-md-6"><img ng-src="{{pag.imagenes}}"></a></div>
+</div>
 
-Buscar: <input ng-model="query">
-<ul class="pags">
-    <li ng-repeat="pag in paginas | filter:query">
-          <a ng-click="VSecundaria(pag.id)">{{pag.titulo}}</a>
-    </li>
-</ul>
+
 
 <div id="right"></div>
