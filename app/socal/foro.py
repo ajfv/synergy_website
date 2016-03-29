@@ -2,7 +2,7 @@ from flask import request, session, Blueprint, json
 
 foro = Blueprint('foro', __name__)
 from sqlalchemy.orm import sessionmaker
-from base import Foro, Hilo, db, Publicacion, Usuario, Sitio, Comentario
+from base import Foro, Hilo, db, Publicacion, Usuario, Sitio
 
 #------------------------------------------------------------------------------#
 #                   COMENTARIOS DE PAGINAS DE SITIO                            #

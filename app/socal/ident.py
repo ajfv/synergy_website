@@ -111,19 +111,15 @@ def VPrincipal():
         pags = Sitio.query.all()
         paginas = []
         for pag in pags:
-            paginas += [{'id':pag.id,'titulo':pag.titulo,'contenido':pag.contenido,'imagenes':pag.imagenes}] 
-    
+            paginas.append({'id':pag.id,'titulo':pag.titulo,'contenido':pag.contenido,'imagenes':pag.imagenes})
         res["paginas"] = paginas
         res["pag"] = {"id": True,'titulo': "Hola " + session['nombre_usuario']}
         res['principal'] = 1
         
     else:
-        
-        
         idPaginaSitio = session['idPaginaSitio']
         pagina = Sitio.query.filter_by(id = idPaginaSitio ).first()
         res['pag'] = {"id":pagina.id,"titulo":pagina.titulo,"contenido":pagina.contenido,"imagenes":pagina.imagenes}
-        
         res['principal'] = 0
     print(session)
     #Action code ends here

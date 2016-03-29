@@ -220,33 +220,13 @@ class Grupo(db.Model):
         self.admin_id = admin.nombre_usuario
         self.chat_id = chat.id
         self.chat = chat
-#-------------------------------------------------------------------------------
-
-class Comentario(db.Model):
-    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String)
-    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
-    contenido = db.Column(db.Text)
-    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    eliminada = db.Column(db.Boolean, default=False)
-    padre_id = db.Column(db.Integer)
-    pagina_id = db.Column(db.String, default=" ")
-
-    def __init__(self,id, pagina, contenido, usuario, padre = None):
-        self.id = id
-        self.pagina_id = pagina
-        self.contenido = contenido
-        self.autor_id = usuario
-        self.padre_id = padre
         
-
 #-------------------------------------------------------------------------------
 class Sitio(db.Model):
     id = db.Column(db.String, primary_key=True)
     titulo = db.Column(db.String)
     contenido = db.Column(db.String)
     imagenes = db.Column(db.String)
-    comentariosActivados  = db.Column(db.Boolean, default=False)
      
     def __init__(self, id, titulo = None, contenido = None, imagenes = None):
         self.id = id
@@ -271,11 +251,10 @@ if __name__ == '__main__':
       SECRET_KEY = repr(SystemRandom().random())
     )
     manager.run()
-"""    
+"""
 s1 = Sitio("usb","Universidad Simon Bolivar")
 s2 = Sitio("perros","Perros")
 s3 = Sitio("futbol","Futbol")
-
 
 s1.contenido = "La Universidad Simon Bolivar (USB por sus iniciales), es una universidad publica Venezolana creada en 1967. Con un fuerte enfasis en la investigacion cientifica y tecnologica, es una de las mas importantes y prestigiosas del pais. Inicio sus actividades academicas en 1970 en el Valle de Sartenejas en Caracas y siete anhos mas tarde en el Valle de Camuri Grande en Vargas. Cuenta actualmente con estas dos sedes. Su rectorado esta en la sede de Sartenejas, ubicada en el Municipio Baruta del estado Miranda. La USB ha graduado aproximadamente 25.000 Ingenieros, Arquitectos, Urbanistas y Licenciados. Ademas se han graduado 7.232 estudiantes con el titulo de Tecnico Superior Universitario (TSU) en las distintas modalidades dictadas en la sede del litoral. Junto con 5.000 especialistas, magister y doctores. Segun un estudio realizado a nivel de America Latina por el QS World University Rankings para el anho 2015, la USB se encuentra en el puesto numero 2 a nivel nacional, mientras que ocupa el puesto numero 34 en America Latina.6"
 s1.imagenes = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/USB_logo.svg/250px-USB_logo.svg.png"
@@ -286,10 +265,21 @@ s3.contenido = "El futbol o futbol2 (del ingles britanico football), tambien con
 db.session.add(s1)
 db.session.add(s2)
 db.session.add(s3)
-
 db.session.commit()
 
-s1 =Sitio.query.filter_by(id = 'usb')
-s2 =Sitio.query.filter_by(id = 'perros')
-s3 =Sitio.query.filter_by(id = 'futbol')
-db.session.commit()"""
+h1 = Hilo(sitio=s1)
+h2 = Hilo(sitio=s2)
+h3 = Hilo(sitio=s3)
+db.session.add(h1)
+db.session.add(h2)
+db.session.add(h3)
+db.session.commit()
+
+p1 = Publicacion(s1.titulo, s1.titulo, hilo=h1)
+p2 = Publicacion(s2.titulo, s2.titulo, hilo=h2)
+p3 = Publicacion(s3.titulo, s3.titulo, hilo=h3)
+db.session.add(p1)
+db.session.add(p2)
+db.session.add(p3)
+db.session.commit()
+"""
