@@ -81,6 +81,8 @@ body > section {
 
 #conectate{
 
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     display: inline-block;
     padding: .5em 2em;
     margin-left: 100px;
@@ -735,8 +737,8 @@ ul.tag-cloud li {
   color: #fff;
   border-radius: 100%;
   display: inline-block;
-  width: 36px;
-  height: 36px;
+  width: 15px;
+  height: 15px;
   line-height: 36px;
   text-align: center;
   padding: 0;
@@ -863,10 +865,10 @@ ul.tag-cloud li {
   border-radius: 100%;
 }
 .icon-md {
-  font-size: 36px;
-  height: 68px;
-  width: 68px;
-  line-height: 68px;
+  font-size: 25px;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
   color: #fff;
   margin-right: 10px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -1014,8 +1016,8 @@ ul.rss li::before {
   content: "\f09e";
 }
 #footer {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   color: #bdc3c7;
 }
 #footer a {
