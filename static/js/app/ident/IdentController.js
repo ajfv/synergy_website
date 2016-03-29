@@ -18,15 +18,15 @@ socialModule.controller('VInicioController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
 
-      $scope.VInicio2 = function() {
+      $scope.VInicio = function() {
         $location.path('/VInicio');
       };
 
-      $scope.VLogin0 = function() {
+      $scope.VLogin = function() {
         $location.path('/VLogin');
       };
 
-      $scope.VRegistro1 = function() {
+      $scope.VRegistro = function() {
         $location.path('/VRegistro');
       };
 
@@ -47,14 +47,13 @@ socialModule.controller('VLoginController',
             $location.path('/');
         }
 
-
       });
 
       $scope.VInicio0 = function() {
         $location.path('/VInicio');
       };
 
-      $scope.VRegistro1 = function() {
+      $scope.VRegistro0 = function() {
         $location.path('/VRegistro');
       };
 
@@ -79,7 +78,7 @@ socialModule.controller('VLoginController',
 
     }]);
 
-
+// Hay que mezclar esto con VInicioController?
 socialModule.controller('VPrincipalController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService) {
@@ -95,7 +94,7 @@ socialModule.controller('VPrincipalController',
 
 
       });
-      $scope.VLogin0 = function() {
+      $scope.VLogin1 = function() {
         $location.path('/VLogin');
       };
       $scope.APagina1 = function(idPagina) {
@@ -107,11 +106,11 @@ socialModule.controller('VPrincipalController',
           $location.path(label);
           $route.reload();
         });};
-      $scope.VContactos2 = function(idUsuario) {
+      $scope.VContactos2 = function(idUsuario) { // cambiar a VContactos1
         $location.path('/VContactos/'+idUsuario);
       };
       
-      $scope.VForos = function(){
+      $scope.VForos = function(){ // Cambiar a VForos1
         foroService.VForos().then(function (object){
           $location.path('/VForos');
         });
@@ -119,6 +118,7 @@ socialModule.controller('VPrincipalController',
 
     }]);
 
+// Usar el 2 para identificar los "href" ($scope.VLogin2)
 socialModule.controller('VRegistroController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
@@ -136,7 +136,12 @@ socialModule.controller('VRegistroController',
 
 
       });
-      $scope.VLogin1 = function() {
+
+      $scope.VInicio2 = function() {
+        $location.path('/VInicio');
+      };
+
+      $scope.VLogin2 = function() {
         $location.path('/VLogin');
       };
 

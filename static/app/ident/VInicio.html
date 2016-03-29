@@ -1,3 +1,30 @@
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+	<div class="container">
+		<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" ng-click="VInicio2()"><img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+		<ul class="nav navbar-nav navbar-right lista headerNavBar">
+			<li>
+				<a ng-click="VInicio()">Home</a>
+			</li>
+			<li>
+				<a ng-click="VLogin()">Iniciar Sesión</a>
+			</li>
+			<li>
+				<a ng-click="VRegistro()">Registrarse</a>
+			</li>
+		</ul>
+		</div>
+	</div>
+</header>
+
 <section id="features" class="container">
 	<div class="row row-centered">
 		<div class="col-md-4 col-sm-6">
@@ -65,8 +92,12 @@
 				<h3>Agrega contenido social a tu pagina</h3>
 				<p>Estos son algunos de los sitios web a los cuales hemos agregado social content.</p>
 				<div class="btn-group">
-					<a class="btn btn-danger" href="#scroller" data-slide="prev"><i class="icon-angle-left"></i></a>
-					<a class="btn btn-danger" href="#scroller" data-slide="next"><i class="icon-angle-right"></i></a>
+					<a class="btn btn-danger" href="#scroller" data-slide="prev">
+						<i class="icon-angle-left"></i>
+					</a>
+					<a class="btn btn-danger" href="#scroller" data-slide="next">
+						<i class="icon-angle-right"></i>
+					</a>
 				</div>
 				<p class="gap"></p>
 			</div>
@@ -143,7 +174,7 @@
 											</div>
 										</div>
 									</div>
-								</div>                            
+								</div>
 								<div class="col-xs-4">
 									<div class="portfolio-item">
 										<div class="item-inner">
@@ -165,3 +196,7 @@
 		</div>
 	</div>
 </section>
+<script src="js2/jquery.js"></script>
+<script src="js2/bootstrap.min.js"></script>
+<script src="js2/jquery.prettyPhoto.js"></script>
+<script src="js2/main.js"></script>
