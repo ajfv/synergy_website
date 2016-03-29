@@ -365,7 +365,7 @@ Parámetros GET: idGrupo
    <li>URL: '/foro/VComentariosPagina'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
 Parámetros GET: idPaginaSitio
-   <li>Roles: Sin restricción de rol
+   <li>Roles: Sin restricción de rol</li>
   </ul>
  </li> <li>
   <p></p>
@@ -373,14 +373,14 @@ Parámetros GET: idPaginaSitio
    <li>URL: '/foro/VForo'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
 Parámetros GET: idForo
-   <li>Roles: Sin restricción de rol
+   <li>Roles: Sin restricción de rol</li>
   </ul>
  </li> <li>
   <p></p>
   <ul>
    <li>URL: '/foro/VForos'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
-   <li>Roles: Sin restricción de rol
+   <li>Roles: Sin restricción de rol</li>
   </ul>
  </li> <li>
   <p></p>
@@ -388,7 +388,99 @@ Parámetros GET: idForo
    <li>URL: '/foro/VPublicacion'</li>
    <li>Método: GET</li><li>Formato de salida: JSON</li>
 Parámetros GET: idForo
-   <li>Roles: Sin restricción de rol
+   <li>Roles: Sin restricción de rol</li>
+  </ul>
+ </li>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/AElimHilo'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idHilo
+   <li>Roles: Sin restricción de rol</li>
+   <li>
+      <p>resultado:</p>
+      <p><strong>Cursos posibles</strong></p>
+      <ol><li><ul>
+       <li>label:'/VForos/:idForo',</li>
+       <li> msg:"Hilo Eliminado".</li>
+      </ul></li>
+      <li><ul>
+       <li>label:'/VForos/:idForo',</li>
+       <li> msg:"No se pudo eliminar el hilo".</li>
+      </ul></li></ol>
+     </li>
+  </ul>
+ </li>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/AElimForo'</li>
+   <li>Método: GET</li><li>Formato de salida: JSON</li>
+Parámetros GET: idForo
+   <li>Roles: Sin restricción de rol</li>
+   <li>
+      <p>resultado:</p>
+      <p><strong>Cursos posibles</strong></p>
+      <ol><li><ul>
+       <li>label:'/VForos',</li>
+       <li> msg:"Foro Eliminado".</li>
+      </ul></li>
+      <li><ul>
+       <li>label:'/VForos',</li>
+       <li> msg:"No se pudo eliminar el foro".</li>
+      </ul></li></ol>
+     </li>
+  </ul>
+ </li>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/AgregHilo'</li>
+   <li>Método: POST</li><li>Formato de salida: JSON</li>
+        <ul>     
+         <li>
+            texto -  Requerido. 
+         </li>
+        </ul>
+   <li>Roles: Sin restricción de rol</li>
+   <li>
+      <p>resultado:</p>
+      <p><strong>Cursos posibles</strong></p>
+      <ol><li><ul>
+       <li>label:'/VForo/:idForo',</li>
+       <li> msg:"Hilo Agregado".</li>
+      </ul></li>
+      <li><ul>
+       <li>label:'/VForo/:idForo',</li>
+       <li> msg:"No se pudo agregar el nuevo hilo".</li>
+      </ul></li></ol>
+     </li>
+  </ul>
+ </li>
+ <li>
+  <p></p>
+  <ul>
+   <li>URL: '/foro/AgregForo'</li>
+   <li>Método: POST</li><li>Formato de salida: JSON</li>
+        <ul>     
+         <li>
+            texto -  Requerido. 
+         </li>
+        </ul>
+   <li>Roles: Sin restricción de rol</li>
+        <li>
+      <p>resultado:</p>
+      <p><strong>Cursos posibles</strong></p>
+      <ol><li><ul>
+       <li>label:'/VForos',</li>
+       <li> msg:"Foro Agregado".</li>
+      </ul></li>
+      <li><ul>
+       <li>label:'/VForos',</li>
+       <li> msg:"No se pudo agregar el nuevo foro".</li>
+      </ul></li></ol>
+     </li>
   </ul>
  </li>
 </ol>

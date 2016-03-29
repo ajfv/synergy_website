@@ -26,7 +26,7 @@ def root():
 #Application code starts here
 
 # Código para la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db?client_encoding=utf8'
 app.config['TESTING']=True
 app.config.update(SECRET_KEY = repr(SystemRandom().random()))
 db = SQLAlchemy(app)
@@ -64,17 +64,10 @@ class Amigo(db.Model):
     amigo1 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
     amigo2 = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
 
-    # amigo2 = db.relationship('Usuario',
-    #     backref=db.backref('amigo2', uselist=False), uselist=False)
-
-
     def __init__(self, amigo1 ,amigo2,chat_id):
         self.amigo1 = amigo1
         self.amigo2 = amigo2
         self.chat_id = chat_id
-
-
-
 
 #-------------------------------------------------------------------------------
 
@@ -96,18 +89,105 @@ class Pagina(db.Model):
 
 #-------------------------------------------------------------------------------
 
+
+class Paginasitio(db.Model):
+    url = db.Column(db.String, primary_key=True)
+    usuario_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    usuario = db.relationship('Usuario',
+                            backref=db.backref('pagina_sitio'), uselist=False)
+
+    def __init__(self, url, usuario):
+        self.url = url
+        self.id_usuario = usuario.nombre_usuario
+        self.usuario = usuario
+
+
+#-------------------------------------------------------------------------------
+
+class Publicacion(db.Model):
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    titulo = db.Column(db.String)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+    contenido = db.Column(db.Text)
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    eliminada = db.Column(db.Boolean, default=False)
+    padre_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'))
+    padre = db.relationship('Publicacion',
+                            backref=db.backref(
+                                'hijos', 
+                                order_by=lambda: db.asc(Publicacion.fecha_creacion)),
+                            remote_side=[id])
+
+    hilo = db.relationship('Hilo',
+                            backref=db.backref('publicaciones'), uselist=False)
+    hilo_id = db.Column(db.Integer, db.ForeignKey('hilo.id'))
+
+
+    def __init__(self, titulo, contenido, usuario, hilo, padre = None):
+        self.titulo = titulo
+        self.contenido = contenido
+        self.autor_id = usuario
+        #self.responde_a = respondido.titulo
+        self.hilo = hilo
+        self.padre = padre
+        
+    def a_diccionario(self):
+        return {
+            'id' : self.id,
+            'titulo' : self.titulo,
+            'contenido' : self.contenido,
+            'autor' : self.autor_id,
+            'eliminada' : self.eliminada,
+            'hijos' : [hijo.a_diccionario() for hijo in self.hijos]
+        }
+
+
+#-------------------------------------------------------------------------------
+
+class Hilo(db.Model):
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
+    pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
+
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+
+    pagina_sitio = db.relationship('Paginasitio',
+                            backref=db.backref('hilo', uselist=False), uselist=False)
+    foro = db.relationship('Foro',
+                            backref=db.backref('hilos'), uselist=False)
+
+
+    def __init__(self, foro, pagina_sitio):
+        self.foro_id = foro.titulo
+        self.foro = foro
+        self.pagina_sitio_id = pagina_sitio.url
+        self.pagina_sitio = pagina_sitio
+
+    @property
+    def raiz(self):
+        for p in self.publicaciones:
+            if p.padre is None:
+                return p
+
+#-------------------------------------------------------------------------------
+class Foro(db.Model):
+    titulo = db.Column(db.String, primary_key=True)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+
+    def __init__(self, titulo, nombre_usuario):
+        self.titulo = titulo
+        self.autor_id = nombre_usuario
+
+#-------------------------------------------------------------------------------
+
 class Chat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     mensajes = db.relationship('Mensaje',
         backref=db.backref('chat',uselist=False),
         order_by=lambda: db.desc(Mensaje.creado))
-
-    # def __init__(self):
-    #     self.id = id
-
-    # backref=db.backref('chat', uselist=False) )
-
 
 #-------------------------------------------------------------------------------
 
@@ -118,9 +198,6 @@ class Mensaje(db.Model):
     contenido = db.Column(db.Text)
     creado = db.Column(db.DateTime, server_default=db.func.now())
     usuario_origen = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-
-    # usuario_destino = db.relationship('Usuario', secondary=Usuario_destino,
-    #     backref=db.backref('usuario_destino', lazy='dynamic'))
 
     def __init__(self,usuario_origen,contenido,chat):
         self.usuario_origen = usuario_origen
@@ -157,41 +234,6 @@ class Grupo(db.Model):
         self.chat_id = chat.id
         self.chat = chat
 
-
-
-"""
-u1 = Usuario('samuel','Samuel Arleo','s@c.com','saar1312')
-u2 = Usuario('alejandra','Alejandra C','s@c.com','alejandra')
-u3 = Usuario('pedro','Pedro Perez','s@c.com','pedro')
-
-db.session.add(u1)
-db.session.add(u2)
-db.session.add(u3)
-db.session.commit()
-
-#users = Usuario.query.all()
-admin = Usuario.query.filter_by(nombre_usuario='alejandra').first()
-admin2 = Usuario.query.filter_by(nombre_usuario='samuel').first()
-
-g1 = Grupo('Mango',admin)
-g2 = Grupo('Synergy',admin2)
-db.session.add(g1)
-db.session.add(g2)
-db.session.commit()
-
-mango = Grupo.query.filter_by(nombre='Mango').first()
-synergy = Grupo.query.filter_by(nombre='Synergy').first()
-
-alej = Usuario.query.filter_by(nombre_usuario='alejandra').first()
-samuel = Usuario.query.filter_by(nombre_usuario='samuel').first()
-
-mango.miembros.append(alej)
-mango.miembros.append(samuel)
-synergy.miembros.append(samuel)
-db.session.commit()
-
-"""
-
 #-------------------------------------------------------------------------------
 
 #Application code ends here
@@ -204,6 +246,8 @@ app.register_blueprint(paginas)
 from app.socal.chat import chat
 app.register_blueprint(chat)
 
+from app.socal.foro import foro
+app.register_blueprint(foro)
 
 if __name__ == '__main__':
     app.config.update(
