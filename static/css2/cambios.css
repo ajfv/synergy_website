@@ -14,6 +14,12 @@
 }
 
 #footer{
+	width:100%;
+}
+
+#footer > div{
+	width: 80%;
+	margin:auto;
 	background-color: #3B3F44;
 }
 
