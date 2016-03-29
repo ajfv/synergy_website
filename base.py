@@ -143,12 +143,8 @@ class Hilo(db.Model):
 
 
     def __init__(self, foro=None, sitio=None):
-        if foro:
-            self.foro_id = foro.titulo
-            self.foro = foro
-        elif sitio:
-            self.sitio_id = sitio.id
-            self.sitio = sitio
+        self.foro = foro
+        self.sitio = sitio
 
     @property
     def raiz(self):

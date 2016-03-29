@@ -169,7 +169,8 @@ def VHilos():
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
     raiz = hilo.raiz
-    res['foroPadre'] =  hilo.foro_id
+    if hilo.sitio is None:
+        res['foroPadre'] =  hilo.foro_id
     res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
     res['publicaciones'] = raiz.a_diccionario()
 
@@ -246,20 +247,6 @@ def AElimHilo():
 #------------------------------------------------------------------------------#
 #                                 PUBLICACIÒN                                  #
 #------------------------------------------------------------------------------#
-
-@foro.route('/foro/VPublicacion')
-def VPublicacion():
-    #GET parameter
-    idForo = request.args['idHilo']
-    res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
-    #Action code goes here, res should be a JSON structure
-
-
-    #Action code ends here
-    return json.dumps(res)
 
 @foro.route('/foro/AgregPublicacion',methods=['POST'])
 def AgregPublicacion():

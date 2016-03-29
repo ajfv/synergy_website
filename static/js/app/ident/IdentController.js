@@ -128,6 +128,14 @@ socialModule.controller('VSecundariaController',
       $scope.VForos = function(){
           $location.path('/VForos');
       };
+      
+      $scope.mostrarComentarios = function (idHilo){
+          if (idHilo == -1)
+            return;
+         $scope.comentarios = true;
+          foroService.VHilos({'idHilo': idHilo}).then(function (object){
+          });
+      };
     }]);
     
 socialModule.controller('VRegistroController', 
