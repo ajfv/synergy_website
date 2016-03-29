@@ -2,7 +2,7 @@ from flask import request, session, Blueprint, json
 
 foro = Blueprint('foro', __name__)
 from sqlalchemy.orm import sessionmaker
-from base import Foro, Hilo, db, Publicacion, Usuario, Paginasitio, Sitio, Comentario
+from base import Foro, Hilo, db, Publicacion, Usuario, Sitio, Comentario
 
 #------------------------------------------------------------------------------#
 #                   COMENTARIOS DE PAGINAS DE SITIO                            #
@@ -187,19 +187,10 @@ def AgregHilo():
     titulo_publicacion  = params['titulo']
     contenido_publicacion = params['contenido']
 
-    # Siento que esto no va
-    pagina_sitio_test = Paginasitio.query.filter_by(url="www").first()
-    if pagina_sitio_test is None :
-        pagina_sitio_test = Paginasitio(url="www",
-            usuario=Usuario.query.filter_by(nombre_usuario=session['nombre_usuario']).first())
-        db.session.add(pagina_sitio_test)
-        db.session.commit()
-
-
     # Se crean hilos
     foro_actual = Foro.query.filter_by(titulo=session['idForo']).first()
 
-    nuevo_hilo = Hilo(foro=foro_actual,pagina_sitio=pagina_sitio_test)
+    nuevo_hilo = Hilo(foro=foro_actual)
     db.session.add(nuevo_hilo)
     db.session.commit()
 
@@ -314,6 +305,3 @@ def AElimPublicacion():
         res = results[1]
     
     return json.dumps(res)
-
-
-

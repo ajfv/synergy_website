@@ -89,21 +89,6 @@ class Pagina(db.Model):
 
 #-------------------------------------------------------------------------------
 
-
-class Paginasitio(db.Model):
-    url = db.Column(db.String, primary_key=True)
-    usuario_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
-    usuario = db.relationship('Usuario',
-                            backref=db.backref('pagina_sitio'), uselist=False)
-
-    def __init__(self, url, usuario):
-        self.url = url
-        self.id_usuario = usuario.nombre_usuario
-        self.usuario = usuario
-
-
-#-------------------------------------------------------------------------------
-
 class Publicacion(db.Model):
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
     titulo = db.Column(db.String)
@@ -123,7 +108,7 @@ class Publicacion(db.Model):
     hilo_id = db.Column(db.Integer, db.ForeignKey('hilo.id'))
 
 
-    def __init__(self, titulo, contenido, usuario, hilo, padre = None):
+    def __init__(self, titulo, contenido, usuario=None, hilo=None, padre=None):
         self.titulo = titulo
         self.contenido = contenido
         self.autor_id = usuario
@@ -147,21 +132,23 @@ class Publicacion(db.Model):
 class Hilo(db.Model):
     id = db.Column (db.Integer, primary_key=True, autoincrement=True)
     foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
-    pagina_sitio_id = db.Column(db.String, db.ForeignKey('paginasitio.url'))
+    sitio_id = db.Column(db.String, db.ForeignKey('sitio.id'))
 
     fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
 
-    pagina_sitio = db.relationship('Paginasitio',
+    sitio = db.relationship('Sitio',
                             backref=db.backref('hilo', uselist=False), uselist=False)
     foro = db.relationship('Foro',
                             backref=db.backref('hilos'), uselist=False)
 
 
-    def __init__(self, foro, pagina_sitio):
-        self.foro_id = foro.titulo
-        self.foro = foro
-        self.pagina_sitio_id = pagina_sitio.url
-        self.pagina_sitio = pagina_sitio
+    def __init__(self, foro=None, sitio=None):
+        if foro:
+            self.foro_id = foro.titulo
+            self.foro = foro
+        elif sitio:
+            self.sitio_id = sitio.id
+            self.sitio = sitio
 
     @property
     def raiz(self):
