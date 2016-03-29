@@ -24,11 +24,11 @@
 
     <div class="container">
     <form id="login" class="form-signin" name="fLoginForm" ng-submit="AIdentificar0(fLoginForm.$valid)" novalidate>
-            <h2 class="form-signin-heading">Conectate</h2><br>
+            <center><h2 class="form-signin-heading">Conectate</h2></center><br>
             <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.usuario.$invalid && fLoginForm.usuario.$pristine && fLoginSubmitted}"><label for="fLogin_usuario" class="sr-only">Usuario</label><input id="fLogin_usuario" type="text" name="usuario" class="form-control" ng-model="fLogin.usuario" placeholder="Usuario" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.usuario.$invalid" class="help-block">Error en campo Usuario.</p></div>
-            <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.clave.$invalid && fLoginForm.clave.$pristine && fLoginSubmitted}"><label for="fLogin_clave" class="sr-only">Clave</label><input id="fLogin_clave" type="password" name="clave" class="form-control" ng-model="fLogin.clave" placeholder="Clave" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.clave.$invalid" class="help-block">Error en campo Clave.</p></div><br>
+            <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.clave.$invalid && fLoginForm.clave.$pristine && fLoginSubmitted}"><label for="fLogin_clave" class="sr-only">Clave</label><input id="fLogin_clave" type="password" name="clave" class="form-control" ng-model="fLogin.clave" placeholder="Contraseña" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.clave.$invalid" class="help-block">Error en campo Clave.</p></div><br>
         <button type="submit" id="conectate" class="btn btn-primary">
-            Conectarse
+            Iniciar sesión
         </button>
     </form>
     </div> <!-- /container -->
