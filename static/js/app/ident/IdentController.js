@@ -58,6 +58,10 @@ socialModule.controller('VLoginController',
         $location.path('/VRegistro');
       };
 
+      $scope.reloadRoute = function() {
+         $route.reload();
+      }
+
       $scope.fLoginSubmitted = false;
       $scope.AIdentificar0 = function(isValid) {
         $scope.fLoginSubmitted = true;
@@ -114,6 +118,7 @@ socialModule.controller('VPrincipalController',
       };
 
     }]);
+
 socialModule.controller('VRegistroController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
@@ -134,6 +139,10 @@ socialModule.controller('VRegistroController',
       $scope.VLogin1 = function() {
         $location.path('/VLogin');
       };
+
+      $scope.reloadRoute = function() {
+         $route.reload();
+      }
 
       $scope.fUsuarioSubmitted = false;
       $scope.ARegistrar0 = function(isValid) {

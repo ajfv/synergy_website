@@ -14,7 +14,7 @@
         </div>
         <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right lista headerNavBar">
-            <li><a ng-click="VLogin0()">Iniciar Sesión</a></li>
+            <li><a ng-click="reloadRoute()">Iniciar Sesión</a></li>
             <li><a ng-click="VRegistro1()">Registrarse</a></li>
         </ul>
         </div>
@@ -23,8 +23,8 @@
   <body>
 
     <div class="container">
-    <form class="form-signin" name="fLoginForm" ng-submit="AIdentificar0(fLoginForm.$valid)" novalidate>
-            <h2 class="form-signin-heading">Conectate</h2>
+    <form id="login" class="form-signin" name="fLoginForm" ng-submit="AIdentificar0(fLoginForm.$valid)" novalidate>
+            <h2 class="form-signin-heading">Conectate</h2><br>
             <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.usuario.$invalid && fLoginForm.usuario.$pristine && fLoginSubmitted}"><label for="fLogin_usuario" class="sr-only">Usuario</label><input id="fLogin_usuario" type="text" name="usuario" class="form-control" ng-model="fLogin.usuario" placeholder="Usuario" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.usuario.$invalid" class="help-block">Error en campo Usuario.</p></div>
             <div class="form-group" ng-class="{ 'has-error' :  fLoginSubmitted && fLoginForm.clave.$invalid && fLoginForm.clave.$pristine && fLoginSubmitted}"><label for="fLogin_clave" class="sr-only">Clave</label><input id="fLogin_clave" type="password" name="clave" class="form-control" ng-model="fLogin.clave" placeholder="Clave" required ng-minlength="1"/><p ng-show="fLoginSubmitted && fLoginForm.clave.$invalid" class="help-block">Error en campo Clave.</p></div><br>
         <button type="submit" id="conectate" class="btn btn-primary">
