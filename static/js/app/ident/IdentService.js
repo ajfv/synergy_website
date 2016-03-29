@@ -1,5 +1,20 @@
 socialModule.service('identService', ['$q', '$http', function($q, $http) {
 
+
+
+  this.APaginaSitio = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'ident/APaginaSitio',
+          method: 'GET',
+          params: args
+        });
+    //    var res = {};
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
     this.AIdentificar = function(fLogin) {
         return  $http({
           url: "ident/AIdentificar",

@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" >Hola usuario</span>
+            <span class="navbar-brand" > {{pag.titulo}}</span>
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
@@ -19,10 +19,14 @@
 <li><a ng-click="VForos()">
   Foros</a></li>
 
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
 <li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="VLogin0()">
+<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+<li><a ng-if="principal != 1" ng-click="VPrincipal4(' ')">
+    Regresar</a></li>
+<li><a ng-if="principal == 1" ng-click="VLogin0()">
     Salir</a></li>
 
             </ul>
@@ -30,6 +34,29 @@
     </div>
 </nav>
 
-
+        
+<div  ng-if="principal == 1">
+	Buscar: <input ng-model="query">
+	<ul class="pags">
+    <li ng-repeat="pag in paginas | filter:query">
+          <a ng-click="VPrincipal4(pag.id)">{{pag.titulo}}</a>
+          
+    </li>
+    </ul>
+    
+    
+</div>
 
 <div id="right"></div>
+
+<div class="row" >
+  <div class="col-md-6">{{pag.contenido}}</div>
+  <div class="col-md-6"><img ng-src="{{pag.imagenes}}" ></a></div>
+</div>
+
+<div  ng-if="principal != 1">
+	  <button ng-model=Comentario.texto ng-click="VComentariosPagina5(pag.id)">Comentarios</button> 
+    
+</div>
+
+

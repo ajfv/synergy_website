@@ -5,6 +5,9 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VPrincipal', {
                 controller: 'VPrincipalController',
                 templateUrl: 'app/ident/VPrincipal.html'
+            }).when('/VPrincipal/:idPaginaSitio', {
+                controller: 'VPrincipalController',
+                templateUrl: 'app/ident/VPrincipal.html'
             }).when('/VRegistro', {
                 controller: 'VRegistroController',
                 templateUrl: 'app/ident/VRegistro.html'
@@ -49,11 +52,17 @@ socialModule.controller('VLoginController',
 
     }]);
 socialModule.controller('VPrincipalController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService',
-    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService', 'ngDialog',
+    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService, ngDialog) {
       $scope.msg = '';
+      $scope.pag = {}; 
+      $scope.principal = ''
+      $scope.paginas = [];
       identService.VPrincipal().then(function (object) {
         $scope.res = object.data;
+        $scope.paginas = object.data['pag'];
+        $scope.paginas = object.data['pags'];
+        $scope.principal = object.data['principal'];
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
@@ -84,6 +93,23 @@ socialModule.controller('VPrincipalController',
           $location.path('/VForos');
         });
       };
+      $scope.VPrincipal4 = function(idPaginaSitio){
+        
+          identService.APaginaSitio({"idPaginaSitio":((typeof idPaginaSitio === 'object')?JSON.stringify(idPaginaSitio):idPaginaSitio)}).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+          });
+      
+      };
+$scope.VComentariosPagina5 = function (idPaginaSitio) {
+        
+        $location.path("/VComentariosPagina/"+idPaginaSitio);
+        ngDialog.openConfirm({ template: 'temp' ,controller:'VComentariosPaginaController'});
+        
+    };   
 
     }]);
 socialModule.controller('VRegistroController', 

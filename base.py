@@ -233,9 +233,39 @@ class Grupo(db.Model):
         self.admin_id = admin.nombre_usuario
         self.chat_id = chat.id
         self.chat = chat
-
 #-------------------------------------------------------------------------------
 
+class Comentario(db.Model):
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    titulo = db.Column(db.String)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+    contenido = db.Column(db.Text)
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    eliminada = db.Column(db.Boolean, default=False)
+    padre_id = db.Column(db.Integer)
+    pagina_id = db.Column(db.String, default=" ")
+
+    def __init__(self,id, pagina, contenido, usuario, padre = None):
+        self.id = id
+        self.pagina_id = pagina
+        self.contenido = contenido
+        self.autor_id = usuario
+        self.padre_id = padre
+        
+
+#-------------------------------------------------------------------------------
+class Sitio(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    titulo = db.Column(db.String)
+    contenido = db.Column(db.String)
+    imagenes = db.Column(db.String)
+    comentariosActivados  = db.Column(db.Boolean, default=False)
+     
+    def __init__(self, id, titulo = None, contenido = None, imagenes = None):
+        self.id = id
+        self.titulo = titulo
+        self.contenido = contenido
+        self.imagenes = imagenes
 #Application code ends here
 
 from app.socal.ident import ident
@@ -254,3 +284,25 @@ if __name__ == '__main__':
       SECRET_KEY = repr(SystemRandom().random())
     )
     manager.run()
+"""    
+s1 = Sitio("usb","Universidad Simon Bolivar")
+s2 = Sitio("perros","Perros")
+s3 = Sitio("futbol","Futbol")
+
+
+s1.contenido = "La Universidad Simon Bolivar (USB por sus iniciales), es una universidad publica Venezolana creada en 1967. Con un fuerte enfasis en la investigacion cientifica y tecnologica, es una de las mas importantes y prestigiosas del pais. Inicio sus actividades academicas en 1970 en el Valle de Sartenejas en Caracas y siete anhos mas tarde en el Valle de Camuri Grande en Vargas. Cuenta actualmente con estas dos sedes. Su rectorado esta en la sede de Sartenejas, ubicada en el Municipio Baruta del estado Miranda. La USB ha graduado aproximadamente 25.000 Ingenieros, Arquitectos, Urbanistas y Licenciados. Ademas se han graduado 7.232 estudiantes con el titulo de Tecnico Superior Universitario (TSU) en las distintas modalidades dictadas en la sede del litoral. Junto con 5.000 especialistas, magister y doctores. Segun un estudio realizado a nivel de America Latina por el QS World University Rankings para el anho 2015, la USB se encuentra en el puesto numero 2 a nivel nacional, mientras que ocupa el puesto numero 34 en America Latina.6"
+s1.imagenes = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/USB_logo.svg/250px-USB_logo.svg.png"
+s2.contenido = "El perro o perro domestico (Canis lupus familiaris)1 2 3 4 o tambien llamado can es un mamifero carnivoro de la familia de los canidos, que constituye una subespecie del lobo (Canis lupus). Un estudio publicado por la revista Nature revela que, gracias al proceso de domesticacion, el organismo del perro se ha adaptado6 a cierta clase de alimentos, en este caso el almidon.7 Su tamanho o talla, su forma y pelaje es muy diverso segun la raza. Posee un oido y olfato muy desarrollados, siendo este ultimo su principal organo sensorial. En las razas pequenhas puede alcanzar una longevidad de cerca de 20 anhos, con atencion esmerada por parte del propietario, de otra forma su vida en promedio es alrededor de los 15 anhos. \n\nSe cree que el lobo gris, del que es considerado una subespecie, es el antepasado mas inmediato. Las pruebas arqueologicas demuestran que el perro ha estado en convivencia cercana con los humanos desde hace al menos 9000 anhos, pero posiblemente desde hace 14 000 anhos. Las pruebas fosiles demuestran que los antepasados de los perros modernos ya estaban asociados con los humanos hace 100 000 anhos. Las investigaciones mas recientes indican que el perro fue domesticado por primera vez en el este de Asia, posiblemente en China. "
+s2.imagenes = "https://i.ytimg.com/vi/VPD8W53SxD4/hqdefault.jpg"
+s3.contenido = "El futbol o futbol2 (del ingles britanico football), tambien conocido como balompie, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno "
+
+db.session.add(s1)
+db.session.add(s2)
+db.session.add(s3)
+
+db.session.commit()
+
+s1 =Sitio.query.filter_by(id = 'usb')
+s2 =Sitio.query.filter_by(id = 'perros')
+s3 =Sitio.query.filter_by(id = 'futbol')
+db.session.commit()"""

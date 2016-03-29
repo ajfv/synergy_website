@@ -18,20 +18,56 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VComentariosPaginaController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService','identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, foroService, identService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService','identService','ngDialog',
+    function ($scope, $location, $route, $timeout, flash, $routeParams, foroService, identService,ngDialog) {
       $scope.msg = '';
+      $scope.fComentarios = {};
+      $scope.comments = []
+      
       foroService.VComentariosPagina({"idPaginaSitio":$routeParams.idPaginaSitio}).then(function (object) {
+        
         $scope.res = object.data;
+        $scope.comments = object.data['comentarios'];
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
         if ($scope.logout) {
             $location.path('/');
         }
-
-
+        
+  
       });
+      $scope.fComenterioSubmitted = false;
+      $scope.VPrincipal0 = function(idPaginaSitio){
+          
+          foroService.AgregComentario($scope.fComentario).then(function (object) {
+                $scope.fComentarioSubmitted = true;
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+                
+          });
+       
+        }
+      $scope.AEliminarComentario1 = function(id){
+            var tableFields = [["idContacto","id"]];
+            var arg = {};
+            arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+            foroService.AEliminarComentario(arg).then(function (object) {
+                
+                $scope.id = id;
+                
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+                
+          });
+            
+      }
+      $scope.VPrincipal2 = function(idPaginaSitio){
+            $location.path("/VPrincipal/"+idPaginaSitio);
+      }
+      
     }]);
 socialModule.controller('VForoController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService', 'ngTableParams',
@@ -46,7 +82,7 @@ socialModule.controller('VForoController',
             $location.path('/');
         }
 
-        $scope.VForos1 = function(){
+        $scope.VForos1 = function(isValid){
           $location.path('/VForos');
         };
 

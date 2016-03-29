@@ -2,7 +2,11 @@ from flask import request, session, Blueprint, json
 
 foro = Blueprint('foro', __name__)
 from sqlalchemy.orm import sessionmaker
-from base import Foro, Hilo, db, Publicacion, Usuario, Paginasitio
+from base import Foro, Hilo, db, Publicacion, Usuario, Paginasitio, Sitio, Comentario
+
+#------------------------------------------------------------------------------#
+#                   COMENTARIOS DE PAGINAS DE SITIO                            #
+#------------------------------------------------------------------------------#
 
 @foro.route('/foro/VComentariosPagina')
 def VComentariosPagina():
@@ -13,11 +17,80 @@ def VComentariosPagina():
         res['actor']=session['actor']
         res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
-
-
+    
+    res['idPaginaSitio'] = idPaginaSitio
+    sitio = Sitio.query.filter_by(id = idPaginaSitio).first()
+    
+    res['comentarios'] = []
+    if sitio.comentariosActivados:
+        comentarios = Comentario.query.filter_by(pagina_id = idPaginaSitio)
+        for c in comentarios:
+            res['comentarios'] += [{'id':c.id,'autor':c.autor_id, 'contenido':c.contenido}]
+            
     #Action code ends here
     return json.dumps(res)
+#------------------------------------------------------------------------------#
 
+@foro.route('/foro/AgregComentario', methods=['POST'])
+def AgregComentario():
+    #POST/PUT parameters
+    params = request.get_json()
+    results = [{'label':'/VComentariosPagina', 'msg':['Comentario agregado']}, {'label':'/VComentariosPagina', 'msg':['No se pudo agregar comentario']}, ]
+    res = results[0]
+    #Action code goes here, res should be a list with a label and a message
+
+    sitio = Sitio.query.filter_by(id = session['idPaginaSitio']).first()
+    sitio.comentariosActivados = True
+   
+    ultimo = Comentario.query.order_by(Comentario.id).all()
+    if (ultimo):
+        idNuevo = ultimo[len(ultimo) -1].id + 1
+        nuevo = Comentario(idNuevo, session['idPaginaSitio'], params['texto'], session['nombre_usuario'], idNuevo - 1)
+        res = results[0]
+        
+    else:
+        idNuevo = 1;
+        nuevo = Comentario(idNuevo, session['idPaginaSitio'], params['texto'], session['nombre_usuario'], idNuevo)
+        res = results[0]
+        
+    
+    db.session.add(nuevo)
+    db.session.commit()
+    res['label'] = res['label'] + '/' + str(session['idPaginaSitio'])
+    
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
+
+#------------------------------------------------------------------------------#
+
+@foro.route('/foro/AEliminarComentario')
+def AEliminarComentario():
+    #GET parameter
+    id = request.args['id']
+    results = [{'label':'/VComentariosPagina', 'msg':['Comentario eliminado.']},{'label':'/VComentariosPagina', 'msg':['No se puede eliminar comentario.']}, ]
+    res = results[1]
+    #Action code goes here, res should be a JSON structure
+    
+    comentario = Comentario.query.filter_by(id = id).first()
+    if (session['nombre_usuario'] == comentario.autor_id):
+        db.session.delete(comentario)
+        db.session.commit()
+        res = results[0]
+        
+    res['label'] = res['label'] + '/' + str(session['idPaginaSitio'])
+    
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
 #------------------------------------------------------------------------------#
 #                                    FORO                                      #
 #------------------------------------------------------------------------------#
@@ -232,3 +305,6 @@ def AElimPublicacion():
     db.session.commit()
 
     return json.dumps(res)
+
+
+

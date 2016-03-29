@@ -1,8 +1,28 @@
 from flask import request, session, Blueprint, json
 
 ident = Blueprint('ident', __name__)
-from base import Usuario, Pagina, db
+from base import Usuario, Pagina, db, Sitio
 
+
+@ident.route('/ident/APaginaSitio')
+
+def APaginaSitio():
+    #GET parameter
+    idPaginaSitio = request.args['idPaginaSitio']
+    
+    res={}
+    res['label'] = 'VPrincipal/'+idPaginaSitio
+    session.pop('idPaginaSitio')
+    session['idPaginaSitio'] = idPaginaSitio
+    
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
+
+    
 @ident.route('/ident/AIdentificar', methods=['POST'])
 def AIdentificar():
     #POST/PUT parameters
@@ -15,6 +35,9 @@ def AIdentificar():
         if nombre_usuario == params['usuario'] and clave == params['clave'] :
             res = results[0]
             session['nombre_usuario']=params['usuario']
+            
+            session['idPaginaSitio'] = " "
+            res['idPaginaSitio'] = " "
             break
 
     #Action code ends here
@@ -75,6 +98,8 @@ def VLogin():
 
 @ident.route('/ident/VPrincipal')
 def VPrincipal():
+    
+    
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
@@ -82,8 +107,28 @@ def VPrincipal():
 
     res['idUsuario'] = session['nombre_usuario']
     res["usuario"] = {"nombre":res['idUsuario']}
+    if (session['idPaginaSitio'] == " "):
+        pags = Sitio.query.all()
+        paginas = []
+        for pag in pags:
+            paginas += [{'id':pag.id,'titulo':pag.titulo,'contenido':pag.contenido,'imagenes':pag.imagenes}] 
+    
+        res["paginas"] = paginas
+        res["pag"] = {"id": True,'titulo': "Hola " + session['nombre_usuario']}
+        res['principal'] = 1
+        
+    else:
+        
+        
+        idPaginaSitio = session['idPaginaSitio']
+        pagina = Sitio.query.filter_by(id = idPaginaSitio ).first()
+        res['pag'] = {"id":pagina.id,"titulo":pagina.titulo,"contenido":pagina.contenido,"imagenes":pagina.imagenes}
+        
+        res['principal'] = 0
+    print(session)
     #Action code ends here
     return json.dumps(res)
+
 
 
 
