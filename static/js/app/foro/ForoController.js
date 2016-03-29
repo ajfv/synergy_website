@@ -89,13 +89,14 @@ socialModule.controller('VForoController',
           var arg = {};
           //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
           arg['idHilo'] = ((typeof id === 'object')?JSON.stringify(idHilo):idHilo);
-          foroService.AElimHilo(arg).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
+          if (confirm("Se eliminará el hilo seleccionado") == true){
+            foroService.AElimHilo(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+          })};
       };
 
       $scope.VHilo0 = function(idHilo){
@@ -169,13 +170,14 @@ socialModule.controller('VForosController',
           var arg = {};
           //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
           arg['idForo'] = ((typeof id === 'object')?JSON.stringify(idForo):idForo);
-          foroService.AElimForo(arg).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
+          if (confirm("Se eliminará el foro seleccionado") == true){
+            foroService.AElimForo(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+          })};
       };
 
       });
@@ -203,13 +205,14 @@ socialModule.controller('VHilosController',
           var arg = {};
           //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
           arg['idPublicacion'] = ((typeof id === 'object')?JSON.stringify(idPublicacion):idPublicacion);
-          foroService.AElimPublicacion(arg).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
+          if (confirm("Se eliminará la publicacion seleccionado") == true){
+            foroService.AElimPublicacion(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+          })};
       };
         
       
