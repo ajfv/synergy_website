@@ -1,6 +1,11 @@
-.lista {
-	padding-top: 4px;
-}
+/*
+
+Colores: 
+* B0B0B0: Gris claro (fondo)
+* 3B3F44: Gris obscuro (footer)
+* e67e22: Anaranjado (Nav)
+
+*/
 
 .fondo{
 	background-color: #B0B0B0;
@@ -69,6 +74,23 @@
 
 .navbar-brand{
 	font-weight: 200;
+}
+
+#user{
+	color: #e67e22;
+	background-color: #FFF4EA;
+	border-radius: 0px 4px 4px 0px;
+	padding: 4px 4px 4px 10px;
+}
+/* Para las opciones del menu (no sirvio)
+.menu-item {
+	font-family: 'NavFont', verdana;
+	color: #e67e22;
+}
+*/
+.navbar-inverse .navbar-nav .dropdown-menu{
+	color: #FFF4EA;
+	background-color: #FFF4EA;
 }
 
 #features > div{

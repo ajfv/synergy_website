@@ -26,11 +26,12 @@
     
        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
-                <td data-title="'Titulo'" >
+                <td data-title="'Titulo'" style='text-align : center' >
                     <a href="" ng-click="VForo0(row['titulo'])">{{row["titulo"]}}</a>
                 </td>
-                <td data-title="'Fecha'" ng-bind="row['fecha']"></td>
-                <td><a ng-click="AElimForo1(row['titulo'])">Eliminar</a></td>
+                <td data-title="'Fecha'" ng-bind="row['fecha']" style='text-align : center'></td>
+                <td data-title="'Creador'" ng-bind="row['autor']" style='text-align : center'></td>
+                <td><a ng-click="AElimForo1(row['titulo'])" ng-show="row['autor']==usuario.nombre">Eliminar</a></td>
             </tr>
         </table>
         
