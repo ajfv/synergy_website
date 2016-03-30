@@ -105,8 +105,13 @@ socialModule.controller('VPrincipalController',
           $location.path(label);
           $route.reload();
         });};
+
       $scope.VContactos2 = function(idUsuario) { // cambiar a VContactos1
         $location.path('/VContactos/'+idUsuario);
+      };
+
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
       };
       
       $scope.VForos = function(){ // Cambiar a VForos1

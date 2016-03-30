@@ -186,8 +186,18 @@ socialModule.controller('VContactosController',
 
 
       });
+
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
+      };
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+      $scope.VForos = function(){
+        $location.path('/VForos');
       };
       $scope.VAdminContactos2 = function(idUsuario) {
         $location.path('/VAdminContactos/'+idUsuario);
