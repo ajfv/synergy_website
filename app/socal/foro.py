@@ -63,7 +63,6 @@ def AgregForo():
     db.session.commit()
 
     res = results[0]
-    print("TEST AGREG FORO: ",params)
     return json.dumps(res)
 
 #------------------------------------------------------------------------------#
@@ -75,7 +74,6 @@ def VHilos():
     #GET parameter
     res = {}
     idHilo = request.args['idHilo']
-    print(idHilo)
     if "actor" in session:
         res['actor']=session['actor']
         res['usuario'] = {'nombre': session['nombre_usuario']}
@@ -83,8 +81,6 @@ def VHilos():
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
     raiz = hilo.raiz
-    print(raiz)
-    print(raiz.titulo)
     if hilo.sitio is None:
         res['foroPadre'] =  hilo.foro_id
     res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
@@ -119,7 +115,6 @@ def AgregHilo():
     db.session.commit()
 
     res = results[0]
-    print("TEST AGREG FORO: ",params)
     return json.dumps(res)
 
 #------------------------------------------------------------------------------#
