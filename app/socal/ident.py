@@ -1,7 +1,7 @@
 from flask import request, session, Blueprint, json
 
 ident = Blueprint('ident', __name__)
-from base import Usuario, Pagina, db, Sitio
+from base import Usuario, Pagina, db, Sitio, Hilo, Publicacion
     
 @ident.route('/ident/AIdentificar', methods=['POST'])
 def AIdentificar():
@@ -95,6 +95,27 @@ def VPrincipal():
         } for pag in pags
     ]
     res["paginas"] = paginas
+    
+    idPagina = 'principal'
+    res['idUsuario'] = session['nombre_usuario']
+    pag = Sitio.query.filter_by(id=idPagina).first()
+    
+    if pag is None:
+        print("aqui")
+        s = Sitio("principal",'')
+        db.session.add(s)
+        db.session.commit()
+        h = Hilo(sitio=s)
+        db.session.add(h)
+        db.session.commit()
+        p = Publicacion(s.titulo, s.titulo, hilo=h)
+        db.session.add(p)
+        db.session.commit()
+        pag = Sitio.query.filter_by(id=idPagina).first()
+    res['pag'] = {
+        'hilo': pag.hilo.id, 'titulo': pag.titulo, 
+        'contenido': pag.contenido, 'imagenes': pag.imagenes}
+        
     #Action code ends here
     return json.dumps(res)
 
