@@ -85,7 +85,7 @@ def VHilos():
     if hilo.sitio is None:
         res['foroPadre'] =  hilo.foro_id
     res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
-    res['publicaciones'] = raiz.a_diccionario()
+    res['publicacion'] = raiz.a_diccionario()
 
     #Action code ends here
     return json.dumps(res)

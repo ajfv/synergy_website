@@ -131,7 +131,7 @@ socialModule.controller('VSecundariaController',
       
       var cargarComentarios = function() {
           foroService.VHilos({'idHilo': $scope.pag.hilo}).then(function (object){
-              $scope.publicaciones = object.data.publicaciones
+              $scope.publicacion = object.data.publicacion
               $scope.fpublicacion = {titulo: object.data.tituloNuevaPublicacion}
               $scope.comentarios = true;
           });

@@ -39,7 +39,7 @@
         <div ng-if="comentarios" class="well">
             <h4>Comentarios:</h4>
             <ul>
-                <li ng-repeat="publicacion in publicaciones.hijos" ng-include="'tree_item_renderer.html'"></li>
+                <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
             </ul>
             <div ng-include="'responder_Publicacion.html'"></div>
     </div>
