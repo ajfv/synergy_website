@@ -109,9 +109,13 @@ def VSecundaria():
     res['idUsuario'] = session['nombre_usuario']
     pag = Sitio.query.filter_by(id=idPagina).first()
     if pag is None:
-        res['pag'] = {'hilo':-1, 'titulo': 'Lo sentimos', 'contenido': 'La página que busca no existe.', 'imagenes':''}
+        res['pag'] = {
+            'hilo':-1, 'titulo': 'Lo sentimos',
+            'contenido': 'La página que busca no existe.', 'imagenes':''}
     else:
-        res['pag'] = {'hilo': pag.hilo.id, 'titulo': pag.titulo, 'contenido': pag.contenido, 'imagenes': pag.imagenes}
+        res['pag'] = {
+            'hilo': pag.hilo.id, 'titulo': pag.titulo, 
+            'contenido': pag.contenido, 'imagenes': pag.imagenes}
     #Action code ends here
     return json.dumps(res)
 

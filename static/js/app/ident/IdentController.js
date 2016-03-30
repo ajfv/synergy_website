@@ -129,13 +129,78 @@ socialModule.controller('VSecundariaController',
           $location.path('/VForos');
       };
       
-      $scope.mostrarComentarios = function (idHilo){
-          if (idHilo == -1)
-            return;
-         $scope.comentarios = true;
-          foroService.VHilos({'idHilo': idHilo}).then(function (object){
+      var cargarComentarios = function() {
+          foroService.VHilos({'idHilo': $scope.pag.hilo}).then(function (object){
+              $scope.publicaciones = object.data.publicaciones
+              $scope.fpublicacion = {titulo: object.data.tituloNuevaPublicacion}
+              $scope.comentarios = true;
           });
       };
+      $scope.mostrarComentarios = function (){
+          if ($scope.pag.hilo == -1)
+            return;
+          cargarComentarios();
+      };
+      $scope.fpublicacionFormSubmitted = false;
+      
+      var agregarPublicacion = function(scope, isValid, idPublicacion) {
+        scope.fpublicacionFormSubmitted = true;
+        if (isValid) {
+          args = {}
+          args['id'] = idPublicacion;
+          args['titulo'] = scope.fpublicacion.titulo;
+          args['contenido'] = scope.fpublicacion.texto;
+          foroService.AgregPublicacion(args).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              ngDialog.closeAll();
+              cargarComentarios();
+              
+          });
+        }
+      };
+      
+      $scope.AgregPublicacion3 = function(isValid, id) {
+          agregarPublicacion($scope, isValid, id);
+      };
+      
+      $scope.responderPublicacion = function(publicacion) {
+          var nuevoScope = $scope.$new(true);
+          nuevoScope.publicacion = publicacion;
+          nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
+          nuevoScope.fpublicacionFormSubmitted = false;
+          nuevoScope.AgregPublicacion3 = function(isValid, id) {
+              agregarPublicacion(nuevoScope, isValid, id);
+          };
+          ngDialog.open({ template: 'responder_Publicacion.html',
+          showClose: true, closeByDocument: true, closeByEscape: true,
+          scope: nuevoScope
+          });
+      };
+      
+      $scope.colapsar = function (id) {
+          var element = document.getElementById('publicacion' + id);
+          var boton = document.getElementById('boton' + id);
+          if (element.style.display == 'none') {
+              element.style.display = 'initial';
+              boton.innerHTML = "[-]";
+          } else {
+              element.style.display = 'none';
+              boton.innerHTML = "[+]";
+          }
+      };
+      
+      $scope.AElimPublicacion1 = function(idPublicacion) {
+        //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
+        var arg = {};
+        //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+        arg['idPublicacion'] = ((typeof id === 'object')?JSON.stringify(idPublicacion):idPublicacion);
+        foroService.AElimPublicacion(arg).then(function (object) {
+            var msg = object.data["msg"];
+            if (msg) flash(msg);
+            cargarComentarios()
+        });
+    };
     }]);
     
 socialModule.controller('VRegistroController', 
