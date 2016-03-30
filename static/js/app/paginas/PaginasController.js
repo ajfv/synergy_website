@@ -34,6 +34,15 @@ socialModule.controller('VMiPaginaController',
       $scope.VMiPagina0 = function(idUsuario) {
         $location.path('/VMiPagina/'+idUsuario);
       };
+      $scope.VForos = function(){
+        $location.path('/VForos');
+      };
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
 
 $scope.__ayuda = function() {
 ngDialog.open({ template: 'ayuda_VMiPagina.html',

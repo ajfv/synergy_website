@@ -79,8 +79,8 @@ socialModule.controller('VLoginController',
     }]);
 
 socialModule.controller('VPrincipalController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService', 'foroService',
-    function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService, foroService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'chatService', 'identService', 'paginasService', 'foroService',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, chatService, identService, paginasService, foroService) {
       $scope.msg = '';
       identService.VPrincipal().then(function (object) {
         $scope.res = object.data;
@@ -123,6 +123,10 @@ socialModule.controller('VPrincipalController',
         });
       };
 
+$scope.__ayuda = function() {
+  ngDialog.open({ template: 'ayuda_VPrincipal.html',
+        showClose: true, closeByDocument: true, closeByEscape: true});
+}
     }]);
 
 // Usar el 2 para identificar los "href" ($scope.VLogin2)
