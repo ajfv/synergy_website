@@ -46,8 +46,19 @@ socialModule.controller('VForoController',
             $location.path('/');
         }
 
-        $scope.VForos1 = function(){
+        $scope.VForos = function(){
           $location.path('/VForos');
+        };
+
+        $scope.VLogin1 = function() {
+          $location.path('/VLogin');
+        };
+        $scope.VContactos2 = function(idUsuario) {
+          $location.path('/VContactos/'+idUsuario);
+        };
+        
+        $scope.VMiPagina0 = function(idUsuario) {
+          $location.path('/VMiPagina/'+idUsuario);
         };
 
         $scope.idForo = $routeParams.idForo;

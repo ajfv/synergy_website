@@ -41,6 +41,7 @@ def VForo():
         for h in Hilo.query.filter_by(foro_id=idForo)]
 
     res['data'] = listaHilos
+    res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
     return json.dumps(res)
