@@ -253,6 +253,8 @@ socialModule.controller('VHilosController',
         $scope.fpublicacionFormSubmitted = false;
         
         var agregarPublicacion = function(scope, isValid, idPublicacion) {
+          if (scope.fpublicacionFormSubmitted)
+            return;
           scope.fpublicacionFormSubmitted = true;
           if (isValid) {
             args = {}
