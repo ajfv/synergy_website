@@ -56,9 +56,25 @@ socialModule.controller('VAdminContactosController',
 
 
       });
+
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
+
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+      $scope.VForos = function(){
+        $location.path('/VForos');
+      };
+
+
       $scope.AgregGrupo4 = function(idUsuario) {
 
         chatService.AgregGrupo({"idUsuario":((typeof idUsuario === 'object')?JSON.stringify(idUsuario):idUsuario)}).then(function (object) {
@@ -190,20 +206,20 @@ socialModule.controller('VContactosController',
       $scope.VLogin1 = function() {
         $location.path('/VLogin');
       };
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
       $scope.VContactos2 = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
       };
       $scope.VForos = function(){
         $location.path('/VForos');
       };
-      $scope.VAdminContactos2 = function(idUsuario) {
-        $location.path('/VAdminContactos/'+idUsuario);
-      };
       $scope.VMiPagina0 = function(idUsuario) {
         $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.VPrincipal0 = function() {
+        $location.path('/VPrincipal');
+      };
+      $scope.VAdminContactos2 = function(idUsuario) {
+        $location.path('/VAdminContactos/'+idUsuario);
       };
       $scope.VChat1 = function(idChat) {
         $location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));

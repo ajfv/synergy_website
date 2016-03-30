@@ -86,7 +86,7 @@ def VMiPagina():
         res['titulo'] = ""
         res['contenido'] = "Este usuario no ha creado su página."
         res['crearPag'] = "Si desea crear su página presione el botón \"crear página\"."
-        res['pagVacia'] = True 
+        res['pagVacia'] = 'true' 
 
     if session['nombre_usuario'] == idUsuario:
         res['mostrar'] = 'true'
