@@ -154,6 +154,17 @@ socialModule.controller('VChatController',
         $location.path('/VContactos/'+idUsuario);
       };
 
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
+
+      $scope.VForos = function(){
+        $location.path('/VForos');
+      };
+
       $scope.fChatSubmitted = false;
       $scope.AEscribir1 = function(isValid) {
         $scope.fChatSubmitted = true;
