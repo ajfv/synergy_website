@@ -21,16 +21,18 @@ socialModule.controller('VMiPaginaController',
             $location.path('/');
         }
 
-
       });
-      $scope.VPrincipal1 = function() {
-        $location.path('/VPrincipal');
+      $scope.VForos = function(){
+        $location.path('/VForos');
       };
-      $scope.VPagina2 = function(idUsuario) {
-        $location.path('/VPagina/'+idUsuario);
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
       };
-       $scope.VInicio1 = function() {
-        $location.path('/VInicio');
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
       };
 
 $scope.__ayuda = function() {
