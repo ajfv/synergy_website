@@ -96,6 +96,9 @@ socialModule.controller('VPrincipalController',
       $scope.VLogin1 = function() {
         $location.path('/VLogin');
       };
+      $scope.VInicio1 = function() {
+        $location.path('/VInicio');
+      };
       $scope.APagina1 = function(idPagina) {
          
         paginasService.APagina({"idPagina":((typeof idPagina === 'object')?JSON.stringify(idPagina):idPagina)}).then(function (object) {
