@@ -1,28 +1,65 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" 
-                    data-toggle="collapse" 
-                    data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" >Foros</span>
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-click="VInicio2()">
+                    <img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div>
+                    <ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+                            <a ng-click="VMiPagina0(idUsuario)">
+                                Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="VContactos2(idUsuario)">
+                                Contactos
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="VForos()">
+                                Foros
+                            </a>
+                        </li>
+    
+                        <li id="user">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown">
+                                    <span ng-show="usuario.nombre" ng-bind="usuario.nombre">
+                                    </span>
+                                    <i class="icon-chevron-down">
+                                    </i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="__ayuda()">
+                                            <span class="glyphicon glyphicon-info-sign"></span>Ayuda
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="VPrincipal0()"><!--Usar una clase para el color-->
+                                            Regresar
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="VLogin1()">
+                                            Salir
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-<li><a ng-click="VPrincipal0()">
-    Regresar</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+</header>
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
     
        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
@@ -56,7 +93,8 @@
         
         <hr />
 
-<div id="right"></div><script type="text/ng-template" id="ayuda_VAdminContactos.html">
+<div id="right"></div><script type="text/ng-template" id="ayuda_VForos.html">
 
+Manual
 
 </script>

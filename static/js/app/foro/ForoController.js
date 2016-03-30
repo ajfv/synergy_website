@@ -33,6 +33,7 @@ socialModule.controller('VComentariosPaginaController',
 
       });
     }]);
+
 socialModule.controller('VForoController',
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService', 'ngTableParams',
     function ($scope, $location, $route, $timeout, flash, $routeParams, foroService, ngTableParams) {
@@ -56,7 +57,7 @@ socialModule.controller('VForoController',
         $scope.VContactos2 = function(idUsuario) {
           $location.path('/VContactos/'+idUsuario);
         };
-        
+
         $scope.VMiPagina0 = function(idUsuario) {
           $location.path('/VMiPagina/'+idUsuario);
         };
@@ -123,6 +124,7 @@ socialModule.controller('VForoController',
 
       });
     }]);
+
 socialModule.controller('VForosController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'foroService', 'ngTableParams',
     function ($scope, $location, $route, $timeout, flash, foroService, ngTableParams) {
@@ -151,11 +153,23 @@ socialModule.controller('VForosController',
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
-      $scope.__ayuda = function() {
-        ngDialog.open({ template: 'ayuda_VForos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
+      $scope.VForos = function(){
+        $location.path('/VForos');
       };
-
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.__ayuda = function() {
+      ngDialog.open({ template: 'ayuda_VForos.html',
+              showClose: true, closeByDocument: true, closeByEscape: true});
+      }
+      
       $scope.fForoSubmitted = false;
       $scope.AgregForo3 = function(isValid) {
         $scope.fForoSubmitted = true;

@@ -60,6 +60,7 @@ def VForos():
         listaForos.append({'titulo':ftitulo,'fecha': ffecha,'autor':fautor})
 
     res['data'] = listaForos
+    res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
     return json.dumps(res)
