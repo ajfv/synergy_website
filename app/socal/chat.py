@@ -287,6 +287,7 @@ def VAdminContactos():
 
 
     res['fContacto_opcionesNombre'] = opciones_usuarios
+    res['idUsuario'] = idUsuario
 
 
     #Action code ends here

@@ -41,6 +41,7 @@ def VForo():
         for h in Hilo.query.filter_by(foro_id=idForo)]
 
     res['data'] = listaHilos
+    res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
     return json.dumps(res)
@@ -59,6 +60,7 @@ def VForos():
         listaForos.append({'titulo':ftitulo,'fecha': ffecha,'autor':fautor})
 
     res['data'] = listaForos
+    res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
     return json.dumps(res)
@@ -98,6 +100,7 @@ def VHilos():
     raiz = hilo.raiz
     res['foroPadre'] =  hilo.foro_id
     res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
+    res['idUsuario'] = session['nombre_usuario']
     res['publicaciones'] = raiz.a_diccionario()
 
     #Action code ends here
