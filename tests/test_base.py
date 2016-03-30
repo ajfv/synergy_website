@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import unittest
 import base
 from flask import Flask, json, current_app, session, request
@@ -74,8 +76,8 @@ class BaseTestCase(unittest.TestCase):
         with base.app.app_context():
             self.assertTrue(current_app.config['TESTING'])
 
-
-
+    
+    
     def test_VLogin(self):
         result = self.app.get('/ident/VLogin')
         self.assertEqual(result.status_code, 200)
@@ -192,18 +194,18 @@ class BaseTestCase(unittest.TestCase):
 
     #Esta en el API, pero bueno...
     """
-    def test_AgregContacto_no_existe(self):
-        with self.app as contexto:
-            with contexto.session_transaction() as sesion_actual:
-                sesion_actual['nombre_usuario'] = 'johngalt'
-
-            res = self.app.post('/chat/AgregContacto', data=json.dumps({
-                'nombre': 'no existo',
-                'opcionesNombre': 'no_existo'
-            }), content_type='application/json;charset=utf-8', follow_redirects=True)
-
-            self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
-            self.assertTrue(bytes('No se pudo agregar contacto', 'UTF-8') in res.data) # True si contacto existe
+    #def test_AgregContacto_no_existe(self):
+    #    with self.app as contexto:
+    #        with contexto.session_transaction() as sesion_actual:
+    #            sesion_actual['nombre_usuario'] = 'johngalt'
+    #
+    #        res = self.app.post('/chat/AgregContacto', data=json.dumps({
+    #            'nombre': 'no existo',
+    #            'opcionesNombre': 'no_existo'
+    #        }), content_type='application/json;charset=utf-8', follow_redirects=True)
+    #
+    #        self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
+    #        self.assertTrue(bytes('No se pudo agregar contacto', 'UTF-8') in res.data) # True si contacto existe
     """
 
     def test_AElimContacto(self):
@@ -217,47 +219,47 @@ class BaseTestCase(unittest.TestCase):
 
     #Esta en el API, pero no puede ocurrir y por ahora no se prueba
     """
-    def test_AElimContacto_no_existe(self):
-        with self.app as contexto:
-            with contexto.session_transaction() as sesion_actual:
-                sesion_actual['nombre_usuario'] = 'johngalt'
-            res = contexto.get('/chat/AElimContacto?id=no_existo')
-        self.assertEqual(res.status_code,200)
-        self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
-        self.assertTrue(bytes('No se pudo eliminar contacto', 'UTF-8') in res.data) # True si tiene si usuario no tenia contacto
+    #def test_AElimContacto_no_existe(self):
+    #    with self.app as contexto:
+    #        with contexto.session_transaction() as sesion_actual:
+    #            sesion_actual['nombre_usuario'] = 'johngalt'
+    #        res = contexto.get('/chat/AElimContacto?id=no_existo')
+    #    self.assertEqual(res.status_code,200)
+    #    self.assertTrue(bytes('/VAdminContactos', 'UTF-8') in res.data)
+    #    self.assertTrue(bytes('No se pudo eliminar contacto', 'UTF-8') in res.data) # True si tiene si usuario no tenia contacto
     """
 
     """
-    def test_AEscribir(self):
-        with self.app as contexto:
-            with contexto.session_transaction() as sesion_actual:
-                sesion_actual['nombre_usuario'] = 'johngalt'
-                sesion_actual['amigo'] = 'RL'
-                sesion_actual['idChat'] = base.Amigo.query.filter_by(amigo1='johngalt').first().chat_id
-
-            res = self.app.post('/chat/AEscribir', data=json.dumps({
-                'texto': 'HOLA HOLA'
-            }), content_type='application/json;charset=utf-8', follow_redirects=True)
-
-            self.assertTrue(bytes('/VChat', 'UTF-8') in res.data)
-            self.assertTrue(bytes('Enviado', 'UTF-8') in res.data)
-            self.assertTrue(base.Mensaje.query.filter_by(contenido='HOLA HOLA' #True si se guarda en la base de datos
-                                                        , usuario_origen='johngalt').first() is not None)
+    #def test_AEscribir(self):
+    #    with self.app as contexto:
+    #        with contexto.session_transaction() as sesion_actual:
+    #            sesion_actual['nombre_usuario'] = 'johngalt'
+    #            sesion_actual['amigo'] = 'RL'
+    #            sesion_actual['idChat'] = base.Amigo.query.filter_by(amigo1='johngalt').first().chat_id
+    #
+    #        res = self.app.post('/chat/AEscribir', data=json.dumps({
+    #            'texto': 'HOLA HOLA'
+    #        }), content_type='application/json;charset=utf-8', follow_redirects=True)
+    #
+    #        self.assertTrue(bytes('/VChat', 'UTF-8') in res.data)
+    #        self.assertTrue(bytes('Enviado', 'UTF-8') in res.data)
+    #        self.assertTrue(base.Mensaje.query.filter_by(contenido='HOLA HOLA' #True si se guarda en la base de datos
+    #                                                    , usuario_origen='johngalt').first() is not None)
 
     """
     #Esta en el API
     """
-    def test_AEscribir_falla(self)
-        with self.app as contexto:
-            with contexto.session_transaction() as sesion_actual:
-                sesion_actual['nombre_usuario'] = 'johngalt'
-                sesion_actual['amigo'] = 'no_existo'
-            res = self.app.post('/chat/AEscribir', data=json.dumps({
-                'texto': 'HOLA HOLA HOLA'
-            }), content_type='application/json;charset=utf-8', follow_redirects=True)
-
-            self.assertTrue(bytes('/VChat', 'UTF-8') in res.data)
-            self.assertTrue(bytes('No se pudo enviar mensaje', 'UTF-8') in res.data) #True si el amigo no existe
+    #def test_AEscribir_falla(self)
+    #    with self.app as contexto:
+    #        with contexto.session_transaction() as sesion_actual:
+    #            sesion_actual['nombre_usuario'] = 'johngalt'
+    #            sesion_actual['amigo'] = 'no_existo'
+    #        res = self.app.post('/chat/AEscribir', data=json.dumps({
+    #            'texto': 'HOLA HOLA HOLA'
+    #        }), content_type='application/json;charset=utf-8', follow_redirects=True)
+    #
+    #        self.assertTrue(bytes('/VChat', 'UTF-8') in res.data)
+    #        self.assertTrue(bytes('No se pudo enviar mensaje', 'UTF-8') in res.data) #True si el amigo no existe
     """
 
     def test_AgregGrupo(self):
@@ -319,6 +321,81 @@ class BaseTestCase(unittest.TestCase):
             res = contexto.get('/chat/AgregGrupo')
         self.assertEqual(res.status_code,200) # True si puede ver el grupo
         self.assertTrue(bytes('Grupo agregado', 'UTF-8') in res.data)
+    
+    
+    def test_VForo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                id_foro = base.Foro.query.filter_by(autor_id="johngalt").first().titulo
+            res = contexto.get('/foro/VForo?idForo='+str(id_foro))
+        self.assertEqual(res.status_code,200) # True si puede ver el foro de este usuario
+        
+    
+    def test_VForos(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+            res = contexto.get('/foro/VForos')
+        self.assertEqual(res.status_code,200) # True si puede ver los foros
+     
+     
+    def test_AgregForo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros)
+            res = self.app.post('/foro/AgregForo', data=json.dumps({
+                'texto': nombre_foro
+            }), content_type='application/json;charset=utf-8', follow_redirects=True)
+
+            self.assertTrue(bytes('/VForos', 'UTF-8') in res.data)
+            self.assertTrue(bytes('Foro Agregado', 'UTF-8') in res.data)
+            #self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
+    
+    def test_AgregHilo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
+                print("TEST AGREG HILO", nombre_foro)
+                sesion_actual['idForo'] = nombre_foro
+            res = self.app.post('/foro/AgregHilo', data=json.dumps({
+                'titulo': "Hilo",
+                'contenido':"HOLA HILO"
+            }), content_type='application/json;charset=utf-8', follow_redirects=True)
+            
+            self.assertTrue(bytes('/VForo', 'UTF-8') in res.data)
+            self.assertTrue(bytes('Hilo Agregado', 'UTF-8') in res.data)
+            #self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
+    
+    def test_AElimHilo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
+                print("TEST AELIMHILO: ",nombre_foro)
+                sesion_actual['idForo'] = nombre_foro
+                id_hilo = base.Hilo.query.filter_by(foro_id=nombre_foro).first().id
+            res = contexto.get('/foro/AElimHilo?idHilo='+str(id_hilo))
+        self.assertEqual(res.status_code,200) # True si puede eliminar el foro de este usuario
+        self.assertTrue(bytes('Hilo eliminado', 'UTF-8') in res.data)
+    
+    
+    def test_AElimHiloForo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
+            res = contexto.get('/foro/AElimForo?idForo='+nombre_foro)
+        self.assertEqual(res.status_code,200) # True si puede eliminar el foro de este usuario
+        self.assertTrue(bytes('Foro eliminado', 'UTF-8') in res.data)
+    
+    
 
 
 if __name__ == '__main__':
