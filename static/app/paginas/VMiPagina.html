@@ -31,6 +31,11 @@
 
 <div ng-bind-html="contenido"></div>
 
+<div class="well" ng-show="pagVacia && mostrar">
+    {{crearPag}} <br>
+    <a id = "config" class="btn btn-primary" ng-click="VPagina2(idUsuario)">Crear página</a>
+</div>
+
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VMiPagina.html">

@@ -85,6 +85,9 @@ def VMiPagina():
     else:
         res['titulo'] = ""
         res['contenido'] = "Este usuario no ha creado su página."
+        res['crearPag'] = "Si desea crear su página presione el botón \"crear página\"."
+        res['pagVacia'] = True 
+
     if session['nombre_usuario'] == idUsuario:
         res['mostrar'] = 'true'
     res['idUsuario'] = idUsuario #Esto arregla el botón del prof
