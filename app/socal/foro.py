@@ -197,8 +197,11 @@ def AElimPublicacion():
     {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}]
     
     if publicacion_a_eliminar.autor_id == session['nombre_usuario']:
-        publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
-        publicacion_a_eliminar.eliminada = True
+        if publicacion_a_eliminar.hijos == []:
+            db.session.delete(publicacion_a_eliminar)
+        else:
+            publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
+            publicacion_a_eliminar.eliminada = True
         db.session.commit()
         res = results[0]
     else:

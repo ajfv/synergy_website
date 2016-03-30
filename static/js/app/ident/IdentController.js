@@ -134,6 +134,8 @@ socialModule.controller('VSecundariaController',
               $scope.publicacion = object.data.publicacion
               $scope.fpublicacion = {titulo: object.data.tituloNuevaPublicacion}
               $scope.comentarios = true;
+              $scope.fpublicacionFormSubmitted = false
+              $scope.error = false
           });
       };
       $scope.mostrarComentarios = function (){
@@ -141,7 +143,6 @@ socialModule.controller('VSecundariaController',
             return;
           cargarComentarios();
       };
-      $scope.fpublicacionFormSubmitted = false;
       
       var agregarPublicacion = function(scope, isValid, idPublicacion) {
         if (scope.fpublicacionFormSubmitted)
@@ -150,16 +151,18 @@ socialModule.controller('VSecundariaController',
         if (isValid) {
           args = {}
           args['id'] = idPublicacion;
-          args['titulo'] = scope.fpublicacion.titulo;
+          args['titulo'] = "Comentario-de-pagina";
           args['contenido'] = scope.fpublicacion.texto;
           foroService.AgregPublicacion(args).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
               ngDialog.closeAll();
               cargarComentarios();
-              
           });
-        }
+      } else {
+          scope.error = true;
+          scope.fpublicacionFormSubmitted = false;
+      } 
       };
       
       $scope.AgregPublicacion3 = function(isValid, id) {

@@ -251,7 +251,7 @@ socialModule.controller('VHilosController',
       
         $scope.fpublicacion = { titulo: $scope.res['tituloNuevaPublicacion']};
         $scope.fpublicacionFormSubmitted = false;
-        
+        $scope.error = false;
         var agregarPublicacion = function(scope, isValid, idPublicacion) {
           if (scope.fpublicacionFormSubmitted)
             return;
@@ -269,7 +269,10 @@ socialModule.controller('VHilosController',
                 $location.path(label);
                 $route.reload();
             });
-          }
+        } else{
+            scope.error = true;
+            scope.fpublicacionFormSubmitted = false;
+        }
         };
         
         $scope.AgregPublicacion3 = function(isValid, id) {
@@ -281,6 +284,7 @@ socialModule.controller('VHilosController',
             nuevoScope.publicacion = publicacion;
             nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
             nuevoScope.fpublicacionFormSubmitted = false;
+            nuevoScope.error = false;
             nuevoScope.AgregPublicacion3 = function(isValid, id) {
                 agregarPublicacion(nuevoScope, isValid, id);
             };
