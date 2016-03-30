@@ -273,6 +273,19 @@ socialModule.controller('VGrupoController',
         $location.path('/VAdminContactos/'+idUsuario);
       };
 
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+      $scope.VForos = function(){
+        $location.path('/VForos');
+      };
+
       $scope.fMiembroSubmitted = false;
       $scope.AgregMiembro0 = function(isValid) {
         $scope.fMiembroSubmitted = true;
