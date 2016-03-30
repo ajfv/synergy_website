@@ -78,12 +78,12 @@ class BaseTestCase(unittest.TestCase):
 
     
     
-    def test_VLogin(self):
+    def test_1VLogin(self):
         result = self.app.get('/ident/VLogin')
         self.assertEqual(result.status_code, 200)
 
 
-    def test_AIdentificar(self):
+    def test_2AIdentificar(self):
         #result = self.app.post('/ident/AIdentificar',data=dict(usuario='johngalt',clave='johngalt'),follow_redirects=True)
         #self.assertTrue(result.status_code == 302)
         res = self.app.post('/ident/AIdentificar', data=json.dumps({
@@ -95,7 +95,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('/VPrincipal', 'UTF-8') in res.data) # True si esta registrado
 
 
-    def test_ARegistrar(self):
+    def test_3ARegistrar(self):
         res = self.app.post('/ident/ARegistrar', data=json.dumps({
             'nombre':'Francisco Danconia',
             'usuario': 'franc',
@@ -111,7 +111,7 @@ class BaseTestCase(unittest.TestCase):
 
 
 
-    def test_VPrincipal(self):
+    def test_4VPrincipal(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'franc'
@@ -119,7 +119,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,200)
 
 
-    def test_APagina_no_tiene(self):
+    def test_5APagina_no_tiene(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'franc'
@@ -128,7 +128,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('/VPagina', 'UTF-8') in res.data) #True si usuario no tiene pagina
 
 
-    def test_APagina_si_tiene(self):
+    def test_6APagina_si_tiene(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -137,7 +137,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('/VMiPagina', 'UTF-8') in res.data) #True si usuario tiene pagina
 
 
-    def test_AModificarPagina(self):
+    def test_7AModificarPagina(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -152,7 +152,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('Cambios almacenados', 'UTF-8') in res.data)
 
 
-    def test_VMiPagina(self):
+    def test_8VMiPagina(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -160,7 +160,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,200) # True si tiene si usuario tiene pagina
 
 
-    def test_VContactos(self):
+    def test_9VContactos(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -170,7 +170,7 @@ class BaseTestCase(unittest.TestCase):
 
 
 
-    def test_VAdminContactos(self):
+    def test_10VAdminContactos(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -179,7 +179,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('data1', 'UTF-8') in res.data)
 
 
-    def test_AgregContacto(self):
+    def test_11AgregContacto(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -208,7 +208,7 @@ class BaseTestCase(unittest.TestCase):
     #        self.assertTrue(bytes('No se pudo agregar contacto', 'UTF-8') in res.data) # True si contacto existe
     """
 
-    def test_AElimContacto(self):
+    def test_12AElimContacto(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -262,7 +262,7 @@ class BaseTestCase(unittest.TestCase):
     #        self.assertTrue(bytes('No se pudo enviar mensaje', 'UTF-8') in res.data) #True si el amigo no existe
     """
 
-    def test_AgregGrupo(self):
+    def test_13AgregGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -271,7 +271,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('Grupo agregado', 'UTF-8') in res.data)
 
 
-    def test_VGrupo(self):
+    def test_14VGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -283,7 +283,7 @@ class BaseTestCase(unittest.TestCase):
 
 
 
-    def test_ASalirGrupo(self):
+    def test_15ASalirGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -296,7 +296,7 @@ class BaseTestCase(unittest.TestCase):
 
 
 
-    def test_AgregMiembro(self):
+    def test_16AgregMiembro(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -314,7 +314,7 @@ class BaseTestCase(unittest.TestCase):
             #self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
 
 
-    def test_AgregGrupo(self):
+    def test_17AgregGrupo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -323,7 +323,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('Grupo agregado', 'UTF-8') in res.data)
     
     
-    def test_VForo(self):
+    def test_18VForo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -332,7 +332,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,200) # True si puede ver el foro de este usuario
         
     
-    def test_VForos(self):
+    def test_19VForos(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -340,7 +340,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,200) # True si puede ver los foros
      
      
-    def test_AgregForo(self):
+    def test_20AgregForo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -354,13 +354,12 @@ class BaseTestCase(unittest.TestCase):
             self.assertTrue(bytes('Foro Agregado', 'UTF-8') in res.data)
             #self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
     
-    def test_AgregHilo(self):
+    def test_21AgregHilo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
                 numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
                 nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
-                print("TEST AGREG HILO", nombre_foro)
                 sesion_actual['idForo'] = nombre_foro
             res = self.app.post('/foro/AgregHilo', data=json.dumps({
                 'titulo': "Hilo",
@@ -371,13 +370,58 @@ class BaseTestCase(unittest.TestCase):
             self.assertTrue(bytes('Hilo Agregado', 'UTF-8') in res.data)
             #self.assertTrue(base.Grupo.miembrosGrupo.query.filter_by(nombre_usuario="johngalt").first() is not None) #True si se agrega
     
-    def test_AElimHilo(self):
+    def test_22VHilos(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
                 numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
                 nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
-                print("TEST AELIMHILO: ",nombre_foro)
+                sesion_actual['idForo'] = nombre_foro
+                id_hilo = base.Hilo.query.filter_by(foro_id=nombre_foro).first().id
+            res = contexto.get('/foro/VHilos?idHilo='+str(id_hilo))
+        self.assertEqual(res.status_code,200) # True si puede ver los foros
+        self.assertTrue(bytes(nombre_foro, 'UTF-8') in res.data)
+    
+    
+    def test_23AgregPublicacion(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
+                sesion_actual['idForo'] = nombre_foro
+                hilo_actual = base.Hilo.query.filter_by(foro_id=nombre_foro).first()
+                datos_pub_raiz = hilo_actual.raiz.a_diccionario()
+            res = self.app.post('/foro/AgregPublicacion', data=json.dumps({
+                'id':datos_pub_raiz['id'],
+                'titulo': "Hilo",
+                'contenido':"HOLA HILO"
+            }), content_type='application/json;charset=utf-8', follow_redirects=True)
+            
+            self.assertTrue(bytes('/VHilos', 'UTF-8') in res.data)
+            self.assertTrue(bytes('Respuesta enviada', 'UTF-8') in res.data)
+    
+    
+    def test_24AElimPublicacion(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
+                sesion_actual['idForo'] = nombre_foro
+                hilo_actual = base.Hilo.query.filter_by(foro_id=nombre_foro).first()
+                datos_pub_raiz = hilo_actual.raiz.a_diccionario()
+            res = contexto.get('/foro/AElimPublicacion?idPublicacion='+str(datos_pub_raiz['id']))
+        self.assertEqual(res.status_code,200) # True si puede eliminar el foro de este usuario
+        self.assertTrue(bytes('Publicacion eliminada', 'UTF-8') in res.data)
+    
+    
+    def test_25AElimHilo(self):
+        with self.app as contexto:
+            with contexto.session_transaction() as sesion_actual:
+                sesion_actual['nombre_usuario'] = 'johngalt'
+                numero_foros = len(base.Foro.query.filter_by(autor_id="johngalt").all())
+                nombre_foro = "johngalt nuevo foro "+str(numero_foros-1)
                 sesion_actual['idForo'] = nombre_foro
                 id_hilo = base.Hilo.query.filter_by(foro_id=nombre_foro).first().id
             res = contexto.get('/foro/AElimHilo?idHilo='+str(id_hilo))
@@ -385,7 +429,7 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('Hilo eliminado', 'UTF-8') in res.data)
     
     
-    def test_AElimHiloForo(self):
+    def test_26AElimHiloForo(self):
         with self.app as contexto:
             with contexto.session_transaction() as sesion_actual:
                 sesion_actual['nombre_usuario'] = 'johngalt'
@@ -396,7 +440,10 @@ class BaseTestCase(unittest.TestCase):
         self.assertTrue(bytes('Foro eliminado', 'UTF-8') in res.data)
     
     
-
+    
+    
+    
+    
 
 if __name__ == '__main__':
     unittest.main()
