@@ -165,22 +165,23 @@ def AElimHilo():
 def AgregPublicacion():
     #GET parameter
     params = request.get_json()
+    results = [{'msg':['Respuesta enviada']},{'msg':['No se pudo enviar la respuesta']}]
     
     idPadre = params['id']
     titulo = params['titulo']
     contenido = params['contenido']
 
     padre = Publicacion.query.filter_by(id=idPadre).first()
-    
-    # Crear nueva publicacion hijo
-    nueva_publicacion = Publicacion(titulo,contenido,session['nombre_usuario'],
-                                    padre.hilo,padre)
-    db.session.add(nueva_publicacion)
-    db.session.commit()
-
-    results = [{'label':'/VHilos/'+str(padre.hilo_id), 'msg':['Respuesta enviada']},
-    {'label':'/VHilos/'+str(padre.hilo_id), 'msg':['No se pudo enviar la respuesta']}]
-    res = results[0]
+    if padre is None or padre.eliminada:
+        res = results[1]
+    else:
+        # Crear nueva publicacion hijo
+        nueva_publicacion = Publicacion(
+            titulo, contenido, session['nombre_usuario'], padre.hilo,padre
+        )
+        db.session.add(nueva_publicacion)
+        db.session.commit()
+        res = results[0]
     #Action code ends here
     return json.dumps(res)
 
@@ -193,8 +194,7 @@ def AElimPublicacion():
     idPublicacion = request.args['idPublicacion']
     publicacion_a_eliminar = Publicacion.query.filter_by(id=idPublicacion).first()
     idHilo = publicacion_a_eliminar.hilo_id
-    results = [{'label':'/VHilos/'+str(idHilo), 'msg':['Publicacion eliminada']}, 
-    {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}]
+    results = [{'msg':['Publicacion eliminada']}, {'msg':['No se pudo eliminar la publicacion']}]
     
     if publicacion_a_eliminar.autor_id == session['nombre_usuario']:
         if publicacion_a_eliminar.hijos == []:
