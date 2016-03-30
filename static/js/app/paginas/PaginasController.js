@@ -23,22 +23,22 @@ socialModule.controller('VMiPaginaController',
 
 
       });
-      $scope.VPrincipal1 = function() {
+      $scope.VPrincipal = function() {
         $location.path('/VPrincipal');
       };
-      $scope.VPagina2 = function(idUsuario) {
+      $scope.VPagina = function(idUsuario) {
         $location.path('/VPagina/'+idUsuario);
       };
-       $scope.VInicio1 = function() {
+       $scope.VInicio = function() {
         $location.path('/VInicio');
       };
       $scope.VForos = function(){
         $location.path('/VForos');
       };
-      $scope.VLogin1 = function() {
+      $scope.VLogin = function() {
         $location.path('/VLogin');
       };
-      $scope.VContactos2 = function(idUsuario) {
+      $scope.VContactos = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
       };
 
@@ -64,9 +64,25 @@ socialModule.controller('VPaginaController',
 
 
       });
-      $scope.VPrincipal1 = function() {
+      $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
+      $scope.VPagina0 = function(idUsuario) {
+        $location.path('/VPagina/'+idUsuario);
+      };
+       $scope.VInicio0 = function() {
+        $location.path('/VInicio');
+      };
+      $scope.VForos0 = function(){
+        $location.path('/VForos');
+      };
+      $scope.VLogin0 = function() {
+        $location.path('/VLogin');
+      };
+      $scope.VContactos0 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+
 
       $scope.fPaginaSubmitted = false;
       $scope.AModificarPagina0 = function(isValid) {

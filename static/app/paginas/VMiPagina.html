@@ -1,7 +1,7 @@
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" ng-click="VInicio2()">
+			<a class="navbar-brand" ng-click="VInicio()">
 				<img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
 			</a>
 		</div>
@@ -9,12 +9,12 @@
 			<div>
 				<ul class="nav navbar-nav navbar-right lista headerNavBar">
 					<li>
-						<a ng-click="VMiPagina0(idUsuario)">
+						<a ng-click="VMiPagina(idUsuario)">
 							Perfil
 						</a>
 					</li>
 					<li>
-						<a ng-click="VContactos2(idUsuario)">
+						<a ng-click="VContactos(idUsuario)">
 							Contactos
 						</a>
 					</li>
@@ -40,7 +40,7 @@
 									</a>
 								</li>
 								<li>
-									<a style="color:#3B3F44" ng-click="VLogin1()">
+									<a style="color:#3B3F44" ng-click="VLogin()">
 										Salir
 									</a>
 								</li>
@@ -68,7 +68,7 @@
 
 	<div id="boton-modif">
 		<div>
-			<a ng-click="VPagina2(idUsuario)"
+			<a ng-click="VPagina(idUsuario)"
 			   ng-show="(actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false) && mostrar">
 				Modificar
 			</a>
@@ -80,7 +80,7 @@
 <div class="well" ng-show="pagVacia && mostrar">
 	{{crearPag}} 
 	<br>
-	<a id = "config" class="btn btn-primary" ng-click="VPagina2(idUsuario)">Crear página</a>
+	<a id = "config" class="btn btn-primary" ng-click="VPagina(idUsuario)">Crear página</a>
 </div>
 
 <!-- AYUDA -->
