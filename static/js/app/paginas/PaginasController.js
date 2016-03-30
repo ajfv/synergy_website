@@ -84,6 +84,19 @@ socialModule.controller('VPaginaController',
       };
 
 
+      $scope.VMiPagina0 = function(idUsuario) {
+        $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.VLogin1 = function() {
+        $location.path('/VLogin');
+      };
+      $scope.VContactos2 = function(idUsuario) {
+        $location.path('/VContactos/'+idUsuario);
+      };
+      $scope.VForos = function(){
+        $location.path('/VForos');
+      };
+
       $scope.fPaginaSubmitted = false;
       $scope.AModificarPagina0 = function(isValid) {
         $scope.fPaginaSubmitted = true;

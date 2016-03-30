@@ -24,7 +24,7 @@
                     </li>
                     <li>
                         <a ng-click="VForos0()">
-                            Foro
+                            Foros
                         </a>
                     </li>
                     <li id="user">
@@ -38,13 +38,17 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a style="color:#3B3F44" ng-click="__ayuda()">
-                                        <span class="glyphicon glyphicon-info-sign">
-                                            Ayuda
-                                        </span>
+                                        <span class="glyphicon glyphicon-info-sign"></span>Ayuda
                                     </a>
                                 </li>
                                 <li>
-                                    <a style="color:#3B3F44" ng-click="VLogin0()">
+                                    <a style="color:#3B3F44" ng-click="VPrincipal1()"><!--Usar una clase para el color-->
+                                        Regresar
+                                    </a>
+                                </li>
+                                
+                                <li>
+                                    <a style="color:#3B3F44" ng-click="VLogin1()">
                                         Salir
                                     </a>
                                 </li>
@@ -77,14 +81,7 @@
             Error en campo Contenido.
         </p>
     </div>
-        <button type="submit" class="btn btn-perso btn-lg btn-block">
-            <span class="glyphicon glyphicon-flash">
-            </span>
-            Modificar
-        </button>
-</form>
-<hr />
-
+</nav>
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VPagina.html">
 <div><span></span>

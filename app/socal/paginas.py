@@ -110,6 +110,7 @@ def VPagina():
     if pagina_existente is not None:
         res = {"fPagina": {"titulo":pagina_existente.titulo, "contenido":pagina_existente.contenido}}
     res["usuario"]=usuario
+    res['idUsuario'] = idUsuario
     #Action code ends here
     return json.dumps(res)
 
