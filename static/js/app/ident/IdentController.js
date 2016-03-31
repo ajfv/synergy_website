@@ -47,6 +47,14 @@ socialModule.controller('VInicioController',
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
+      
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $route.reload();
+          });
+      };
 
 }]);
 

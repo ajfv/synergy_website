@@ -170,7 +170,8 @@ def VInicio():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
     return json.dumps(res)

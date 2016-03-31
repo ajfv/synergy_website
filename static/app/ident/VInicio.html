@@ -20,10 +20,11 @@
 					<a ng-click="VPrincipal0()">Páginas</a>
 				</li>
 				<li>
-					<a ng-click="VLogin()">Iniciar Sesión</a>
+					<a ng-show="!idUsuario" ng-click="VLogin()">Iniciar Sesión</a>
+					<a ng-show="idUsuario" ng-click="ASalir(idUsuario)">Cerrar Sesión</a>
 				</li>
 				<li>
-					<a ng-click="VRegistro()">Registrarse</a>
+					<a ng-show="!idUsuario" ng-click="VRegistro()">Registrarse</a>
 				</li>
 			</ul>
 		</div>
