@@ -9,6 +9,9 @@
 				<div>
 					<ul class="nav navbar-nav navbar-right lista headerNavBar">
 						<li>
+							<a ng-click="VInicio()">Inicio</a>
+						</li>
+						<li>
 							<a ng-click="VMiPagina0(idUsuario)" ng-show='idUsuario'>
 								Perfil
 							</a>
@@ -36,7 +39,7 @@
 								<span class="glyphicon glyphicon-info-sign"></span>
 							</a> 
 						</li>
-						<li ng-show="idUsuario" class="user">
+						<li ng-show="idUsuario" id="user">
 							<div class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown">
 									<span ng-bind="idUsuario">

@@ -2,7 +2,7 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/VLogin', {
                 controller: 'VLoginController',
                 templateUrl: 'app/ident/VLogin.html'
-            }).when('/VInicio', {
+            }).when('/', {
                 controller: 'VInicioController',
                 templateUrl: 'app/ident/VInicio.html'
             }).when('/VPrincipal', {
@@ -31,10 +31,6 @@ socialModule.controller('VInicioController',
         }
 
       });
-      
-      $scope.VInicio = function() {
-        $location.path('/VInicio');
-      };
 
       $scope.VLogin = function() {
         $location.path('/VLogin');
@@ -115,6 +111,9 @@ socialModule.controller('VPrincipalController',
         }
 
       });
+      $scope.VInicio = function() {
+        $location.path('/');
+      };
       $scope.VLogin0 = function() {
         $location.path('/VLogin');
       };
@@ -183,7 +182,7 @@ socialModule.controller('VPrincipalController',
       }
       
       $scope.ASalir = function(id) {
-          identService.ASalir({idUsuario: id}).then( function (object){
+          identService.ASalir({'idUsuario': id}).then( function (object){
               var msg = object.data["msg"];
               if (msg) flash(msg);
               $route.reload();

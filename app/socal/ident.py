@@ -15,9 +15,6 @@ def AIdentificar():
         if nombre_usuario == params['usuario'] and clave == params['clave'] :
             res = results[0]
             session['nombre_usuario']=params['usuario']
-            
-            session['idPaginaSitio'] = " "
-            res['idPaginaSitio'] = " "
             break
 
     #Action code ends here
@@ -35,8 +32,8 @@ def ASalir():
     {'msg':['No se pudo cerrar sesión.']} ]
     res = results[1]
     #Action code goes here, res should be a list with a label and a message
-    if params['idUsuario'] in session:
-        session.pop('nombre_usuario', None)
+    if 'nombre_usuario' in session and params['idUsuario'] == session['nombre_usuario']:
+        session.pop('nombre_usuario')
         res = results[0]
     else:
         res = results[1]
