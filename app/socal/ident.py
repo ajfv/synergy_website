@@ -67,7 +67,8 @@ def ARegistrar():
         db.session.add(nuevo_usuario)
 
         db.session.commit()
-
+    else:
+        res = results[1]
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
