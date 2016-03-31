@@ -82,10 +82,38 @@
 </div>
 
 <!-- VISTA PARA USUARIO SIN PAGINA -->
+<!--
 <div class="well" ng-show="pagVacia && mostrar">
 	{{crearPag}} 
 	<br>
 	<a id = "config" class="btn btn-primary" ng-click="VPagina(idUsuario)">Crear página</a>
+</div>
+-->
+
+
+
+<div id="profile" class="container" ng-show="pagVacia && mostrar">
+	<div class="center-column row">
+		<div class="portfolio-item">
+			<div id="profile-box" class="item-inner">
+				<a ng-click="VPagina(idUsuario)">
+					<img id="perfil" src="img/profile/profile13.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="center-column row">
+		<div class="portfolio-item">
+			<div id="profile-message" class="item-inner">
+				<h2>
+					¿Aún no has creado tu página?
+				</h2>
+				<p>
+					Haz click en la imagen y personaliza el contenido de tu perfil agregando fotos y textos de tu interés.
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- AYUDA -->

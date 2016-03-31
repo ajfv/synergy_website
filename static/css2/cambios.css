@@ -199,6 +199,80 @@ Colores:
 	color: #3B3F44;
 }
 
+/* Este poco de identificadores hay que cambiarlos por clases de arriba*/
+#profile {
+	margin-top: 120px;
+	width: 100%;
+	height: 500px;
+	background-color: #B0B0B0;
+}
+
+#profile-box{
+	max-width:300px;
+	max-height:220px;
+	padding:0px;
+	border:0px; 
+	text-align: center;
+	color: #3B3F44;
+	background-color: #B0B0B0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#profile-message p{
+	font-size: 17px;
+	height: inherit;
+}
+
+#profile-message h2{
+	font-style: bold;
+}
+
+#perfil{
+	padding-left: 15px;
+	padding-top: 10px;
+	background-color: #B0B0B0;
+	max-width: 250px;
+	cursor: pointer; 
+	cursor: hand;
+
+}
+
+#profile-message{
+	max-width:300px;
+	padding:0px;
+	border:0px; 
+	text-align: center;
+	color: #3B3F44;
+	background-color: #B0B0B0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#perfil:hover{
+	max-width: 270px;
+}
+
+#boton-editar{
+	height: 40px;
+	margin-top:40px;
+}
+
+#boton-editar > div{
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+}
+
+#boton-editar a{
+	border-radius: 4px;
+	font-style: bold;
+	font-size: 20px;
+	padding:10px;
+	background-color: #3B3F44;
+	color: #FFF8ED;
+}
+
 /* Tamano imagen en pantallas grandes */
 @media screen and (min-width: 1200px) {
 	.pagina-usuario img{
