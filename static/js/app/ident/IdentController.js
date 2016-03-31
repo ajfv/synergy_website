@@ -198,6 +198,7 @@ socialModule.controller('VPrincipalController',
           nuevoScope.publicacion = publicacion;
           nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
           nuevoScope.fpublicacionFormSubmitted = false;
+          nuevoScope.idUsuario = true;
           nuevoScope.AgregPublicacion3 = function(isValid, id) {
               agregarPublicacion(nuevoScope, isValid, id);
           };
@@ -313,6 +314,7 @@ socialModule.controller('VSecundariaController',
           nuevoScope.publicacion = publicacion;
           nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
           nuevoScope.fpublicacionFormSubmitted = false;
+          nuevoScope.idUsuario = true;
           nuevoScope.AgregPublicacion3 = function(isValid, id) {
               agregarPublicacion(nuevoScope, isValid, id);
           };

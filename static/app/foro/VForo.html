@@ -27,7 +27,7 @@
                         <li id="user">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                    <span ng-show="usuario.nombre" ng-bind="usuario.nombre">
+                                    <span ng-show="usuario.nombre" ng-bind="idUsuario">
                                     </span>
                                     <i class="icon-chevron-down">
                                     </i>
@@ -70,13 +70,13 @@ $('.dropdown-toggle').dropdown()
                 </td>
                 <td data-title="'Fecha'" ng-bind="row['fecha']" style='text-align : center'></td>
                 <td data-title="'Autor'" ng-bind="row['autor']" style='text-align : center'></td>
-                <td><a ng-show="row['autor']==usuario.nombre" ng-click="AElimHilo1(row['id'])">Eliminar</a></td>
+                <td><a ng-show="row['autor']==idUsuario" ng-click="AElimHilo1(row['id'])">Eliminar</a></td>
             </tr>
         </table>
 
         <hr />
 
-        <form ng-show="!esInvitado" name="fHiloForm" ng-submit="AgregHilo3(fHiloForm.$valid)" novalidate>
+        <form ng-show="idUsuario" name="fHiloForm" ng-submit="AgregHilo3(fHiloForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' :  fHiloSubmitted && fHiloForm.titulo.$invalid && fHiloForm.titulo.$pristine && fHiloSubmitted}">
                 <label for="fHilo_titulo">
                     Título del Hilo
