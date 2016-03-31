@@ -116,6 +116,7 @@ def VPrincipal():
         'hilo': pag.hilo.id, 'titulo': pag.titulo, 
         'contenido': pag.contenido, 'imagenes': pag.imagenes}
         
+    res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code ends here
     return json.dumps(res)
 
@@ -138,6 +139,7 @@ def VSecundaria():
             'hilo': pag.hilo.id, 'titulo': pag.titulo, 
             'contenido': pag.contenido, 'imagenes': pag.imagenes}
     #Action code ends here
+    res['usuario'] = {'nombre': session['nombre_usuario']}
     return json.dumps(res)
 
 @ident.route('/ident/VRegistro')
