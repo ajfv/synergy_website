@@ -252,10 +252,11 @@ def VAdminContactos():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
-
+    if 'nombre_usuario' not in session or session['nombre_usuario'] != idUsuario:
+        return json.dumps({'data1': [], 'data2':[]})
     res['idContacto'] = idUsuario
+    res['idUsuario'] = idUsuario
     Amistades = Amigo.query.filter_by(amigo1=idUsuario).all()
 
     listaAmigos = []
@@ -333,27 +334,27 @@ def VContactos():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
-    res['idContacto'] = 1
+    if 'nombre_usuario' in session:
+        res['idContacto'] = 1
+        listaAmigos = []
+        User = Amigo.query.filter_by(amigo1=idUsuario).all()
 
-    listaAmigos = []
+        for i in User:
+            listaAmigos += [{'idContacto':i.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
 
-    User = Amigo.query.filter_by(amigo1=idUsuario).all()
-
-    for i in User:
-        listaAmigos += [{'idContacto':i.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
-
-    usuarioID = Usuario.query.filter_by(nombre_usuario = idUsuario).first()
+        usuarioID = Usuario.query.filter_by(nombre_usuario = idUsuario).first()
 
 
-    if(usuarioID.grupos):
-        for i in usuarioID.grupos:
-            listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
+        if(usuarioID.grupos):
+            for i in usuarioID.grupos:
+                listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
 
-    res['data1'] = listaAmigos
-    res['idUsuario'] = idUsuario # Esto arregla el botón del prof
+        res['data1'] = listaAmigos
+        res['idUsuario'] = idUsuario # Esto arregla el botón del prof
+    else:
+        res['data1'] = []
 
 
     #Action code ends here
