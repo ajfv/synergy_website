@@ -55,6 +55,10 @@
 $('.dropdown-toggle').dropdown()
 </script>
 
+<a id="config" class="btn btn-primary" ng-show="idUsuario" ng-click="AbrirForm()">
+    <span class="glyphicon glyphicon-plus"></span>Agregar Foro
+</a>
+
        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
                 <td data-title="'Titulo'" style='text-align : center' >
@@ -67,26 +71,26 @@ $('.dropdown-toggle').dropdown()
         </table>
         
         <hr />
-        
-        <form ng-show="idUsuario" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
-                <label for="fForo_texto">
-                    Título del Foro
-                </label>
-                <input type="text" id="fForo_texto" name="texto" class="form-control" ng-model="fForo.texto" placeholder="Texto" required>
-                    
-                </input>
-                <p ng-show="fForoSubmitted && fForoForm.texto.$invalid" class="help-block">
-                    Error en campo Texto.
-                </p>
-            </div>
-            <button type="submit" class="btn btn-perso btn-lg btn-block">
-                <span class="glyphicon glyphicon-flash"></span>Crear Foro
-            </button>
-        </form>
+        <div ng-show="openForm">
+            <form ng-show="idUsuario" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
+                    <label for="fForo_texto">
+                        Título del Foro
+                    </label>
+                    <input type="text" id="fForo_texto" name="texto" class="form-control" ng-model="fForo.texto" placeholder="Texto" required>
+                        
+                    </input>
+                    <p ng-show="fForoSubmitted && fForoForm.texto.$invalid" class="help-block">
+                        Error en campo Texto.
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-perso btn-lg btn-block">
+                    <span class="glyphicon glyphicon-flash"></span>Crear Foro
+                </button>
+            </form>
+        </div>
         
         <hr />
-
 <script type="text/ng-template" id="ayuda_VForos.html">
 Manual
 </script>

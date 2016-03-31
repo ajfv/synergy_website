@@ -90,6 +90,11 @@ socialModule.controller('VForoController',
           })};
       };
 
+      $scope.AbrirForm = function(){
+          $scope.openForm = true;
+          $scope.fForoSubmitted = false
+      };
+
       $scope.VHilo0 = function(idHilo){
           $location.path('/VHilos/'+idHilo);
 
@@ -147,6 +152,11 @@ socialModule.controller('VForosController',
       };
       $scope.VMiPagina0 = function(idUsuario) {
         $location.path('/VMiPagina/'+idUsuario);
+      };
+
+      $scope.AbrirForm = function(){
+          $scope.openForm = true;
+          $scope.fForoSubmitted = false
       };
 
       $scope.fForoSubmitted = false;
