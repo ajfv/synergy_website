@@ -133,6 +133,10 @@ socialModule.controller('VPrincipalController',
         $location.path('/VContactos/'+idUsuario);
       };
       
+      $scope.VMiPagina0 = function(idUsuario) {
+          $location.path('/VMiPagina/'+idUsuario);
+      };
+      
       $scope.VForos = function(){
           $location.path('/VForos');
       };
