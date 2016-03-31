@@ -26,25 +26,34 @@ socialModule.controller('VForoController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
+        $scope.VInicio = function() {
             $location.path('/');
-        }
-
+        };
+        $scope.VPrincipal0 = function() {
+          $location.path('/VPrincipal');
+        };
+        $scope.VRegistro0 = function() {
+          $location.path('/VRegistro');
+        };
         $scope.VForos = function(){
           $location.path('/VForos');
         };
-
-        $scope.VLogin1 = function() {
+        $scope.VLogin0 = function() {
           $location.path('/VLogin');
         };
         $scope.VContactos2 = function(idUsuario) {
           $location.path('/VContactos/'+idUsuario);
         };
-
         $scope.VMiPagina0 = function(idUsuario) {
           $location.path('/VMiPagina/'+idUsuario);
         };
-
+        $scope.ASalir = function(id) {
+            identService.ASalir({'idUsuario': id}).then( function (object){
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                $location.path('/');
+            });
+        };
         $scope.idForo = $routeParams.idForo;
 
         var VHilo2Data = $scope.res.data;
@@ -94,15 +103,6 @@ socialModule.controller('VForoController',
           $location.path('/VHilos/'+idHilo);
 
       };
-
-      $scope.ASalir = function(id) {
-          identService.ASalir({'idUsuario': id}).then( function (object){
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              $location.path("/");
-          });
-      };
-
       });
 
 $scope.__ayuda = function() {
@@ -133,13 +133,16 @@ socialModule.controller('VForosController',
                   }
         });
 
+      $scope.VInicio = function() {
+          $location.path('/');
+      };
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
       $scope.VForos = function(){
         $location.path('/VForos');
       };
-      $scope.VLogin1 = function() {
+      $scope.VLogin0 = function() {
         $location.path('/VLogin');
       };
       $scope.VContactos2 = function(idUsuario) {
@@ -147,6 +150,16 @@ socialModule.controller('VForosController',
       };
       $scope.VMiPagina0 = function(idUsuario) {
         $location.path('/VMiPagina/'+idUsuario);
+      };
+      $scope.VRegistro0 = function() {
+        $location.path('/VRegistro');
+      };
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $location.path('/');
+          });
       };
 
       $scope.fForoSubmitted = false;
@@ -190,13 +203,6 @@ socialModule.controller('VForosController',
           ngDialog.open({ template: 'ayuda_VForos.html',
           showClose: true, closeByDocument: true, closeByEscape: true});
       }
-      $scope.ASalir = function(id) {
-          identService.ASalir({'idUsuario': id}).then( function (object){
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              $location.path("/");
-          });
-      };
     }]);
     
 socialModule.controller('VHilosController',
@@ -212,13 +218,19 @@ socialModule.controller('VHilosController',
             $location.path('/');
         }
 
-        $scope.VForo1 = function(){
-          $location.path('/VForo/' + $scope.foroPadre);
+        $scope.VInicio = function() {
+            $location.path('/');
+        };
+        $scope.VPrincipal0 = function() {
+          $location.path('/VPrincipal');
+        };
+        $scope.VRegistro0 = function() {
+          $location.path('/VRegistro');
         };
         $scope.VForos = function(){
           $location.path('/VForos');
         };
-        $scope.VLogin1 = function() {
+        $scope.VLogin0 = function() {
           $location.path('/VLogin');
         };
         $scope.VContactos2 = function(idUsuario) {
@@ -227,7 +239,13 @@ socialModule.controller('VHilosController',
         $scope.VMiPagina0 = function(idUsuario) {
           $location.path('/VMiPagina/'+idUsuario);
         };
-      
+        $scope.ASalir = function(id) {
+            identService.ASalir({'idUsuario': id}).then( function (object){
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                $location.path('/');
+            });
+        };
         $scope.AElimPublicacion1 = function(idPublicacion) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
@@ -303,12 +321,4 @@ socialModule.controller('VHilosController',
           ngDialog.open({ template: 'ayuda_VHilos.html',
           showClose: true, closeByDocument: true, closeByEscape: true});
       }
-      
-      $scope.ASalir = function(id) {
-          identService.ASalir({'idUsuario': id}).then( function (object){
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              $location.path("/");
-          });
-      };
     }]);
