@@ -193,13 +193,6 @@ body > section {
   height:700px;
 }
 
-#editarPagh1{
-  margin-bottom:-170px; 
-  text-align:left;
-  font-size:30px; 
-  text-shadow:0 1px 0 #ede8d9; 
-}
-
 #form_wrap.hide:after, #form_wrap.hide:before {
   display:none; 
 }
@@ -208,7 +201,7 @@ body > section {
 #formEditPag{
     background:#f7f2ec url('images/letter_bg.png'); 
     position:relative;
-    top:200px;
+    top:80px;
     left: 10px;
     overflow:hidden;
     margin-left: 10px;
@@ -266,6 +259,45 @@ body > section {
 }
 
 /*VPagina*/
+
+/*Buscador*/
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+  border-right:0; 
+  box-shadow:0 0 0; 
+  border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+#buscador{
+  width: 250px;
+  left:150px;
+}
+
+/*Buscador*/
+
+#paginas{
+  width: 600px;
+  margin-left: 580px;
+  margin-top: 40px;
+  float: left;
+}
+
+#comentarios{
+  width: 400px;
+  margin-top: 40px;
+  margin-left: 100px;
+  float: left;
+
+}
+
+
 .turquoise,
 .green-sea,
 .sun-flower,
