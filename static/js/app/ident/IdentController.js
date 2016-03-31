@@ -47,6 +47,14 @@ socialModule.controller('VInicioController',
       $scope.VPrincipal0 = function() {
         $location.path('/VPrincipal');
       };
+      
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $route.reload();
+          });
+      };
 
 }]);
 
@@ -68,7 +76,7 @@ socialModule.controller('VLoginController',
       });
 
       $scope.VInicio0 = function() {
-        $location.path('/VInicio');
+        $location.path('/');
       };
 
       $scope.VRegistro0 = function() {
@@ -131,6 +139,10 @@ socialModule.controller('VPrincipalController',
         
       $scope.VContactos2 = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
+      };
+      
+      $scope.VMiPagina0 = function(idUsuario) {
+          $location.path('/VMiPagina/'+idUsuario);
       };
       
       $scope.VForos = function(){
@@ -198,6 +210,7 @@ socialModule.controller('VPrincipalController',
           nuevoScope.publicacion = publicacion;
           nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
           nuevoScope.fpublicacionFormSubmitted = false;
+          nuevoScope.idUsuario = true;
           nuevoScope.AgregPublicacion3 = function(isValid, id) {
               agregarPublicacion(nuevoScope, isValid, id);
           };
@@ -313,6 +326,7 @@ socialModule.controller('VSecundariaController',
           nuevoScope.publicacion = publicacion;
           nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
           nuevoScope.fpublicacionFormSubmitted = false;
+          nuevoScope.idUsuario = true;
           nuevoScope.AgregPublicacion3 = function(isValid, id) {
               agregarPublicacion(nuevoScope, isValid, id);
           };
@@ -366,7 +380,7 @@ socialModule.controller('VRegistroController',
       });
 
       $scope.VInicio2 = function() {
-        $location.path('/VInicio');
+        $location.path('/');
       };
 
       $scope.VLogin2 = function() {

@@ -18,8 +18,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VForoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'ngTableParams',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, ngTableParams) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'identService', 'ngTableParams',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, identService, ngTableParams) {
       $scope.msg = '';
       foroService.VForo({"idForo":$routeParams.idForo}).then(function (object) {
         $scope.res = object.data;
@@ -95,11 +95,13 @@ socialModule.controller('VForoController',
 
       };
 
-
-
-     // $scope.VHilo0 = function(idHilo) {
-     //   $location.path('/VForo');
-     // };
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $location.path("/");
+          });
+      };
 
       });
 
@@ -110,16 +112,13 @@ $scope.__ayuda = function() {
     }]);
 
 socialModule.controller('VForosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'foroService', 'ngTableParams',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, foroService, ngTableParams) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'foroService', 'ngTableParams', 'identService',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, foroService, ngTableParams, identService) {
       $scope.msg = '';
       foroService.VForos().then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
-        }
-        if ($scope.logout) {
-            $location.path('/');
         }
 
         var VForo2Data = $scope.res.data;
@@ -187,15 +186,22 @@ socialModule.controller('VForosController',
 
       });
 
-$scope.__ayuda = function() {
-  ngDialog.open({ template: 'ayuda_VForos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VForos.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
+      }
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $location.path("/");
+          });
+      };
     }]);
     
 socialModule.controller('VHilosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'identService',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, identService) {
       $scope.msg = '';
       foroService.VHilos({"idHilo":$routeParams.idHilo}).then(function (object) {
         $scope.res = object.data;
@@ -293,8 +299,16 @@ socialModule.controller('VHilosController',
 
       });
 
-$scope.__ayuda = function() {
-  ngDialog.open({ template: 'ayuda_VHilos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VHilos.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
+      }
+      
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $location.path("/");
+          });
+      };
     }]);

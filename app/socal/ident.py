@@ -67,7 +67,8 @@ def ARegistrar():
         db.session.add(nuevo_usuario)
 
         db.session.commit()
-
+    else:
+        res = results[1]
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -170,7 +171,8 @@ def VInicio():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
     return json.dumps(res)

@@ -30,7 +30,7 @@ socialModule.controller('VMiPaginaController',
         $location.path('/VPagina/'+idUsuario);
       };
        $scope.VInicio = function() {
-        $location.path('/VInicio');
+        $location.path('/');
       };
       $scope.VForos = function(){
         $location.path('/VForos');
@@ -71,7 +71,7 @@ socialModule.controller('VPaginaController',
         $location.path('/VPagina/'+idUsuario);
       };
        $scope.VInicio0 = function() {
-        $location.path('/VInicio');
+        $location.path('/');
       };
       $scope.VForos0 = function(){
         $location.path('/VForos');

@@ -27,7 +27,7 @@
                         <li id="user">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                    <span ng-show="usuario.nombre" ng-bind="usuario.nombre">
+                                    <span ng-show="usuario.nombre" ng-bind="idUsuario">
                                     </span>
                                     <i class="icon-chevron-down">
                                     </i>
@@ -37,15 +37,9 @@
                                         <a style="color:#3B3F44" ng-click="__ayuda()">
                                             <span class="glyphicon glyphicon-info-sign"></span>Ayuda
                                         </a>
-                                    </li>
+                                    </li>                                    
                                     <li>
-                                        <a style="color:#3B3F44" ng-click="VPrincipal0()"><!--Usar una clase para el color-->
-                                            Regresar
-                                        </a>
-                                    </li>
-                                    
-                                    <li>
-                                        <a style="color:#3B3F44" ng-click="VLogin1()">
+                                        <a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
                                             Salir
                                         </a>
                                     </li>
@@ -68,13 +62,13 @@ $('.dropdown-toggle').dropdown()
                 </td>
                 <td data-title="'Fecha'" ng-bind="row['fecha']" style='text-align : center'></td>
                 <td data-title="'Creador'" ng-bind="row['autor']" style='text-align : center'></td>
-                <td><a ng-click="AElimForo1(row['titulo'])" ng-show="row['autor']==usuario.nombre">Eliminar</a></td>
+                <td><a ng-click="AElimForo1(row['titulo'])" ng-show="row['autor']==idUsuario">Eliminar</a></td>
             </tr>
         </table>
         
         <hr />
         
-        <form ng-show="!esInvitado" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
+        <form ng-show="idUsuario" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
                 <label for="fForo_texto">
                     Título del Foro

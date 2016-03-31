@@ -27,7 +27,7 @@
                         <li id="user">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                    <span ng-show="usuario.nombre" ng-bind="usuario.nombre">
+                                    <span ng-show="usuario.nombre" ng-bind="idUsuario">
                                     </span>
                                     <i class="icon-chevron-down">
                                     </i>
@@ -37,15 +37,9 @@
                                         <a style="color:#3B3F44" ng-click="__ayuda()">
                                             <span class="glyphicon glyphicon-info-sign"></span>Ayuda
                                         </a>
-                                    </li>
+                                    </li>                                    
                                     <li>
-                                        <a style="color:#3B3F44" ng-click="VForo1()"><!--Usar una clase para el color-->
-                                            Regresar
-                                        </a>
-                                    </li>
-                                    
-                                    <li>
-                                        <a style="color:#3B3F44" ng-click="VLogin1()">
+                                        <a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
                                             Salir
                                         </a>
                                     </li>
@@ -75,11 +69,11 @@ $('.dropdown-toggle').dropdown()
 
 
 <hr>
-    <div ng-include="'responder_Publicacion.html'"></div>
+    <div ng-show="idUsuario" ng-include="'responder_Publicacion.html'"></div>
 <hr>
 
 <script type="text/ng-template" id="responder_Publicacion.html">
-        <form ng-show="!esInvitado" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
                 <label for="fpublicacion_titulo">
                     Título del la respuesta.
@@ -113,8 +107,8 @@ $('.dropdown-toggle').dropdown()
     </h4>
     <div id="{{'publicacion' + publicacion.id}}">
     <p>{{publicacion.contenido}} - <em>{{publicacion.autor}}</em></p>
-    <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == usuario.nombre && !esInvitado">Eliminar</button>
-    <button ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada && !esInvitado">Responder</button>
+    <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</button>
+    <button ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
     <ul>
         <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
     </ul>
@@ -126,5 +120,3 @@ Manual
 </script>
 
 <div id="right"></div>
-
-
