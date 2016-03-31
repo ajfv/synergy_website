@@ -118,6 +118,9 @@ socialModule.controller('VPrincipalController',
       $scope.VLogin0 = function() {
         $location.path('/VLogin');
       };
+      $scope.VRegistro = function() {
+          $location.path('/VRegistro');
+      };
       $scope.APagina1 = function(idPagina) {
         paginasService.APagina({"idPagina":((typeof idPagina === 'object')?JSON.stringify(idPagina):idPagina)}).then(function (object) {
           var msg = object.data["msg"];
@@ -172,6 +175,19 @@ socialModule.controller('VPrincipalController',
           scope.error = true;
           scope.fpublicacionFormSubmitted = false;
       } 
+      };
+      
+      $scope.__ayuda = function() {
+      ngDialog.open({
+              showClose: true, closeByDocument: true, closeByEscape: true});
+      }
+      
+      $scope.ASalir = function(id) {
+          identService.ASalir({idUsuario: id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $route.reload();
+          });
       };
       
       $scope.AgregPublicacion3 = function(isValid, id) {

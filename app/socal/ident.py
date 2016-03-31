@@ -28,6 +28,25 @@ def AIdentificar():
             session['actor'] = res['actor']
     return json.dumps(res)
 
+@ident.route('/ident/ASalir', methods=['POST'])
+def ASalir():
+    params = request.get_json()
+    results = [{'msg':['Cerraste sesión satisfactoriamente.']}, 
+    {'msg':['No se pudo cerrar sesión.']} ]
+    res = results[1]
+    #Action code goes here, res should be a list with a label and a message
+    if params['idUsuario'] in session:
+        session.pop('nombre_usuario', None)
+        res = results[0]
+    else:
+        res = results[1]
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
 
 
 @ident.route('/ident/ARegistrar', methods=['POST'])
@@ -82,8 +101,6 @@ def VPrincipal():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
-    res['idUsuario'] = session['nombre_usuario']
     pags = Sitio.query.all()
     paginas = [{
         'id':pag.id,
@@ -95,7 +112,6 @@ def VPrincipal():
     res["paginas"] = paginas
     
     idPagina = 'principal'
-    res['idUsuario'] = session['nombre_usuario']
     pag = Sitio.query.filter_by(id=idPagina).first()
     
     if pag is None:
@@ -114,11 +130,8 @@ def VPrincipal():
         'hilo': pag.hilo.id, 'titulo': pag.titulo, 
         'contenido': pag.contenido, 'imagenes': pag.imagenes}
      
-    res['usuario'] = {'nombre': session['nombre_usuario']}
-
-    if(session['nombre_usuario']=="invitado"):
-        res['esInvitado']='true'
-        print("Soy invitado VPrincipal")
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
     #Action code ends here
     return json.dumps(res)
 
@@ -128,9 +141,7 @@ def VSecundaria():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
     idPagina = request.args['idPagina']
-    res['idUsuario'] = session['nombre_usuario']
     pag = Sitio.query.filter_by(id=idPagina).first()
     if pag is None:
         res['pag'] = {
@@ -141,9 +152,8 @@ def VSecundaria():
             'hilo': pag.hilo.id, 'titulo': pag.titulo, 
             'contenido': pag.contenido, 'imagenes': pag.imagenes}
     #Action code ends here
-    res['usuario'] = {'nombre': session['nombre_usuario']}
-    if(session['nombre_usuario']=="invitado"):
-        res['esInvitado']='true'
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
     return json.dumps(res)
 
 @ident.route('/ident/VRegistro')
@@ -162,8 +172,6 @@ def VInicio():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
-    print("Estoy aqui")
-    session['nombre_usuario'] = "invitado"
     #Action code goes here, res should be a JSON structure
 
 

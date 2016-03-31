@@ -26,6 +26,19 @@ socialModule.service('identService', ['$q', '$http', function($q, $http) {
     //    deferred.resolve(res);
     //    return deferred.promise;
     };
+    
+    this.ASalir = function(idUsuario) {
+        return  $http({
+          url: "ident/ASalir",
+          data: idUsuario,
+          method: 'POST',
+        });
+    //    var labels = ["/VPrincipal", "/VLogin", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
 
     this.ARegistrar = function(fUsuario) {
         return  $http({

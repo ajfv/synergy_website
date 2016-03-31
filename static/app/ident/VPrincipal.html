@@ -9,12 +9,12 @@
 				<div>
 					<ul class="nav navbar-nav navbar-right lista headerNavBar">
 						<li>
-							<a ng-click="VMiPagina0(idUsuario)">
+							<a ng-click="VMiPagina0(idUsuario)" ng-show='idUsuario'>
 								Perfil
 							</a>
 						</li>
 						<li>
-							<a ng-click="VContactos2(idUsuario)">
+							<a ng-click="VContactos2(idUsuario)" ng-show='idUsuario'>
 								Contactos
 							</a>
 						</li>
@@ -23,10 +23,23 @@
 								Foro
 							</a>
 						</li>
-						<li id="user">
+						<li>
+							<a ng-click="VLogin0()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li>
+							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</a> 
+						</li>
+						<li ng-show="idUsuario" class="user">
 							<div class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown">
-									<span ng-show="usuario.nombre" ng-bind="usuario.nombre">
+									<span ng-bind="idUsuario">
 									</span>
 									<i class="icon-chevron-down">
 									</i>
@@ -34,16 +47,20 @@
 								<ul class="dropdown-menu">
 									<li>
 										<a style="color:#3B3F44" ng-click="__ayuda()">
-										    <span class="glyphicon glyphicon-info-sign"></span>  Ayuda
+										    Ayuda
 										</a>
 									</li>
 									
 									<li>
-										<a style="color:#3B3F44" ng-click="VLogin1()">
-											Salir
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
 										</a>
 									</li>
 								</ul>
+							</li>
+							</div>
+						</li>
+					</ul>
 							</div>
 						</li>
 					</ul>
@@ -122,6 +139,3 @@ Manual
 </script>
 
 <div id="right"></div>
-
-
-
