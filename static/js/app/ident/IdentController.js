@@ -76,7 +76,7 @@ socialModule.controller('VLoginController',
       });
 
       $scope.VInicio0 = function() {
-        $location.path('/VInicio');
+        $location.path('/');
       };
 
       $scope.VRegistro0 = function() {
@@ -380,7 +380,7 @@ socialModule.controller('VRegistroController',
       });
 
       $scope.VInicio2 = function() {
-        $location.path('/VInicio');
+        $location.path('/');
       };
 
       $scope.VLogin2 = function() {
