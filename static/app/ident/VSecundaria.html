@@ -1,70 +1,34 @@
-<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" ng-click="VInicio2()">
-					<img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
-				</a>
-			</div>
-			<div class="collapse navbar-collapse">
-				<div>
-					<ul class="nav navbar-nav navbar-right lista headerNavBar">
-						<li>
-							<a ng-click="VMiPagina0(idUsuario)">
-								Perfil
-							</a>
-						</li>
-						<li>
-							<a ng-click="VContactos2(idUsuario)">
-								Contactos
-							</a>
-						</li>
-						<li>
-							<a ng-click="VForos()">
-								Foro
-							</a>
-						</li>
-						<li id="user">
-							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown">
-									<span ng-show="usuario.nombre" ng-bind="usuario.nombre">
-									</span>
-									<i class="icon-chevron-down">
-									</i>
-								</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a style="color:#3B3F44" ng-click="__ayuda()">
-										    <span class="glyphicon glyphicon-info-sign"></span>  Ayuda
-										</a>
-									</li>
-									
-									<li>
-										<a style="color:#3B3F44" ng-click="VLogin1()">
-											Salir
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-</header>
-
-<script>
-$('.dropdown-toggle').dropdown()
-</script>
-
-
-Buscar: <input ng-model="query">
-<ul class="pags">
-    <ul  ng-repeat="pag in paginas | filter:query">
-          
-          <a ng-if= "pag.id != principal" ng-click="VSecundaria(pag.id)">{{pag.titulo}}</a>
-    </ul>
-</ul>
-
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+            data-toggle="collapse"
+            data-target="#contenido-plegable">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand" > Hola {{idUsuario}}</span>
+    </div>
+    <div class="collapse navbar-collapse" id="contenido-plegable">
+        <ul class="nav navbar-nav navbar-left">
+            <li><a ng-click="APagina1(idUsuario)">Página de usuario</a></li>
+            <li><a ng-click="VContactos2(idUsuario)">Contactos</a></li>
+            <li><a ng-click="VForos()">Foros</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text" ng-show="idUsuario" ng-bind="idUsuario"></li>
+            <li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+            <li><a ng-click="VPrincipal0()">Regresar</a></li>
+        </ul>
+    </div>
+</div>
+</nav>
+<div class="row" >
+    <div class="col-md-6"><h3>{{pag.titulo}}</h3>{{pag.contenido}}</div>
+    <div class="col-md-6"><br><img ng-src="{{pag.imagenes}}"></a></div>
+</div>
+<br>
 <div class="row">
     <div class="col-md-6">
         <div ng-if="!comentarios">
@@ -117,11 +81,4 @@ Buscar: <input ng-model="query">
 </form>
 </script>
 
-<script type="text/ng-template" id="ayuda_VPrincipal.html">
-Manual
-</script>
-
 <div id="right"></div>
-
-
-
