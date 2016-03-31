@@ -277,26 +277,16 @@ body > section {
 
 #buscador{
   width: 250px;
-  left:150px;
+  left:350px;
 }
 
 /*Buscador*/
 
-#paginas{
-  width: 600px;
-  margin-left: 580px;
-  margin-top: 40px;
-  float: left;
-}
+#pag-coment{
 
-#comentarios{
-  width: 400px;
   margin-top: 40px;
-  margin-left: 100px;
-  float: left;
 
 }
-
 
 .turquoise,
 .green-sea,
