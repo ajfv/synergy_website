@@ -26,7 +26,12 @@ def VForo():
         'autor': h.raiz.autor_id}
         for h in Hilo.query.filter_by(foro_id=idForo)]
 
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+        print("soy invitado")
+
     res['data'] = listaHilos
+    res['usuario'] = {'nombre': session['nombre_usuario']}
     res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
@@ -45,8 +50,12 @@ def VForos():
     for ftitulo, ffecha,fautor in db.session.query(Foro.titulo, Foro.fecha_creacion,Foro.autor_id):
         listaForos.append({'titulo':ftitulo,'fecha': ffecha,'autor':fautor})
 
-    res['data'] = listaForos
+    res['data'] = listaForos    
     res['idUsuario'] = session['nombre_usuario']
+
+    if(session['nombre_usuario']=="invitado"):
+        res['usuario'] = {'nombre': "invitado"}
+        res['esInvitado']='true'
 
     #Action code ends here
     return json.dumps(res)
@@ -88,6 +97,11 @@ def VHilos():
     res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
     res['idUsuario'] = session['nombre_usuario']
     res['publicacion'] = raiz.a_diccionario()
+
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+        res['usuario'] = {'nombre': "invitado"}
+        print("soy invitado Hilo")
 
     #Action code ends here
     return json.dumps(res)

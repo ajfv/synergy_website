@@ -21,6 +21,17 @@ socialModule.controller('VInicioController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'chatService', 'identService', 'paginasService',
     function ($scope, $location, $route, $timeout, flash, chatService, identService, paginasService) {
 
+      identService.VInicio().then(function (object) {
+        $scope.res = object.data;
+        for (var key in object.data) {
+            $scope[key] = object.data[key];
+        }
+        if ($scope.logout) {
+            $location.path('/');
+        }
+
+      });
+      
       $scope.VInicio = function() {
         $location.path('/VInicio');
       };
@@ -31,6 +42,14 @@ socialModule.controller('VInicioController',
 
       $scope.VRegistro = function() {
         $location.path('/VRegistro');
+      };
+
+      $scope.VForos = function(){
+          $location.path('/VForos');
+      };
+
+      $scope.VPrincipal0 = function() {
+        $location.path('/VPrincipal');
       };
 
 }]);

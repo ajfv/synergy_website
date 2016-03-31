@@ -55,7 +55,7 @@
     <div id="{{'publicacion' + publicacion.id}}">
         <p>{{publicacion.contenido}}</p>
         <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</button>
-        <button ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
+        <button ng-show="!esInvitado" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
         <ul>
             <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
         </ul>
@@ -63,7 +63,7 @@
 </script>
 
 <script type="text/ng-template" id="responder_Publicacion.html">
-    <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+    <form ng-show="!esInvitado" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
         <label for="fpublicacion_texto">
             Tu comentario:

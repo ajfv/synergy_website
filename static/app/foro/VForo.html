@@ -76,7 +76,7 @@ $('.dropdown-toggle').dropdown()
 
         <hr />
 
-        <form name="fHiloForm" ng-submit="AgregHilo3(fHiloForm.$valid)" novalidate>
+        <form ng-show="!esInvitado" name="fHiloForm" ng-submit="AgregHilo3(fHiloForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' :  fHiloSubmitted && fHiloForm.titulo.$invalid && fHiloForm.titulo.$pristine && fHiloSubmitted}">
                 <label for="fHilo_titulo">
                     Título del Hilo

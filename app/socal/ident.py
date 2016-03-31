@@ -78,8 +78,6 @@ def VLogin():
 
 @ident.route('/ident/VPrincipal')
 def VPrincipal():
-    
-    
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
@@ -115,8 +113,12 @@ def VPrincipal():
     res['pag'] = {
         'hilo': pag.hilo.id, 'titulo': pag.titulo, 
         'contenido': pag.contenido, 'imagenes': pag.imagenes}
-        
+     
     res['usuario'] = {'nombre': session['nombre_usuario']}
+
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+        print("Soy invitado VPrincipal")
     #Action code ends here
     return json.dumps(res)
 
@@ -140,6 +142,8 @@ def VSecundaria():
             'contenido': pag.contenido, 'imagenes': pag.imagenes}
     #Action code ends here
     res['usuario'] = {'nombre': session['nombre_usuario']}
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
     return json.dumps(res)
 
 @ident.route('/ident/VRegistro')
@@ -153,7 +157,18 @@ def VRegistro():
     #Action code ends here
     return json.dumps(res)
 
+@ident.route('/ident/VInicio')
+def VInicio():
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    print("Estoy aqui")
+    session['nombre_usuario'] = "invitado"
+    #Action code goes here, res should be a JSON structure
 
+
+    #Action code ends here
+    return json.dumps(res)
 
 
 
