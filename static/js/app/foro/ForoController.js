@@ -17,23 +17,6 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             });
 }]);
 
-socialModule.controller('VComentariosPaginaController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'foroService','identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, foroService, identService) {
-      $scope.msg = '';
-      foroService.VComentariosPagina({"idPaginaSitio":$routeParams.idPaginaSitio}).then(function (object) {
-        $scope.res = object.data;
-        for (var key in object.data) {
-            $scope[key] = object.data[key];
-        }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
-      });
-    }]);
-
 socialModule.controller('VForoController',
    ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'ngTableParams',
     function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, ngTableParams) {
@@ -185,6 +168,8 @@ socialModule.controller('VForosController',
       $scope.VForo0 = function(idForo){
           $location.path('/VForo/'+idForo);
       };
+
+
       $scope.AElimForo1 = function(idForo) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
@@ -246,8 +231,6 @@ socialModule.controller('VHilosController',
             foroService.AElimPublicacion(arg).then(function (object) {
                 var msg = object.data["msg"];
                 if (msg) flash(msg);
-                var label = object.data["label"];
-                $location.path(label);
                 $route.reload();
           })};
       };
@@ -255,8 +238,10 @@ socialModule.controller('VHilosController',
       
         $scope.fpublicacion = { titulo: $scope.res['tituloNuevaPublicacion']};
         $scope.fpublicacionFormSubmitted = false;
-        
+        $scope.error = false;
         var agregarPublicacion = function(scope, isValid, idPublicacion) {
+          if (scope.fpublicacionFormSubmitted)
+            return;
           scope.fpublicacionFormSubmitted = true;
           if (isValid) {
             args = {}
@@ -266,12 +251,13 @@ socialModule.controller('VHilosController',
             foroService.AgregPublicacion(args).then(function (object) {
                 var msg = object.data["msg"];
                 if (msg) flash(msg);
-                var label = object.data["label"];
                 ngDialog.closeAll();
-                $location.path(label);
                 $route.reload();
             });
-          }
+        } else{
+            scope.error = true;
+            scope.fpublicacionFormSubmitted = false;
+        }
         };
         
         $scope.AgregPublicacion3 = function(isValid, id) {
@@ -283,6 +269,7 @@ socialModule.controller('VHilosController',
             nuevoScope.publicacion = publicacion;
             nuevoScope.fpublicacion = {titulo: "RE: " + publicacion.titulo};
             nuevoScope.fpublicacionFormSubmitted = false;
+            nuevoScope.error = false;
             nuevoScope.AgregPublicacion3 = function(isValid, id) {
                 agregarPublicacion(nuevoScope, isValid, id);
             };

@@ -74,7 +74,7 @@ $('.dropdown-toggle').dropdown()
         
         <hr />
         
-        <form name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
+        <form ng-show="!esInvitado" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
                 <label for="fForo_texto">
                     Título del Foro

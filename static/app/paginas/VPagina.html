@@ -59,27 +59,39 @@
     </div>
 </header>
 
-<form name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
-    <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}">
-        <label for="fPagina_titulo">
-            Título
-        </label>
-        <input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/>
-        <p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">
-            Error en campo Título.
-        </p>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}">
-        <label for="fPagina_contenido">
-            Contenido
-        </label>
-        <div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" >
+    <div id="wrap">
+        <h1 id="editarPagh1" >Edita tu página</h1>
+        <div id='form_wrap'>
+            <form id="formEditPag" name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}">
+                    <label id="lVPagina" for="fPagina_titulo">
+                        Título
+                    </label>
+                    <input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/>
+                    <p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">
+                        Error en campo Título.
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}">
+                    <label id="lVPagina" for="fPagina_contenido">
+                        Contenido
+                    </label>
+                    <div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" >
+                    </div>
+                    <p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">
+                        Error en campo Contenido.
+                    </p>
+                </div>
+                <button id="btn_fPagina"type="submit" class="btn">
+                Modificar
+                </button>
+                </form>
         </div>
-        <p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">
-            Error en campo Contenido.
-        </p>
     </div>
-</nav>
+
+
+
+
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VPagina.html">
 <div><span></span>

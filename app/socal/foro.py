@@ -2,21 +2,7 @@ from flask import request, session, Blueprint, json
 
 foro = Blueprint('foro', __name__)
 from sqlalchemy.orm import sessionmaker
-from base import Foro, Hilo, db, Publicacion, Usuario, Paginasitio
-
-@foro.route('/foro/VComentariosPagina')
-def VComentariosPagina():
-    #GET parameter
-    idPaginaSitio = request.args['idPaginaSitio']
-    res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
-    #Action code goes here, res should be a JSON structure
-
-
-    #Action code ends here
-    return json.dumps(res)
+from base import Foro, Hilo, db, Publicacion, Usuario, Sitio
 
 #------------------------------------------------------------------------------#
 #                                    FORO                                      #
@@ -40,7 +26,12 @@ def VForo():
         'autor': h.raiz.autor_id}
         for h in Hilo.query.filter_by(foro_id=idForo)]
 
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+        print("soy invitado")
+
     res['data'] = listaHilos
+    res['usuario'] = {'nombre': session['nombre_usuario']}
     res['idUsuario'] = session['nombre_usuario']
 
     #Action code ends here
@@ -59,8 +50,12 @@ def VForos():
     for ftitulo, ffecha,fautor in db.session.query(Foro.titulo, Foro.fecha_creacion,Foro.autor_id):
         listaForos.append({'titulo':ftitulo,'fecha': ffecha,'autor':fautor})
 
-    res['data'] = listaForos
+    res['data'] = listaForos    
     res['idUsuario'] = session['nombre_usuario']
+
+    if(session['nombre_usuario']=="invitado"):
+        res['usuario'] = {'nombre': "invitado"}
+        res['esInvitado']='true'
 
     #Action code ends here
     return json.dumps(res)
@@ -79,7 +74,6 @@ def AgregForo():
     db.session.commit()
 
     res = results[0]
-    print("TEST AGREG FORO: ",params)
     return json.dumps(res)
 
 #------------------------------------------------------------------------------#
@@ -98,10 +92,16 @@ def VHilos():
 
     hilo = Hilo.query.filter_by(id=idHilo).first()
     raiz = hilo.raiz
-    res['foroPadre'] =  hilo.foro_id
+    if hilo.sitio is None:
+        res['foroPadre'] =  hilo.foro_id
     res['tituloNuevaPublicacion'] = "RE: " + raiz.titulo
     res['idUsuario'] = session['nombre_usuario']
-    res['publicaciones'] = raiz.a_diccionario()
+    res['publicacion'] = raiz.a_diccionario()
+
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+        res['usuario'] = {'nombre': "invitado"}
+        print("soy invitado Hilo")
 
     #Action code ends here
     return json.dumps(res)
@@ -117,19 +117,10 @@ def AgregHilo():
     titulo_publicacion  = params['titulo']
     contenido_publicacion = params['contenido']
 
-    # Siento que esto no va
-    pagina_sitio_test = Paginasitio.query.filter_by(url="www").first()
-    if pagina_sitio_test is None :
-        pagina_sitio_test = Paginasitio(url="www",
-            usuario=Usuario.query.filter_by(nombre_usuario=session['nombre_usuario']).first())
-        db.session.add(pagina_sitio_test)
-        db.session.commit()
-
-
     # Se crean hilos
     foro_actual = Foro.query.filter_by(titulo=session['idForo']).first()
 
-    nuevo_hilo = Hilo(foro=foro_actual,pagina_sitio=pagina_sitio_test)
+    nuevo_hilo = Hilo(foro=foro_actual)
     db.session.add(nuevo_hilo)
     db.session.commit()
 
@@ -141,7 +132,6 @@ def AgregHilo():
     db.session.commit()
 
     res = results[0]
-    print("TEST AGREG FORO: ",params)
     return json.dumps(res)
 
 #------------------------------------------------------------------------------#
@@ -186,40 +176,27 @@ def AElimHilo():
 #                                 PUBLICACIÒN                                  #
 #------------------------------------------------------------------------------#
 
-@foro.route('/foro/VPublicacion')
-def VPublicacion():
-    #GET parameter
-    idForo = request.args['idHilo']
-    res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
-    #Action code goes here, res should be a JSON structure
-
-
-    #Action code ends here
-    return json.dumps(res)
-
 @foro.route('/foro/AgregPublicacion',methods=['POST'])
 def AgregPublicacion():
     #GET parameter
     params = request.get_json()
+    results = [{'msg':['Respuesta enviada']},{'msg':['No se pudo enviar la respuesta']}]
     
     idPadre = params['id']
     titulo = params['titulo']
     contenido = params['contenido']
 
     padre = Publicacion.query.filter_by(id=idPadre).first()
-    
-    # Crear nueva publicacion hijo
-    nueva_publicacion = Publicacion(titulo,contenido,session['nombre_usuario'],
-                                    padre.hilo,padre)
-    db.session.add(nueva_publicacion)
-    db.session.commit()
-
-    results = [{'label':'/VHilos/'+str(padre.hilo_id), 'msg':['Respuesta enviada']},
-    {'label':'/VHilos/'+str(padre.hilo_id), 'msg':['No se pudo enviar la respuesta']}]
-    res = results[0]
+    if padre is None or padre.eliminada:
+        res = results[1]
+    else:
+        # Crear nueva publicacion hijo
+        nueva_publicacion = Publicacion(
+            titulo, contenido, session['nombre_usuario'], padre.hilo,padre
+        )
+        db.session.add(nueva_publicacion)
+        db.session.commit()
+        res = results[0]
     #Action code ends here
     return json.dumps(res)
 
@@ -232,12 +209,14 @@ def AElimPublicacion():
     idPublicacion = request.args['idPublicacion']
     publicacion_a_eliminar = Publicacion.query.filter_by(id=idPublicacion).first()
     idHilo = publicacion_a_eliminar.hilo_id
-    results = [{'label':'/VHilos/'+str(idHilo), 'msg':['Publicacion eliminada']}, 
-    {'label':'/VForo/'+str(idHilo), 'msg':['No se pudo eliminar la publicacion']}]
+    results = [{'msg':['Publicacion eliminada']}, {'msg':['No se pudo eliminar la publicacion']}]
     
     if publicacion_a_eliminar.autor_id == session['nombre_usuario']:
-        publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
-        publicacion_a_eliminar.eliminada = True
+        if publicacion_a_eliminar.hijos == []:
+            db.session.delete(publicacion_a_eliminar)
+        else:
+            publicacion_a_eliminar.contenido = 'Esta publicación fue eliminada.'
+            publicacion_a_eliminar.eliminada = True
         db.session.commit()
         res = results[0]
     else:

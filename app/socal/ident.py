@@ -1,8 +1,8 @@
 from flask import request, session, Blueprint, json
 
 ident = Blueprint('ident', __name__)
-from base import Usuario, Pagina, db
-
+from base import Usuario, Pagina, db, Sitio, Hilo, Publicacion
+    
 @ident.route('/ident/AIdentificar', methods=['POST'])
 def AIdentificar():
     #POST/PUT parameters
@@ -15,6 +15,9 @@ def AIdentificar():
         if nombre_usuario == params['usuario'] and clave == params['clave'] :
             res = results[0]
             session['nombre_usuario']=params['usuario']
+            
+            session['idPaginaSitio'] = " "
+            res['idPaginaSitio'] = " "
             break
 
     #Action code ends here
@@ -81,11 +84,67 @@ def VPrincipal():
     #Action code goes here, res should be a JSON structure
 
     res['idUsuario'] = session['nombre_usuario']
-    res["usuario"] = {"nombre":res['idUsuario']}
+    pags = Sitio.query.all()
+    paginas = [{
+        'id':pag.id,
+        'titulo':pag.titulo,
+        'contenido':pag.contenido,
+        'imagenes':pag.imagenes
+        } for pag in pags
+    ]
+    res["paginas"] = paginas
+    
+    idPagina = 'principal'
+    res['idUsuario'] = session['nombre_usuario']
+    pag = Sitio.query.filter_by(id=idPagina).first()
+    
+    if pag is None:
+        print("aqui")
+        s = Sitio("principal",'')
+        db.session.add(s)
+        db.session.commit()
+        h = Hilo(sitio=s)
+        db.session.add(h)
+        db.session.commit()
+        p = Publicacion(s.titulo, s.titulo, hilo=h)
+        db.session.add(p)
+        db.session.commit()
+        pag = Sitio.query.filter_by(id=idPagina).first()
+    res['pag'] = {
+        'hilo': pag.hilo.id, 'titulo': pag.titulo, 
+        'contenido': pag.contenido, 'imagenes': pag.imagenes}
+     
+    res['usuario'] = {'nombre': session['nombre_usuario']}
+
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+        print("Soy invitado VPrincipal")
     #Action code ends here
     return json.dumps(res)
 
+@ident.route('/ident/VSecundaria')
+def VSecundaria():
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
 
+    idPagina = request.args['idPagina']
+    res['idUsuario'] = session['nombre_usuario']
+    pag = Sitio.query.filter_by(id=idPagina).first()
+    if pag is None:
+        res['pag'] = {
+            'hilo':-1, 'titulo': 'Lo sentimos',
+            'contenido': 'La página que busca no existe.', 'imagenes':''}
+    else:
+        res['pag'] = {
+            'hilo': pag.hilo.id, 'titulo': pag.titulo, 
+            'contenido': pag.contenido, 'imagenes': pag.imagenes}
+    #Action code ends here
+    res['usuario'] = {'nombre': session['nombre_usuario']}
+    if(session['nombre_usuario']=="invitado"):
+        res['esInvitado']='true'
+    return json.dumps(res)
 
 @ident.route('/ident/VRegistro')
 def VRegistro():
@@ -98,7 +157,18 @@ def VRegistro():
     #Action code ends here
     return json.dumps(res)
 
+@ident.route('/ident/VInicio')
+def VInicio():
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    print("Estoy aqui")
+    session['nombre_usuario'] = "invitado"
+    #Action code goes here, res should be a JSON structure
 
+
+    #Action code ends here
+    return json.dumps(res)
 
 
 
