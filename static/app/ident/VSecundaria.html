@@ -4,35 +4,31 @@
             <button type="button" class="navbar-toggle"
             data-toggle="collapse"
             data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" > Hola {{idUsuario}}</span>
-        </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-                <li><a ng-click="APagina1(idUsuario)">Página de usuario</a></li>
-                <li><a ng-click="VContactos2(idUsuario)">Contactos</a></li>
-                <li><a ng-click="VForos()">Foros</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-text" ng-show="idUsuario" ng-bind="idUsuario"></li>
-                <li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-                <li><a ng-click="VLogin0()">Salir</a></li>
-            </ul>
-        </div>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand" > Hola {{idUsuario}}</span>
     </div>
+    <div class="collapse navbar-collapse" id="contenido-plegable">
+        <ul class="nav navbar-nav navbar-left">
+            <li><a ng-click="APagina1(idUsuario)">Página de usuario</a></li>
+            <li><a ng-click="VContactos2(idUsuario)">Contactos</a></li>
+            <li><a ng-click="VForos()">Foros</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text" ng-show="idUsuario" ng-bind="idUsuario"></li>
+            <li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+            <li><a ng-click="VPrincipal0()">Regresar</a></li>
+        </ul>
+    </div>
+</div>
 </nav>
-
-Buscar: <input ng-model="query">
-<ul class="pags">
-    <ul  ng-repeat="pag in paginas | filter:query">
-          
-          <a ng-if= "pag.id != principal" ng-click="VSecundaria(pag.id)">{{pag.titulo}}</a>
-    </ul>
-</ul>
-
+<div class="row" >
+    <div class="col-md-6"><h3>{{pag.titulo}}</h3>{{pag.contenido}}</div>
+    <div class="col-md-6"><br><img ng-src="{{pag.imagenes}}"></a></div>
+</div>
+<br>
 <div class="row">
     <div class="col-md-6">
         <div ng-if="!comentarios">

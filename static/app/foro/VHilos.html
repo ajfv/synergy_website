@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" >Hilo: {{publicaciones.titulo}}</span>
+            <span class="navbar-brand" >Hilo: {{publicacion.titulo}}</span>
         </div>
         <div class="collapse navbar-collapse" id="contenido-plegable">
             <ul class="nav navbar-nav navbar-left">
@@ -22,8 +22,48 @@
     </div>
 </nav>
 
-<h3> {{publicaciones.contenido + '  - '}} <em>{{publicaciones.autor}}</em> </h3>
+<h3> {{publicacion.contenido + '  - '}} <em>{{publicacion.autor}}</em> </h3>
 
+
+
+
+<ul>
+    <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+</ul>
+
+
+<hr>
+    <div ng-include="'responder_Publicacion.html'"></div>
+<hr>
+
+<script type="text/ng-template" id="responder_Publicacion.html">
+        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+                <label for="fpublicacion_titulo">
+                    Título del la respuesta.
+                </label>
+                <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
+
+                </input>
+                <p ng-show="error && fpublicacionForm.titulo.$invalid" class="help-block">
+                    Error en campo Título.
+                </p>
+                <br>
+                <label for="fpublicacion_texto">
+                    Tu respuesta:
+                </label>
+                <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
+                    
+                </textarea >
+                <p ng-show="error && fpublicacionForm.texto.$invalid" class="help-block">
+                    Error en campo Texto.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-perso btn-lg btn-block">
+                <span class="glyphicon glyphicon-pencil"></span>Responder
+            </button>
+        </form>
+</script>
 
 <script type="text/ng-template"  id="tree_item_renderer.html">
     <h4>{{publicacion.titulo}} 
@@ -37,69 +77,6 @@
         <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
     </ul>
     </div>
-</script>
-
-<ul>
-    <li ng-repeat="publicacion in publicaciones.hijos" ng-include="'tree_item_renderer.html'"></li>
-</ul>
-
-
-<hr>
-        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicaciones.id)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
-                <label for="fpublicacion_titulo">
-                    Título del la respuesta.
-                </label>
-                <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
-
-                </input>
-                <p ng-show="fpublicacionSubmitted && fpublicacionForm.titulo.$invalid" class="help-block">
-                    Error en campo Título.
-                </p>
-                <br>
-                <label for="fpublicacion_texto">
-                    Tu respuesta:
-                </label>
-                <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
-                    
-                </textarea >
-                <p ng-show="fpublicacionSubmitted && fpublicacionForm.texto.$invalid" class="help-block">
-                    Error en campo Texto.
-                </p>
-            </div>
-            <button type="submit" class="btn btn-perso btn-lg btn-block">
-                <span class="glyphicon glyphicon-pencil"></span>Responder
-            </button>
-        </form>
-<hr>
-
-<script type="text/ng-template" id="responder_Publicacion.html">
-        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
-                <label for="fpublicacion_titulo">
-                    Título del la respuesta.
-                </label>
-                <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
-
-                </input>
-                <p ng-show="fpublicacionSubmitted && fpublicacionForm.titulo.$invalid" class="help-block">
-                    Error en campo Título.
-                </p>
-                <br>
-                <label for="fpublicacion_texto">
-                    Tu respuesta:
-                </label>
-                <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
-                    
-                </textarea >
-                <p ng-show="fpublicacionSubmitted && fpublicacionForm.texto.$invalid" class="help-block">
-                    Error en campo Texto.
-                </p>
-            </div>
-            <button type="submit" class="btn btn-perso btn-lg btn-block">
-                <span class="glyphicon glyphicon-pencil"></span>Responder
-            </button>
-        </form>
 </script>
 
 <div id="right"></div>
