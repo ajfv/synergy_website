@@ -75,12 +75,20 @@ socialModule.controller('VLoginController',
 
       });
 
-      $scope.VInicio0 = function() {
+      $scope.VInicio = function() {
         $location.path('/');
+      };
+      
+      $scope.VPrincipal0 = function() {
+        $location.path('/VPrincipal');
       };
 
       $scope.VRegistro0 = function() {
         $location.path('/VRegistro');
+      };
+      
+      $scope.VForos = function(){
+          $location.path('/VForos');
       };
 
       $scope.reloadRoute = function() {
@@ -197,7 +205,7 @@ socialModule.controller('VPrincipalController',
           identService.ASalir({'idUsuario': id}).then( function (object){
               var msg = object.data["msg"];
               if (msg) flash(msg);
-              $route.reload();
+              $location.path('/')
           });
       };
       
@@ -385,6 +393,13 @@ socialModule.controller('VRegistroController',
 
       $scope.VLogin2 = function() {
         $location.path('/VLogin');
+      };
+      $scope.VForos = function(){
+          $location.path('/VForos');
+      };
+      
+      $scope.VPrincipal0 = function() {
+        $location.path('/VPrincipal');
       };
 
       $scope.reloadRoute = function() {

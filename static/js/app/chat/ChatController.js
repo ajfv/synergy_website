@@ -54,18 +54,19 @@ socialModule.controller('VAdminContactosController',
                   }
               });
 
-
       });
 
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
+      $scope.AInicio = function() { $location.path('/');};
 
       $scope.VMiPagina0 = function(idUsuario) {
         $location.path('/VMiPagina/'+idUsuario);
       };
-      $scope.VLogin1 = function() {
+      $scope.VLogin = function() {
         $location.path('/VLogin');
+      };
+
+      $scope.VRegistro = function() {
+        $location.path('/VRegistro');
       };
       $scope.VContactos2 = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
@@ -74,6 +75,13 @@ socialModule.controller('VAdminContactosController',
         $location.path('/VForos');
       };
 
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $location.path("/");
+          });
+      };
 
       $scope.AgregGrupo4 = function(idUsuario) {
 
@@ -214,8 +222,12 @@ socialModule.controller('VContactosController',
 
       });
 
-      $scope.VLogin1 = function() {
+      $scope.VLogin = function() {
         $location.path('/VLogin');
+      };
+
+      $scope.VRegistro = function() {
+        $location.path('/VRegistro');
       };
       $scope.VContactos2 = function(idUsuario) {
         $location.path('/VContactos/'+idUsuario);
@@ -235,6 +247,14 @@ socialModule.controller('VContactosController',
       $scope.VChat1 = function(idChat) {
         $location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
       };
+      $scope.ASalir = function(id) {
+          identService.ASalir({'idUsuario': id}).then( function (object){
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              $location.path("/");
+          });
+      };
+      
 
 $scope.__ayuda = function() {
 ngDialog.open({ template: 'ayuda_VContactos.html',
