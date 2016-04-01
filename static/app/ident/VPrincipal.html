@@ -127,12 +127,12 @@ $('.dropdown-toggle').dropdown()
     <h4>{{publicacion.autor}} 
         <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}">[-]</span>
     </h4>
-    <div id="{{'publicacion' + publicacion.id}}">
+    <div style="word-wrap:break-word;" id="{{'publicacion' + publicacion.id}}">
         <p>{{publicacion.contenido}}</p>
         <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</button>
         <button ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
         <ul>
-            <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+            <li style="word-wrap:break-word;" ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
         </ul>
     </div>
 </script>
