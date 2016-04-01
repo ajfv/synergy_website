@@ -81,7 +81,7 @@ $('.dropdown-toggle').dropdown()
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'">
                     <div ng-if="row['tipo'] === 'usuario'">
-                        <a href="" ng-click="VMiPagina0(row['nombre'])">{{row['nombre']}}</a>
+                        <a href="" ng-click="VMiPagina(row['nombre'])">{{row['nombre']}}</a>
                     </div>
                     <div ng-if="row['tipo'] === 'grupo'">
                         <div ng-bind="row['nombre']"></div>
