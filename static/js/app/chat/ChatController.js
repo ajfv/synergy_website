@@ -338,6 +338,20 @@ socialModule.controller('VGrupoController',
                 $route.reload();
           })};
       };
+      
+       $scope.AgregarContactoQuery = function(nombre){
+        
+        var parametro_post = {'nombre':nombre};
+        
+        chatService.AgregMiembro(parametro_post).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+        });
+      };
+      
 
 $scope.__ayuda = function() {
 ngDialog.open({ template: 'ayuda_VGrupo.html',

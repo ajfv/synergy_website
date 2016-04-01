@@ -79,14 +79,9 @@ $('.dropdown-toggle').dropdown()
 <a id="config" class="btn btn-primary" ng-click="ASalirGrupo1()">
     <span class="glyphicon glyphicon-log-out"></span>  Salirme del grupo
 </a>
-
-    <form name="fMiembroForm" ng-submit="AgregMiembro0(fMiembroForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fMiembroSubmitted && fMiembroForm.nombre.$invalid && fMiembroForm.nombre.$pristine && fMiembroSubmitted}"><label for="fMiembro_nombre">Nombre</label>:&nbsp;<select id="fMiembro_nombre" ng-model="fMiembro.nombre" required ng-options="item.value as item.value for item in fMiembro_opcionesNombre"></select><p ng-show="fMiembroSubmitted && fMiembroForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
-        <button type="submit" class="btn btn-perso btn-lg btn-block">
-            <span class="glyphicon glyphicon-flash"></span>Agregar
-        </button>
-    </form>
-    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
+	
+  
+    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
@@ -94,6 +89,38 @@ $('.dropdown-toggle').dropdown()
         </table>
 
 <hr />
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<table>
+  		<tr>
+		    <td><h3 class="panel-title">Añade a tus contactos</h3></td>
+			<td><div id="buscadorAmigos" class="input-group stylish-input-group">
+		  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
+		  		
+		  		<span class="input-group-addon">
+		  			<button type="submit">
+		      			<span class="glyphicon glyphicon-search"></span>
+		 			</button>  
+		  		</span>
+			</div></td>
+		</tr>
+	</table>
+  </div>
+  <div class="panel-body">
+	<ul class="agregMiembros">
+		<!-- El repeat se hace sobre los usuarios que pueden ser tus contactos, si no hay nada escrito en el buscador, éste no muestra resultados. -->
+		<table template-pagination="pager.html" class="table">
+		          <tr ng-repeat="item in fMiembro_opcionesNombre | filter:query">
+		              <td data-title="'Nombre'" ng-if= "query.length" ng-bind="item.value"></td>
+		              <td ng-if= "query.length"><button ng-click="AgregarContactoQuery(item.value)" id="btnHilos" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>  Añadir contacto</button></td>
+		          </tr>
+		      </table>
+	</ul>
+
+  </div>
+</div>
+
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VGrupo.html">
@@ -106,3 +133,4 @@ $('.dropdown-toggle').dropdown()
 <li>Eliminar: Se elimina el miembro seleccionado del grupo.</li>
 </ul>
 </script>
+

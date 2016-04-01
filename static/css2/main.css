@@ -182,6 +182,11 @@ body > section {
   border-color: #2c3e50;
 
 }
+
+#config:hover{
+  background-color: #237799;
+  border-color: #237799;
+}
 /*VContacto*/
 
 /*VPagina*/
@@ -276,6 +281,11 @@ body > section {
 #buscador{
   width: 250px;
   left:350px;
+}
+
+#buscadorAmigos{
+  width: 250px;
+  left:700px;
 }
 
 /*Buscador*/

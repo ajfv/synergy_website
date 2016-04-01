@@ -78,7 +78,7 @@ $('.dropdown-toggle').dropdown()
 <a id="config" class="btn btn-primary" ng-click="AgregGrupo4(idUsuario)">
     <span class="glyphicon glyphicon-plus"></span>Agregar Grupo
 </a>
-        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+        <table ng-table="tableParams1" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
@@ -86,7 +86,7 @@ $('.dropdown-toggle').dropdown()
             </tr>
         </table>
 
-<hr />        <table ng-table="tableParams2" template-pagination="pager.html" class="table">
+<hr />        <table ng-table="tableParams2" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
@@ -109,20 +109,37 @@ $('.dropdown-toggle').dropdown()
 </ul>
 
 </script>
-	<div id="buscador" class="input-group stylish-input-group">
-  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
-  		
-  		<span class="input-group-addon">
-  			<button type="submit">
-      			<span class="glyphicon glyphicon-search"></span>
- 			</button>  
-  		</span>
-	</div>
-<ul class="agregAmigos">
-	<!-- El repeat se hace sobre los usuarios que pueden ser tus contactos, si no hay nada escrito en el buscador, éste no muestra resultados. -->
-  	<ul  ng-repeat="item in fContacto_opcionesNombre | filter:query">
-          <ul ng-if= "query.length" ng-bind="item.value" ng-click="AgregarContactoQuery(item.value)"></ul>
-  	</ul>
+ <div class="panel panel-default">
+  <div class="panel-heading">
+  	<table>
+  	  		<tr>
+		    <td><h3 class="panel-title">Busca a tus amigos</h3></td>
+			<td><div id="buscadorAmigos" class="input-group stylish-input-group">
+		  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
+		  		
+		  		<span class="input-group-addon">
+		  			<button type="submit">
+		      			<span class="glyphicon glyphicon-search"></span>
+		 			</button>  
+		  		</span>
+			</div></td>
+		</tr>
+	</table>
+  </div>
+  <div class="panel-body">
+	<ul class="agregAmigos">
+		<!-- El repeat se hace sobre los usuarios que pueden ser tus contactos, si no hay nada escrito en el buscador, éste no muestra resultados. -->
+
+		<table template-pagination="pager.html" class="table">
+		          <tr ng-repeat="item in fContacto_opcionesNombre | filter:query">
+		              <td data-title="'Nombre'" ng-if= "query.length" ng-bind="item.value"></td>
+		              <td ng-if= "query.length"><button ng-click="AgregarContactoQuery(item.value)" id="btnHilos" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>  Agregar</button></td>
+		          </tr>
+		      </table>
+	</ul>
+  </div>
+</div>
+<hr>
 </ul>
   			
   
