@@ -98,7 +98,6 @@ socialModule.controller('VPrincipalController',
           $route.reload();
         });};
         
-      
       $scope.VSecundaria = function(idPagina){    
           $location.path('/VPrincipal/' + idPagina)
       };
