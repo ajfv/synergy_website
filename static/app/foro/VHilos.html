@@ -103,7 +103,7 @@ $('.dropdown-toggle').dropdown()
 
 <hr>
 
-<div class="container" id="formHilos">
+<div class="container" id="formHilos" ng-if="idUsuario">
     <form id="foros" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
             <label for="fpublicacion_titulo">
