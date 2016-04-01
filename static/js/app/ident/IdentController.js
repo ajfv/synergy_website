@@ -8,6 +8,9 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
             }).when('/VPrincipal', {
                 controller: 'VPrincipalController',
                 templateUrl: 'app/ident/VPrincipal.html'
+            }).when('/VPrincipal', {
+                controller: 'VPrincipalController',
+                templateUrl: 'app/ident/VPrincipal.html'
             }).when('/VRegistro', {
                 controller: 'VRegistroController',
                 templateUrl: 'app/ident/VRegistro.html'
@@ -97,7 +100,7 @@ socialModule.controller('VPrincipalController',
           $location.path(label);
           $route.reload();
         });};
-        
+
       $scope.VSecundaria = function(idPagina){    
           $location.path('/VPrincipal/' + idPagina)
       };

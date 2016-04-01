@@ -70,7 +70,7 @@ def AgregForo():
             db.session.add(nuevo_foro)
             db.session.commit()
             res = results[0]
-        
+
     return json.dumps(res)
 
 #------------------------------------------------------------------------------#

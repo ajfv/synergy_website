@@ -7,8 +7,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'app/ident/VInicio.html'
             });
 }]);
-socialModule.controller('socialController_',  ['$scope', '$http', '$location', "chatService",'ngTableParams', 'ngDialog',
-function($scope, $http, $location, chatService, ngTableParams, ngDialog) {
+socialModule.controller('socialController_',  ['$scope', '$http', '$location', "chatService",'ngTableParams', 'ngDialog', '$interval',
+function($scope, $http, $location, chatService, ngTableParams, ngDialog, $interval) {
     $scope.title = "Social";
     $scope.chat = false;
     $scope.verContactos = function(idUsuario) {
@@ -40,10 +40,35 @@ function($scope, $http, $location, chatService, ngTableParams, ngDialog) {
     $scope.VMiPagina = function (idUsuario) {
         $location.path('/VMiPagina/' + idUsuario);
     };
+    $scope.close = function (value) {$interval.cancel(recargarChat);return true;};
     $scope.VChat = function(idChat) {
-      var newScope = $scope.$new(true);
-      ngDialog.open({ template: 'pop_up_chat.html',scope: newScope,
-      showClose: true, closeByDocument: true, closeByEscape: true});
+      var newScope = $scope.$new();
+      newScope.fChat = {};
+      var recargarChat = $interval(function () {
+            chatService.VChat({"idChat":idChat}).then(function (obj) {
+              newScope.mensajesAnt = obj.data['mensajesAnt'];
+            });
+      }, 3000);
+
+      newScope.fChatSubmitted = false;
+      newScope.AEscribir1 = function(isValid) {
+        newScope.fChatSubmitted = true;
+        
+        if (isValid) {
+          chatService.AEscribir(newScope.fChat).then(function (object) {
+              newScope.fChat.texto = "";
+              newScope.fChatSubmitted = false;
+          });
+        }
+      };
+      ngDialog.open({ 
+          template: 'pop_up_chat.html',
+          scope: newScope,
+          showClose: true, 
+          closeByDocument: true, 
+          closeByEscape: true}).closePromise.then(function (data) {
+              $interval.cancel(recargarChat);
+          });
     
       chatService.VChat({"idChat":idChat}).then(function (object) {
         newScope.res = object.data;

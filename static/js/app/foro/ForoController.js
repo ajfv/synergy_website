@@ -178,6 +178,7 @@ socialModule.controller('VHilosController',
           var arg = {};
           //arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
           arg['idPublicacion'] = ((typeof id === 'object')?JSON.stringify(idPublicacion):idPublicacion);
+
           if (confirm("Se eliminará la publicacion seleccionado") == true){
             foroService.AElimPublicacion(arg).then(function (object) {
                 var msg = object.data["msg"];

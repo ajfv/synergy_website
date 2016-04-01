@@ -1,0 +1,58 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" 
+                    data-toggle="collapse" 
+                    data-target="#contenido-plegable">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" >Comentarios de la página</span>
+        </div>
+        <div class="collapse navbar-collapse" id="contenido-plegable">
+            <ul class="nav navbar-nav navbar-left">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
+<li><a ng-click="VPrincipal2(pag.id)">Regresar</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<table ng-table="tableParams1" template-pagination="pager.html" class="table">
+            <tr ng-repeat="c in comments">
+                <td data-title="'Comentario'" ng-bind=c['contenido'] +fComentario['texto']></td>
+                <td data-title="'Autor'" ng-bind=c['autor']></td>
+                <td ><a ng-if="c['autor'] == usuario.nombre" ng-click="AEliminarComentario1(c['id'])">Eliminar</a></td>
+            </tr>
+        </table>
+
+
+
+<form name="fComentarioForm" ng-submit="VPrincipal0(fComentarioForm.$valid)" novalidate >
+<div class="form-group">
+    
+    <label for="fComentario_texto">
+        Comenta: 
+    </label>
+
+    <input c type="text" id="fComentario_texto" name="comentario" class="form-control" ng-model="fComentario.texto" placeholder="Comentario" required>
+    
+    </input>
+    <p ng-show="fComentarioSubmitted && fComentarioForm.texto.$invalid" class="help-block">
+        Error
+    </p>
+    <button ng-click="confirm(fComentario)" type="submit" class="btn btn-perso btn-lg btn-block">
+        <span  class="glyphicon glyphicon-pencil"></span>Comentar
+    </button>
+</div>
+</form>
+<hr />
+<div id="right"></div>
+
+
+          
+
+    

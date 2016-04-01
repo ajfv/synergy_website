@@ -15,6 +15,9 @@ def AIdentificar():
         if nombre_usuario == params['usuario'] and clave == params['clave'] :
             res = results[0]
             session['nombre_usuario']=params['usuario']
+            
+            session['idPaginaSitio'] = " "
+            res['idPaginaSitio'] = " "
             break
 
     #Action code ends here
@@ -95,10 +98,13 @@ def VLogin():
 
 @ident.route('/ident/VPrincipal')
 def VPrincipal():
+    
+    
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
+
     pags = Sitio.query.all()
     paginas = [{
         'id':pag.id,
@@ -110,6 +116,7 @@ def VPrincipal():
     res["paginas"] = paginas
     
     idPagina = 'principal'
+
     pag = Sitio.query.filter_by(id=idPagina).first()
     
     if pag is None:
@@ -130,6 +137,7 @@ def VPrincipal():
      
     if 'nombre_usuario' in session:
         res['idUsuario'] = session['nombre_usuario']
+
     #Action code ends here
     return json.dumps(res)
 
@@ -140,6 +148,7 @@ def VSecundaria():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
     idPagina = request.args['idPagina']
+
     pag = Sitio.query.filter_by(id=idPagina).first()
     if pag is None:
         res['pag'] = {
@@ -150,6 +159,7 @@ def VSecundaria():
             'hilo': pag.hilo.id, 'titulo': pag.titulo, 
             'contenido': pag.contenido, 'imagenes': pag.imagenes}
     #Action code ends here
+
     if 'nombre_usuario' in session:
         res['idUsuario'] = session['nombre_usuario']
     return json.dumps(res)

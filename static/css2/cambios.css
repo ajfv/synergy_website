@@ -383,3 +383,6 @@ a,button,.icono i, .pulsor {
   -o-transition: opacity 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) 10ms;
   transition: opacity 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) 10ms;
 }
+
+.ngdialog-content {overflow:auto; 
+				   height: 110%;}
