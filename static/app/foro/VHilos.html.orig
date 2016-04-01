@@ -1,4 +1,15 @@
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+<<<<<<< HEAD
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-click="VInicio2()">
+                    <img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div>
+                    <ul class="nav navbar-nav navbar-right lista headerNavBar">
+=======
 		<div class="container">
 			<div class="navbar-header">
 				<a class="navbar-brand" ng-click="VInicio2()">
@@ -11,12 +22,51 @@
 			<div class="collapse navbar-collapse">
 				<div>
 					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+>>>>>>> 1372cc881d3fa8bb81515b38c5460ffc411015ff
                         <li>
-        					<a ng-click="VForos()">
+                            <a ng-click="VMiPagina0(idUsuario)">
+                                Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="VContactos2(idUsuario)">
+                                Contactos
+                            </a>
+                        </li>
+                        <li>
+<<<<<<< HEAD
+                            <a ng-click="VForos()">
                                 Foros
                             </a>
-        				</li>
-                        <li>
+                        </li>
+    
+                        <li id="user">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown">
+                                    <span ng-show="usuario.nombre" ng-bind="idUsuario">
+                                    </span>
+                                    <i class="icon-chevron-down">
+                                    </i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="__ayuda()">
+                                            <span class="glyphicon glyphicon-info-sign"></span>Ayuda
+                                        </a>
+                                    </li>                                    
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+                                            Salir
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+=======
 							<a ng-click="VPrincipal()">
 								Páginas
 							</a>
@@ -70,8 +120,8 @@
 				</div>
 			</div>
 		</div>
+>>>>>>> 1372cc881d3fa8bb81515b38c5460ffc411015ff
 </header>
-
 <script>
 $('.dropdown-toggle').dropdown()
 </script>
@@ -80,13 +130,17 @@ $('.dropdown-toggle').dropdown()
 <h2>Hilo: {{publicacion.titulo}}</h2>
 <h3> {{publicacion.contenido + '  - '}} <em>{{publicacion.autor}}</em> </h3>
 <hr>
+
+
+
 <ul>
     <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
 </ul>
 
 <hr>
+
 <div class="container" id="formHilos">
-    <form id="foros" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+    <form id="hilos" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
             <label for="fpublicacion_titulo">
                 Título del la respuesta.
@@ -114,34 +168,36 @@ $('.dropdown-toggle').dropdown()
     </form>
 </div>
 
-
 <script type="text/ng-template" id="responder_Publicacion.html">
-        <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
-                <label for="fpublicacion_titulo">
-                    Título del la respuesta.
-                </label>
-                <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
 
-                </input>
-                <p ng-show="error && fpublicacionForm.titulo.$invalid" class="help-block">
-                    Error en campo Título.
-                </p>
-                <br>
-                <label for="fpublicacion_texto">
-                    Tu respuesta:
-                </label>
-                <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
-                    
-                </textarea >
-                <p ng-show="error && fpublicacionForm.texto.$invalid" class="help-block">
-                    Error en campo Texto.
-                </p>
-            </div>
-            <button type="submit" id="btnHilos" class="btn btn-primary">
-                <span class="glyphicon glyphicon-pencil"></span>Responder
-            </button>
-        </form>
+            <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+                    <label for="fpublicacion_titulo">
+                        Título del la respuesta.
+                    </label>
+                    <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
+
+                    </input>
+                    <p ng-show="error && fpublicacionForm.titulo.$invalid" class="help-block">
+                        Error en campo Título.
+                    </p>
+                    <br>
+                    <label for="fpublicacion_texto">
+                        Tu respuesta:
+                    </label>
+                    <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
+                        
+                    </textarea >
+                    <p ng-show="error && fpublicacionForm.texto.$invalid" class="help-block">
+                        Error en campo Texto.
+                    </p>
+                </div>
+                <button type="submit" id="btnHilos" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span>Responder
+                </button>
+            </form>
+
+
 </script>
 
 <script type="text/ng-template"  id="tree_item_renderer.html">

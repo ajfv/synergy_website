@@ -11,33 +11,28 @@
 			<div class="collapse navbar-collapse">
 				<div>
 					<ul class="nav navbar-nav navbar-right lista headerNavBar">
-						<li>
-							<a ng-click="VMiPagina0(idUsuario)" ng-show='idUsuario'>
-								Perfil
-							</a>
-						</li>
                         <li>
         					<a ng-click="VForos()">
                                 Foros
                             </a>
         				</li>
                         <li>
-							<a ng-click="VPrincipal0()">
+							<a ng-click="VPrincipal()">
 								Páginas
 							</a>
 						</li>
 						<li>
-							<a ng-click="VContactos2(idUsuario)" ng-show='idUsuario'>
+							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
 								Contactos
 							</a>
 						</li>
 						<li>
-							<a ng-click="VLogin0()" ng-show='!idUsuario'>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
 								Iniciar sesión
 							</a>
 						</li>
 						<li> 
-							<a ng-click="VRegistro0()" ng-show='!idUsuario'>Registrarse</a>
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
 						</li>
 						<li>
 							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
@@ -54,23 +49,23 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a style="color:#3B3F44" ng-click="__ayuda()">
-										    Ayuda
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
 										</a>
-									</li>
-									
+									</li>			
 									<li>
 										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
 											Cerrar sesión
 										</a>
 									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
+											Ayuda
+										</a>
+									</li>
 								</ul>
 							</li>
-							</div>
-						</li>
-					</ul>
-							</div>
-						</li>
+						</div>
 					</ul>
 				</div>
 			</div>

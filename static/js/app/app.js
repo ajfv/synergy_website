@@ -34,3 +34,40 @@ socialModule.directive('sameAs', [function () {
         }
     };
 }]);
+
+socialModule.service('navegador', 
+    ['$location', 'identService', 'flash', '$route',
+    function($location, identService, flash, $route) {
+
+    this.agregarBotones = function (scope) {
+        scope.VInicio = function() {
+            $location.path('/');
+        };
+        scope.VPrincipal = function() {
+          $location.path('/VPrincipal');
+        };
+        scope.VRegistro = function() {
+          $location.path('/VRegistro');
+        };
+        scope.VForos = function(){
+          $location.path('/VForos');
+        };
+        scope.VLogin = function() {
+          $location.path('/VLogin');
+        };
+        scope.VContactos = function(idUsuario) {
+          $location.path('/VContactos/'+idUsuario);
+        };
+        scope.VMiPagina = function(idUsuario) {
+          $location.path('/VMiPagina/'+idUsuario);
+        };
+        scope.ASalir = function(id) {
+            identService.ASalir({'idUsuario': id}).then( function (object){
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                $location.path('/');
+                $route.reload();
+            });
+        };
+    }
+}]);
