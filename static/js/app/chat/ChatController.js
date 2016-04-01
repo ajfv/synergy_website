@@ -15,8 +15,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VAdminContactosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fContacto = {};
 
@@ -25,10 +25,6 @@ socialModule.controller('VAdminContactosController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var AElimContacto1Data = $scope.res.data1;
               if(typeof AElimContacto1Data === 'undefined') AElimContacto1Data=[];
@@ -54,11 +50,10 @@ socialModule.controller('VAdminContactosController',
                   }
               });
 
-
       });
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
+
+     navegador.agregarBotones($scope);
+
       $scope.AgregGrupo4 = function(idUsuario) {
 
         chatService.AgregGrupo({"idUsuario":((typeof idUsuario === 'object')?JSON.stringify(idUsuario):idUsuario)}).then(function (object) {
@@ -83,129 +78,47 @@ socialModule.controller('VAdminContactosController',
           });
         }
       };
-
-      $scope.AElimContacto1 = function(id) {
-          var tableFields = [["idContacto","id"],["nombre","Nombre"],["tipo","Tipo"]];
-          var arg = {};
-          arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
-          chatService.AElimContacto(arg).then(function (object) {
+      
+      $scope.AgregarContactoQuery = function(nombre){
+        
+        var parametro_post = {'nombre':nombre};
+        
+        chatService.AgregContacto(parametro_post).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
               var label = object.data["label"];
               $location.path(label);
               $route.reload();
-          });
+        });
+      };
+      
+      
+      $scope.AElimContacto1 = function(id) {
+          var tableFields = [["idContacto","id"],["nombre","Nombre"],["tipo","Tipo"]];
+          var arg = {};
+          arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
+          if (confirm("Se eliminará el usuario "+"\'"+id+"\'") == true){
+            chatService.AElimContacto(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();   
+          })};
       };
       $scope.VGrupo2 = function(idGrupo) {
         $location.path('/VGrupo/'+((typeof idGrupo === 'object')?JSON.stringify(idGrupo):idGrupo));
       };
 
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VAdminContactos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
-    }]);
-socialModule.controller('VChatController',
-   ['$scope', '$interval', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'chatService', 'identService',
-    function ($scope, $interval, $location, $route, $timeout, flash, $routeParams, ngDialog, chatService, identService) {
-      $scope.msg = '';
-      $scope.fChat = {};
-
-      chatService.VChat({"idChat":$routeParams.idChat}).then(function (object) {
-        $scope.res = object.data;
-        for (var key in object.data) {
-            $scope[key] = object.data[key];
-        }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
-      });
-
-      var recargarChat = $interval(function () {
-          chatService.VChat({"idChat":$routeParams.idChat}).then(function (obj) {
-              $scope.mensajesAnt = obj.data['mensajesAnt'];
-          });
-      }, 3000);
-
-      $scope.$on('$destroy', function (){
-         $interval.cancel(recargarChat);
-      });
-
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-
-      $scope.fChatSubmitted = false;
-      $scope.AEscribir1 = function(isValid) {
-        $scope.fChatSubmitted = true;
-        if (isValid) {
-
-          chatService.AEscribir($scope.fChat).then(function (object) {
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              var label = object.data["label"];
-              $location.path(label);
-              $route.reload();
-          });
-        }
-      };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VChat.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
-    }]);
-socialModule.controller('VContactosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
-      $scope.msg = '';
-      chatService.VContactos({"idUsuario":$routeParams.idUsuario}).then(function (object) {
-        $scope.res = object.data;
-        for (var key in object.data) {
-            $scope[key] = object.data[key];
-        }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
-              var VChat1Data = $scope.res.data1;
-              if(typeof VChat1Data === 'undefined') VChat1Data=[];
-              $scope.tableParams1 = new ngTableParams({
-                  page: 1,            // show first page
-                  count: 10           // count per page
-              }, {
-                  total: VChat1Data.length, // length of data
-                  getData: function($defer, params) {
-                      $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                  }
-              });
-
-
-      });
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VAdminContactos2 = function(idUsuario) {
-        $location.path('/VAdminContactos/'+idUsuario);
-      };
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VChat1 = function(idChat) {
-        $location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
-      };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VContactos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
-    }]);
+      $scope.__ayuda = function() {
+      ngDialog.open({ template: 'ayuda_VAdminContactos.html',
+              showClose: true, closeByDocument: true, closeByEscape: true});
+      }
+          }]);
+          
 socialModule.controller('VGrupoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fMiembro = {};
 
@@ -214,10 +127,6 @@ socialModule.controller('VGrupoController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var AElimMiembro3Data = $scope.res.data3;
               if(typeof AElimMiembro3Data === 'undefined') AElimMiembro3Data=[];
@@ -246,6 +155,8 @@ socialModule.controller('VGrupoController',
         $location.path('/VAdminContactos/'+idUsuario);
       };
 
+    navegador.agregarBotones($scope);
+
       $scope.fMiembroSubmitted = false;
       $scope.AgregMiembro0 = function(isValid) {
         $scope.fMiembroSubmitted = true;
@@ -265,14 +176,29 @@ socialModule.controller('VGrupoController',
           var tableFields = [["idContacto","id"],["nombre","Nombre"]];
           var arg = {};
           arg[tableFields[0][1]] = ((typeof id === 'object')?JSON.stringify(id):id);
-          chatService.AElimMiembro(arg).then(function (object) {
+          if (confirm("Se eliminará el miembro "+"\'"+id+"\'") == true){
+            chatService.AElimMiembro(arg).then(function (object) {
+                var msg = object.data["msg"];
+                if (msg) flash(msg);
+                var label = object.data["label"];
+                $location.path(label);
+                $route.reload();
+          })};
+      };
+      
+       $scope.AgregarContactoQuery = function(nombre){
+        
+        var parametro_post = {'nombre':nombre};
+        
+        chatService.AgregMiembro(parametro_post).then(function (object) {
               var msg = object.data["msg"];
               if (msg) flash(msg);
               var label = object.data["label"];
               $location.path(label);
               $route.reload();
-          });
+        });
       };
+      
 
 $scope.__ayuda = function() {
 ngDialog.open({ template: 'ayuda_VGrupo.html',

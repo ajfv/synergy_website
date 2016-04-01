@@ -1,40 +1,137 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-                    data-toggle="collapse"
-                    data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" >Hilo: {{publicacion.titulo}}</span>
-        </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="VForo1()">
-    Regresar</a></li>
-            </ul>
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li>
+							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</a> 
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
+											Ayuda
+										</a>
+									</li>
+								</ul>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+</header>
+
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
+
+<div class="tab-content">
+    <div id="recent-activity" class="tab-pane active">
+        <div class="profile-activity">
+            <div class="act-time">                                      
+                <div class="activity-body act-in">
+                    <span class="arrow"></span>
+                    <div class="text">
+                        <h2>{{publicacion.titulo}} </h2>
+                        <hr>
+                        <h3>{{publicacion.contenido}}</h3>
+                        <p id="firma" class="attribution">Publicado por:{{publicacion.autor}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</nav>
+</div>
+<hr>
 
-<h3> {{publicacion.contenido + '  - '}} <em>{{publicacion.autor}}</em> </h3>
-
-
-
-
-<ul>
+<div style="word-wrap:break-word;">
+<ul style="visibility: hidden;">
     <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
 </ul>
-
+</div>
 
 <hr>
-    <div ng-include="'responder_Publicacion.html'"></div>
-<hr>
+
+<div class="container" id="formHilos">
+    <form id="foros" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+            <label for="fpublicacion_titulo">
+                Título del la respuesta.
+            </label>
+            <input type="text" id="fpublicacion_titulo" name="titulo" class="form-control" ng-model="fpublicacion.titulo" required>
+
+            </input>
+            <p ng-show="error && fpublicacionForm.titulo.$invalid" class="help-block">
+                Error en campo Título.
+            </p>
+            <br>
+            <label for="fpublicacion_texto">
+                Tu respuesta:
+            </label>
+            <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
+                
+            </textarea >
+            <p ng-show="error && fpublicacionForm.texto.$invalid" class="help-block">
+                Error en campo Texto.
+            </p>
+        </div>
+        <button type="submit" id="btnForos" class="btn btn-primary">
+            <span class="glyphicon glyphicon-pencil"></span>Responder
+        </button>
+    </form>
+</div>
+
 
 <script type="text/ng-template" id="responder_Publicacion.html">
         <form name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
@@ -59,24 +156,44 @@
                     Error en campo Texto.
                 </p>
             </div>
-            <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <button type="submit" id="btnHilos" class="btn btn-primary">
                 <span class="glyphicon glyphicon-pencil"></span>Responder
             </button>
         </form>
 </script>
 
 <script type="text/ng-template"  id="tree_item_renderer.html">
-    <h4>{{publicacion.titulo}} 
-        <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}">[-]</span>
-    </h4>
-    <div id="{{'publicacion' + publicacion.id}}">
-    <p>{{publicacion.contenido}} - <em>{{publicacion.autor}}</em></p>
-    <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == usuario.nombre">Eliminar</button>
-    <button ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
-    <ul>
-        <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
-    </ul>
+<div class="tab-content">
+    <div id="recent-activity" class="tab-pane active">
+        <div class="profile-activity">
+            <div class="act-time">                                      
+                <div class="activity-body act-in">
+                    <span class="arrow"></span>
+                    <div class="text">
+                        <h4><strong>{{publicacion.titulo}}</strong>
+                            <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
+                        </h4>
+                        <div id="{{'publicacion' + publicacion.id}}">
+                            <h4>{{publicacion.contenido}}</h4>
+                            <p id="firma"class="attribution">Publicado por:{{publicacion.autor}}</p>
+                            <a ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</a>
+                            <a ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</a>
+                            <ul style="visibility: hidden;">
+                                <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+</script>
+
+<script type="text/ng-template" id="ayuda_VHilos.html">
+
+<div style="text-align: center;"><b>Manual</b></div><div><br/></div><div>En esta vista podrá ver las publicaciones correspondientes al hilo que acaba de seleccionar.</div><div><br/></div><div>Los usuarios registrados en Social FL tienen permitido responder nuevas publicaciones, y eliminar aquellas que hayan creado de forma previa a través de los botones <b>Responder </b>y<b> </b><b>Eliminar </b><span>respectivamente. </span></div><div><br/></div><div>Es posible responder al contenido del hilo o a una publicación que se encuentre en el mismo. Para ello, deberá agregar título y contenido a la misma a través de los campos <b>Título de la respuesta</b> y <b>Tu respuesta</b>. Luego deberá presionar el botón <b>Responder</b>.</div>
 </script>
 
 <div id="right"></div>
