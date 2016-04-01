@@ -28,6 +28,25 @@ def AIdentificar():
             session['actor'] = res['actor']
     return json.dumps(res)
 
+@ident.route('/ident/ASalir', methods=['POST'])
+def ASalir():
+    params = request.get_json()
+    results = [{'msg':['Cerraste sesión satisfactoriamente.']}, 
+    {'msg':['No se pudo cerrar sesión.']} ]
+    res = results[1]
+    #Action code goes here, res should be a list with a label and a message
+    if 'nombre_usuario' in session and params['idUsuario'] == session['nombre_usuario']:
+        session.pop('nombre_usuario')
+        res = results[0]
+    else:
+        res = results[1]
+    #Action code ends here
+    if "actor" in res:
+        if res['actor'] is None:
+            session.pop("actor", None)
+        else:
+            session['actor'] = res['actor']
+    return json.dumps(res)
 
 
 @ident.route('/ident/ARegistrar', methods=['POST'])
@@ -51,7 +70,8 @@ def ARegistrar():
         db.session.add(nuevo_usuario)
 
         db.session.commit()
-
+    else:
+        res = results[1]
     #Action code ends here
     if "actor" in res:
         if res['actor'] is None:
@@ -85,7 +105,6 @@ def VPrincipal():
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    res['idUsuario'] = session['nombre_usuario']
     pags = Sitio.query.all()
     paginas = [{
         'id':pag.id,
@@ -97,7 +116,7 @@ def VPrincipal():
     res["paginas"] = paginas
     
     idPagina = 'principal'
-    res['idUsuario'] = session['nombre_usuario']
+
     pag = Sitio.query.filter_by(id=idPagina).first()
     
     if pag is None:
@@ -115,7 +134,10 @@ def VPrincipal():
     res['pag'] = {
         'hilo': pag.hilo.id, 'titulo': pag.titulo, 
         'contenido': pag.contenido, 'imagenes': pag.imagenes}
-        
+     
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
+
     #Action code ends here
     return json.dumps(res)
 
@@ -125,9 +147,8 @@ def VSecundaria():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
     idPagina = request.args['idPagina']
-    res['idUsuario'] = session['nombre_usuario']
+
     pag = Sitio.query.filter_by(id=idPagina).first()
     if pag is None:
         res['pag'] = {
@@ -138,8 +159,10 @@ def VSecundaria():
             'hilo': pag.hilo.id, 'titulo': pag.titulo, 
             'contenido': pag.contenido, 'imagenes': pag.imagenes}
     #Action code ends here
-    return json.dumps(res)
 
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
+    return json.dumps(res)
 
 @ident.route('/ident/VRegistro')
 def VRegistro():
@@ -152,7 +175,17 @@ def VRegistro():
     #Action code ends here
     return json.dumps(res)
 
+@ident.route('/ident/VInicio')
+def VInicio():
+    res = {}
+    if "actor" in session:
+        res['actor']=session['actor']
+    #Action code goes here, res should be a JSON structure
+    if 'nombre_usuario' in session:
+        res['idUsuario'] = session['nombre_usuario']
 
+    #Action code ends here
+    return json.dumps(res)
 
 
 

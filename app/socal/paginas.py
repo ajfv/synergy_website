@@ -43,7 +43,6 @@ def APagina():
     idPagina = request.args['idPagina']
     results = [{'label':'/VPagina', 'msg':[]}, {'label':'/VMiPagina', 'msg':[]}, ]
     res = results[0]
-    print("ESTOY EN APAGINA")
     #Action code goes here, res should be a list with a label and a message
 
     #Cuando la página exista, ir directamente a ella.
@@ -75,7 +74,6 @@ def VMiPagina():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
@@ -83,11 +81,15 @@ def VMiPagina():
         res['titulo'] = pagina_existente.titulo
         res['contenido'] = pagina_existente.contenido
     else:
-        res['titulo'] = ""
+        res['titulo'] = "La página no existe."
         res['contenido'] = "Este usuario no ha creado su página."
+        res['crearPag'] = "Si desea crear su página presione el botón \"crear página\"."
+        res['pagVacia'] = 'true' 
+
     if session['nombre_usuario'] == idUsuario:
         res['mostrar'] = 'true'
-    res['idUsuario'] = idUsuario #Esto arregla el botón del prof
+    
+    res['idUsuario'] = session['nombre_usuario'] #Esto arregla el botón del prof
     #Action code ends here
     return json.dumps(res)
 
@@ -107,6 +109,7 @@ def VPagina():
     if pagina_existente is not None:
         res = {"fPagina": {"titulo":pagina_existente.titulo, "contenido":pagina_existente.contenido}}
     res["usuario"]=usuario
+    res['idUsuario'] = idUsuario
     #Action code ends here
     return json.dumps(res)
 

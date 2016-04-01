@@ -1,45 +1,116 @@
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" 
-                    data-toggle="collapse" 
-                    data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" >Página de usuario</span>
-        </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-<li><a ng-click="VPrincipal1()">
-    Regresar</a></li>
-
-            </ul>
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+                    <li id="user">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <span ng-show="usuario.nombre" ng-bind="usuario.nombre">
+                                </span>
+                                <i class="icon-chevron-down">
+                                </i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)" ng-show='idUsuario'>
+                                        Perfil
+                                    </a>
+                                </li>                       
+                                <li>
+                                    <a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+                                        Cerrar Sesión
+                                    </a>
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="__ayuda()">
+                                            <span class="glyphicon glyphicon-info-sign"></span>Ayuda
+                                        </a>
+                                    </li>    
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</nav>
+</header>
 
-    <form name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}"><label for="fPagina_titulo">Título</label><input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/><p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">Error en campo Título.</p></div>
-            <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}"><label for="fPagina_contenido">Contenido</label><div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" ></div><p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">Error en campo Contenido.</p></div>
-        <button type="submit" class="btn btn-perso btn-lg btn-block">
-            <span class="glyphicon glyphicon-flash"></span>Modificar
-        </button>
-    </form>
-    <hr />
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <div id="wrap">
+        <div id='form_wrap'>
+            <form id="formEditPag" name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}">
+                    <label id="lVPagina" for="fPagina_titulo">
+                        Título
+                    </label>
+                    <input id="fPagina_titulo" type="text" name="titulo" class="form-control" ng-model="fPagina.titulo" placeholder="Título" required ng-minlength="5"/>
+                    <p ng-show="fPaginaSubmitted && fPaginaForm.titulo.$invalid" class="help-block">
+                        Error en campo Título.
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.contenido.$invalid && fPaginaForm.contenido.$pristine && fPaginaSubmitted}">
+                    <label id="lVPagina" for="fPagina_contenido">
+                        Contenido
+                    </label>
+                    <div id="fPagina_contenido" text-angular="text-angular" name="contenido" ng-model="fPagina.contenido" >
+                    </div>
+                    <p ng-show="fPaginaSubmitted && fPaginaForm.contenido.$invalid" class="help-block">
+                        Error en campo Contenido.
+                    </p>
+                </div>
+
+                <button id="btn_fPagina" type="submit" class="btn btn-primary">
+                Modificar
+                </button>
+                </form>
+        </div>
+    </div>
+
+
+
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VPagina.html">
 <div><span></span>
 <p dir="ltr" style="text-align: center;"><span><b>Manual para modificar su página de usuario</b></span></p>
 <p dir="ltr" style="text-align: justify;"><span> Una página de usuario debe contener un título. Sin embargo, el contenido de la misma es opcional. Una vez haya terminado de realizar las modificaciones deseadas, puede guardar los cambios haciendo clic en el botón verde "Modificar" que se encuentra en la parte inferior de la ventana de Contenido.</span></p>
-<p dir="ltr"><span> Si no desea modificar su página, sino más bien volver a la página principal haga clic en la palabra “Regresar” que se encuentra en la esquina superior derecha. Desde allí, puede desconectarse si lo desea. Para ello haga clic en la palabra “Salir” que se encuentra en la esquina superior derecha de la vista.</span></p>
 <p dir="ltr" style="text-align: justify;"><span>Podrá notar que sobre el cuadro de texto grande que corresponde al contenido de su página, se encuentran una serie de botones que puede encontrar útiles a la hora de redactar el contenido. </span></p>
 <p dir="ltr"><span>Las funciones que cumplen cada uno de estos botones son las siguientes:</span></p>
 <ul>
@@ -57,4 +128,9 @@
 <li dir="ltr"><p dir="ltr"><span>Por último están las opciones para crear enlaces a otras páginas y la opción para eliminar enlaces.</span></p></li>
 </ul>
 </div>
+</script>
+
+<!-- Para asegurar que se despliegue el menu dropdown -->
+<script>
+$('.dropdown-toggle').dropdown()
 </script>
