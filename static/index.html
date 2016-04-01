@@ -28,6 +28,49 @@
 			<flash:messages class="alerta alert-perso"></flash:messages>
 			<div ng-view class="fade"></div>
 		</div>
+		
+		<div id="invisible" ng-click="ocultarContactos()">
+			<div id="invisible_interno" >
+				<div class="panel panel-default" style="width:50%;margin-left:25%;">
+			  		<div class="panel-heading">
+					  		<div class="panel-heading"> Contactos </div>
+					</div>
+					<div class="panel-body">
+						<table ng-table="tableParams1" template-pagination="pager.html" class="table">
+				            <tr ng-repeat="row in $data">
+				                <td data-title="'Nombre'">
+				                    <div ng-if="row['tipo'] === 'usuario'">
+				                        <a href="" ng-click="VMiPagina(row['nombre'])">{{row['nombre']}}</a>
+				                    </div>
+				                    <div ng-if="row['tipo'] === 'grupo'">
+				                        <div ng-bind="row['nombre']"></div>
+				                    </div>
+				                </td>
+				                <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
+				                <td ng-show="row['idContacto']"><img src="img/chat.png" ng-click="VChat(row['idContacto'])" style="padding-left:5px;" alt="chat"></td>
+				            </tr>
+				        </table>
+						<div ng-click="VAdminContactos(idUsuario)">
+							<span class="glyphicon glyphicon-cog"></span> Administrar
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/ng-template" id="pop_up_chat.html">
+		<div>
+		<ul>
+		  <li style="word-wrap:break-word;" ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
+		</ul>
+		</div>
+		<form name="fChatForm" ng-submit="AEscribir1(fChatForm.$valid)" novalidate>
+		            <div class="form-group" ng-class="{ 'has-error' :  fChatSubmitted && fChatForm.texto.$invalid && fChatForm.texto.$pristine && fChatSubmitted}"><label for="fChat_texto">Texto</label><textarea id="fChat_texto" name="texto" class="form-control" ng-model="fChat.texto" placeholder="Texto" required></textarea><p ng-show="fChatSubmitted && fChatForm.texto.$invalid" class="help-block">Error en campo Texto.</p></div>
+		        <button type="submit" id="btnHilos" class="btn btn-primary">
+		            <span class="glyphicon glyphicon-pencil"></span>Escribir
+		        </button>
+		</form>
+
+		</script>
 
 		<!--FOOTER-->
 		<footer id="footer" class="container">

@@ -193,79 +193,81 @@ socialModule.controller('VChatController',
 socialModule.controller('VContactosController',
    ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService', '$interval',
     function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService,$interval) {
-      $scope.msg = '';
-      $scope.fChat = {};
-      chatService.VContactos({"idUsuario":$routeParams.idUsuario}).then(function (object) {
-        $scope.res = object.data;
-        for (var key in object.data) {
-            $scope[key] = object.data[key];
-        }
-
-              var VChat1Data = $scope.res.data1;
-              if(typeof VChat1Data === 'undefined') VChat1Data=[];
-              $scope.tableParams1 = new ngTableParams({
-                  page: 1,            // show first page
-                  count: 10           // count per page
-              }, {
-                  total: VChat1Data.length, // length of data
-                  getData: function($defer, params) {
-                      $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                  }
-              });
-
-
-      });
+    //     $scope.verContactos = function(idUsuario) {
+    //         document.getElementById('invisible').style.display = 'table';
+    //         chatService.VContactos({"idUsuario":idUsuario}).then(function (object) {
+    //             $scope.res = object.data;
+    //             for (var key in object.data) {
+    //                 $scope[key] = object.data[key];
+    //             }
+      // 
+    //                   var VChat1Data = $scope.res.data1;
+    //                   if(typeof VChat1Data === 'undefined') VChat1Data=[];
+    //                   $scope.tableParams1 = new ngTableParams({
+    //                       page: 1,            // show first page
+    //                       count: 10           // count per page
+    //                   }, {
+    //                       total: VChat1Data.length, // length of data
+    //                       getData: function($defer, params) {
+    //                           $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+    //                       }
+    //                   });
+    //     });};
+    //     $scope.ocultarContactos = function () {
+    //         document.getElementById('invisible').style.display = 'none';
+    //     };
+    //   });
       
-     navegador.agregarBotones($scope);
-     $scope.VAdminContactos = function (id) {
-         $location.path('/VAdminContactos/' + id);
-     };
-     
-      $scope.VChat1 = function(idChat) {
-        //$location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
-        //debugger;
-        ngDialog.open({ template: 'pop_up_chat.html',scope: $scope,
-        showClose: true, closeByDocument: true, closeByEscape: true});
-      
-        chatService.VChat({"idChat":idChat}).then(function (object) {
-          $scope.res = object.data;
-          for (var key in object.data) {
-              $scope[key] = object.data[key];
-          }
-        });
-
-        var recargarChat = $interval(function () {
-              chatService.VChat({"idChat":idChat}).then(function (obj) {
-                $scope.mensajesAnt = obj.data['mensajesAnt'];
-              });
-        }, 3000);
-
-        $scope.$on('$destroy', function (){
-          $interval.cancel(recargarChat);
-        });
-        
-        $scope.fChatSubmitted = false;
-        $scope.AEscribir1 = function(isValid) {
-          $scope.fChatSubmitted = true;
-          debugger;
-          if (isValid) {
-  
-            chatService.AEscribir($scope.fChat).then(function (object) {
-                var msg = object.data["msg"];
-                if (msg) flash(msg);
-                var label = object.data["label"];
-                
-            });
-          }
-        };
-        
-      };
-
-      $scope.__ayuda = function() {
-        ngDialog.open({ template: 'ayuda_VContactos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-      }
-      
+    //  navegador.agregarBotones($scope);
+    //  $scope.VAdminContactos = function (id) {
+    //      $location.path('/VAdminContactos/' + id);
+    //  };
+    //  
+    //   $scope.VChat1 = function(idChat) {
+    //     //$location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
+    //     //debugger;
+    //     ngDialog.open({ template: 'pop_up_chat.html',scope: $scope,
+    //     showClose: true, closeByDocument: true, closeByEscape: true});
+    //   
+    //     chatService.VChat({"idChat":idChat}).then(function (object) {
+    //       $scope.res = object.data;
+    //       for (var key in object.data) {
+    //           $scope[key] = object.data[key];
+    //       }
+    //     });
+     // 
+    //     var recargarChat = $interval(function () {
+    //           chatService.VChat({"idChat":idChat}).then(function (obj) {
+    //             $scope.mensajesAnt = obj.data['mensajesAnt'];
+    //           });
+    //     }, 3000);
+     // 
+    //     $scope.$on('$destroy', function (){
+    //       $interval.cancel(recargarChat);
+    //     });
+    //     
+    //     $scope.fChatSubmitted = false;
+    //     $scope.AEscribir1 = function(isValid) {
+    //       $scope.fChatSubmitted = true;
+    //       debugger;
+    //       if (isValid) {
+     // 
+    //         chatService.AEscribir($scope.fChat).then(function (object) {
+    //             var msg = object.data["msg"];
+    //             if (msg) flash(msg);
+    //             var label = object.data["label"];
+    //             
+    //         });
+    //       }
+    //     };
+    //     
+    //   };
+     // 
+    //   $scope.__ayuda = function() {
+    //     ngDialog.open({ template: 'ayuda_VContactos.html',
+    //     showClose: true, closeByDocument: true, closeByEscape: true});
+    //   }
+    //   
     }]);
 socialModule.controller('VGrupoController',
    ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
@@ -336,6 +338,20 @@ socialModule.controller('VGrupoController',
                 $route.reload();
           })};
       };
+      
+       $scope.AgregarContactoQuery = function(nombre){
+        
+        var parametro_post = {'nombre':nombre};
+        
+        chatService.AgregMiembro(parametro_post).then(function (object) {
+              var msg = object.data["msg"];
+              if (msg) flash(msg);
+              var label = object.data["label"];
+              $location.path(label);
+              $route.reload();
+        });
+      };
+      
 
 $scope.__ayuda = function() {
 ngDialog.open({ template: 'ayuda_VGrupo.html',

@@ -5,7 +5,7 @@
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" ng-click="VInicio()">
+                <a class="navbar-brand" ng-click="VInicio2()">
                     <img style="padding-top:6px;max-width:300px;" 
                          src="img2/logo.png" 
                          alt="logo"
@@ -74,14 +74,14 @@
 $('.dropdown-toggle').dropdown()
 </script>
 
-        <a id="config" class="btn btn-primary" ng-click="VAdminContactos(idUsuario)">
+        <a id="config" class="btn btn-primary btn-negro-naranja" ng-click="VAdminContactos(idUsuario)">
             <span class="glyphicon glyphicon-cog"></span>Administrar contactos
         </a>
-        <table ng-table="tableParams1" template-pagination="pager.html" class="table table-hover">
+        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'">
                     <div ng-if="row['tipo'] === 'usuario'">
-                        <a href="" ng-click="VMiPagina(row['nombre'])">{{row['nombre']}}</a>
+                        <a href="" ng-click="VMiPagina0(row['nombre'])">{{row['nombre']}}</a>
                     </div>
                     <div ng-if="row['tipo'] === 'grupo'">
                         <div ng-bind="row['nombre']"></div>
@@ -115,11 +115,14 @@ $('.dropdown-toggle').dropdown()
 
 -->
 <script type="text/ng-template" id="pop_up_chat.html">
+<<<<<<< HEAD
+
+=======
 <div>
+>>>>>>> 6d45910d655649f9efc4ade4f2a5e000ad9fa76f
 <ul>
-  <li style="word-wrap:break-word;" ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
-</ul>
-</div>
+  <li ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
+</ul>    
 <form name="fChatForm" ng-submit="AEscribir1(fChatForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' :  fChatSubmitted && fChatForm.texto.$invalid && fChatForm.texto.$pristine && fChatSubmitted}"><label for="fChat_texto">Texto</label><textarea id="fChat_texto" name="texto" class="form-control" ng-model="fChat.texto" placeholder="Texto" required></textarea><p ng-show="fChatSubmitted && fChatForm.texto.$invalid" class="help-block">Error en campo Texto.</p></div>
         <button type="submit" class="btn btn-perso btn-lg btn-block">

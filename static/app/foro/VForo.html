@@ -22,7 +22,7 @@
 							</a>
 						</li>
 						<li>
-							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
 								Contactos
 							</a>
 						</li>
@@ -79,7 +79,7 @@ $('.dropdown-toggle').dropdown()
 <a id="config" class="btn btn-primary" ng-show="idUsuario" ng-click="AbrirForm()">
     <span class="glyphicon glyphicon-plus"></span>Agregar Hilo
 </a>
-       <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+       <table ng-table="tableParams1" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Titulo'" style='text-align : center'>
                     <a href="" ng-click="VHilo0(row['id'])">{{row["titulo"]}}</a>
