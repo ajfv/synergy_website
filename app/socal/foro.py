@@ -62,13 +62,15 @@ def AgregForo():
     {'label':'/VForos', 'msg':['No se pudo agregar el nuevo foro']}]
 
     titulo_nuevo_foro = params['texto']
-    if 'nombre_usuario' in session:
-        nuevo_foro = Foro(titulo=titulo_nuevo_foro, nombre_usuario=session['nombre_usuario'])
-        db.session.add(nuevo_foro)
-        db.session.commit()
-        res = results[0]
-    else:
-        res = results[1]
+    foro_ya_existe = Foro.query.filter_by(titulo=titulo_nuevo_foro).first()
+    res = results[1]
+    if foro_ya_existe is None:
+        if 'nombre_usuario' in session:
+            nuevo_foro = Foro(titulo=titulo_nuevo_foro, nombre_usuario=session['nombre_usuario'])
+            db.session.add(nuevo_foro)
+            db.session.commit()
+            res = results[0]
+        
     return json.dumps(res)
 
 #------------------------------------------------------------------------------#
