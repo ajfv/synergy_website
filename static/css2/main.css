@@ -178,6 +178,9 @@ body > section {
   display: inline-block;
   margin-left: 950px;
   margin-top: 30px;
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+
 }
 /*VContacto*/
 
@@ -348,7 +351,12 @@ body > section {
     top: 0;
     width: 2px;
 }
-
+/*.profile-activity:before, .act-time:before, .act-time .text:before {
+    content: "";
+    left: 60px;
+    position: absolute;
+    top: -2px;
+}*/
 .profile-activity, .act-time , .profile-activity .act-in, .profile-activity .act-out {
     position: relative;
 }
@@ -429,7 +437,9 @@ body > section {
   border-radius: 4px;
   -webkit-border-radius: 4px;
 }
-
+#bulletForo{
+  visibility: hidden;
+}
 #up{
   font-size: 13px;
 }
