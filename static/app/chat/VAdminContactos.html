@@ -94,13 +94,7 @@ $('.dropdown-toggle').dropdown()
             </tr>
         </table>
 
-<hr />    <form name="fContactoForm" ng-submit="AgregContacto3(fContactoForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fContactoSubmitted && fContactoForm.nombre.$invalid && fContactoForm.nombre.$pristine && fContactoSubmitted}"><label for="fContacto_nombre">Nombre</label>:&nbsp;<select id="fContacto_nombre" ng-model="fContacto.nombre" required ng-options="item.key as item.value for item in fContacto_opcionesNombre"></select><p ng-show="fContactoSubmitted && fContactoForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
-        <button type="submit" class="btn btn-perso btn-lg btn-block">
-            <span class="glyphicon glyphicon-flash"></span>Agregar contacto
-        </button>
-    </form>
-    <hr />
+<hr />    
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VAdminContactos.html">
@@ -115,3 +109,20 @@ $('.dropdown-toggle').dropdown()
 </ul>
 
 </script>
+	<div id="buscador" class="input-group stylish-input-group">
+  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
+  		
+  		<span class="input-group-addon">
+  			<button type="submit">
+      			<span class="glyphicon glyphicon-search"></span>
+ 			</button>  
+  		</span>
+	</div>
+<ul class="agregAmigos">
+	<!-- El repeat se hace sobre los usuarios que pueden ser tus contactos, si no hay nada escrito en el buscador, éste no muestra resultados. -->
+  	<ul  ng-repeat="item in fContacto_opcionesNombre | filter:query">
+          <ul ng-if= "query.length" ng-bind="item.value" ng-click="AgregarContactoQuery(item.value)"></ul>
+  	</ul>
+</ul>
+  			
+  
