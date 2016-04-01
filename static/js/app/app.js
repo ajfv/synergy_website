@@ -7,9 +7,10 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'app/ident/VInicio.html'
             });
 }]);
-socialModule.controller('socialController_',  ['$scope', '$http', '$location', "chatService",'ngTableParams',
-function($scope, $http, $location, chatService, ngTableParams) {
+socialModule.controller('socialController_',  ['$scope', '$http', '$location', "chatService",'ngTableParams', 'ngDialog',
+function($scope, $http, $location, chatService, ngTableParams, ngDialog) {
     $scope.title = "Social";
+    $scope.chat = false;
     $scope.verContactos = function(idUsuario) {
         document.getElementById('invisible').style.display = 'table';
         chatService.VContactos({"idUsuario":idUsuario}).then(function (object) {
@@ -31,7 +32,7 @@ function($scope, $http, $location, chatService, ngTableParams) {
                   });
     });};
     $scope.ocultarContactos = function () {
-        document.getElementById('invisible').style.display = 'none';
+            document.getElementById('invisible').style.display = 'none';
     };
     $scope.VAdminContactos = function (idUsuario) {
         $location.path('/VAdminContactos/' + idUsuario);
@@ -39,6 +40,18 @@ function($scope, $http, $location, chatService, ngTableParams) {
     $scope.VMiPagina = function (idUsuario) {
         $location.path('/VMiPagina/' + idUsuario);
     };
+    $scope.VChat = function(idChat) {
+      var newScope = $scope.$new(true);
+      ngDialog.open({ template: 'pop_up_chat.html',scope: newScope,
+      showClose: true, closeByDocument: true, closeByEscape: true});
+    
+      chatService.VChat({"idChat":idChat}).then(function (object) {
+        newScope.res = object.data;
+        for (var key in object.data) {
+            newScope[key] = object.data[key];
+        }
+      });
+  }
 }]);
 socialModule.directive('sameAs', [function () {
     return {
