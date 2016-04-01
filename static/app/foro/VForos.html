@@ -1,65 +1,79 @@
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" ng-click="VInicio2()">
-                    <img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
-                </a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <div>
-                    <ul class="nav navbar-nav navbar-right lista headerNavBar">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
                         <li>
-                            <a ng-click="VMiPagina0(idUsuario)">
-                                Perfil
-                            </a>
-                        </li>
-                        <li>
-                            <a ng-click="VContactos2(idUsuario)">
-                                Contactos
-                            </a>
-                        </li>
-                        <li>
-                            <a ng-click="VForos()">
-                                Foros
-                            </a>
-                        </li>
-    
-                        <li id="user">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown">
-                                    <span ng-show="usuario.nombre" ng-bind="usuario.nombre">
-                                    </span>
-                                    <i class="icon-chevron-down">
-                                    </i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a style="color:#3B3F44" ng-click="__ayuda()">
-                                            <span class="glyphicon glyphicon-info-sign"></span>Ayuda
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a style="color:#3B3F44" ng-click="VPrincipal0()"><!--Usar una clase para el color-->
-                                            Regresar
-                                        </a>
-                                    </li>
-                                    
-                                    <li>
-                                        <a style="color:#3B3F44" ng-click="VLogin1()">
-                                            Salir
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-</header>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li>
+							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</a> 
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
+											Ayuda
+										</a>
+									</li>
+								</ul>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
 <script>
 $('.dropdown-toggle').dropdown()
 </script>
+
+<a id="config" class="btn btn-primary" ng-show="idUsuario" ng-click="AbrirForm()">
+    <span class="glyphicon glyphicon-plus"></span>Agregar Foro
+</a>
+<br>
 
        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
             <tr ng-repeat="row in $data">
@@ -68,31 +82,31 @@ $('.dropdown-toggle').dropdown()
                 </td>
                 <td data-title="'Fecha'" ng-bind="row['fecha']" style='text-align : center'></td>
                 <td data-title="'Creador'" ng-bind="row['autor']" style='text-align : center'></td>
-                <td><a ng-click="AElimForo1(row['titulo'])" ng-show="row['autor']==usuario.nombre">Eliminar</a></td>
+                <td><a ng-click="AElimForo1(row['titulo'])" ng-show="row['autor']==idUsuario">Eliminar</a></td>
             </tr>
         </table>
         
-        <hr />
-        
-        <form ng-show="!esInvitado" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
-                <label for="fForo_texto">
-                    Título del Foro
-                </label>
-                <input type="text" id="fForo_texto" name="texto" class="form-control" ng-model="fForo.texto" placeholder="Texto" required>
-                    
-                </input>
-                <p ng-show="fForoSubmitted && fForoForm.texto.$invalid" class="help-block">
-                    Error en campo Texto.
-                </p>
+        <div ng-show="openForm">
+            <div class="container" id="formForos">
+                <form id="foros" class="form-signin" ng-show="idUsuario" name="fForoForm" ng-submit="AgregForo3(fForoForm.$valid)" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' :  fForoSubmitted && fForoForm.texto.$invalid && fForoForm.texto.$pristine && fForoSubmitted}">
+                        <label for="fForo_texto">
+                            Título del Foro
+                        </label>
+                        <input type="text" id="fForo_texto" name="texto" class="form-control" ng-model="fForo.texto" placeholder="Texto" required>
+                            
+                        </input>
+                        <p ng-show="fForoSubmitted && fForoForm.texto.$invalid" class="help-block">
+                            Error en campo Texto.
+                        </p>
+                    </div>
+                    <button type="submit" id="btnForos" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-flash"></span>Crear Foro
+                    </button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-perso btn-lg btn-block">
-                <span class="glyphicon glyphicon-flash"></span>Crear Foro
-            </button>
-        </form>
+        </div>
         
-        <hr />
-
 <script type="text/ng-template" id="ayuda_VForos.html">
 Manual
 </script>

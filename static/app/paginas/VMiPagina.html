@@ -1,62 +1,72 @@
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand" ng-click="VInicio()">
-				<img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
-			</a>
-		</div>
-		<div class="collapse navbar-collapse">
-			<div>
-				<ul class="nav navbar-nav navbar-right lista headerNavBar">
-					<li>
-						<a ng-click="VMiPagina(idUsuario)">
-							Perfil
-						</a>
-					</li>
-					<li>
-						<a ng-click="VContactos(idUsuario)">
-							Contactos
-						</a>
-					</li>
-					<li>
-						<a ng-click="VForos()">
-							Foro
-						</a>
-					</li>
-					<li id="user">
-						<div class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown">
-								<span ng-show="usuario.nombre" ng-bind="usuario.nombre">
-								</span>
-								<i class="icon-chevron-down">
-								</i>
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
 							</a>
-							<ul class="dropdown-menu">
-								<li>
-									<a style="color:#3B3F44" ng-click="__ayuda()">
-										<span class="glyphicon glyphicon-info-sign">
+						</li>
+						<li>
+							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
 											Ayuda
-										</span>
-									</a>
-								</li>
-								<li>
-									<a style="color:#3B3F44" ng-click="VPrincipal()"><!--Usar una clase para el color-->
-										Regresar
-									</a>
-								</li>
-								<li>
-									<a style="color:#3B3F44" ng-click="VLogin()">
-										Salir
-									</a>
-								</li>
-							</ul>
+										</a>
+									</li>
+								</ul>
+							</li>
 						</div>
-					</li>
-				</ul>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
-</header>
+	</header>
 
 <!-- VISTA PARA USUARIO CON PAGINA -->
 <div ng-show="!pagVacia">
@@ -134,9 +144,6 @@
 	<ul> 
 		<li>
 			Modificar: Se dirige a la página en la que puede modificar su pagina de usuario.
-		</li>
-		<li>
-			Regresar: Se regresa a la página principal.
 		</li>
 	</ul>
 	<br>

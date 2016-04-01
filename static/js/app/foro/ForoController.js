@@ -18,35 +18,17 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VForoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'ngTableParams',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, ngTableParams) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'navegador', 'ngTableParams',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, navegador, ngTableParams) {
       $scope.msg = '';
       foroService.VForo({"idForo":$routeParams.idForo}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-        $scope.VForos = function(){
-          $location.path('/VForos');
-        };
-
-        $scope.VLogin1 = function() {
-          $location.path('/VLogin');
-        };
-        $scope.VContactos2 = function(idUsuario) {
-          $location.path('/VContactos/'+idUsuario);
-        };
-
-        $scope.VMiPagina0 = function(idUsuario) {
-          $location.path('/VMiPagina/'+idUsuario);
-        };
-
+        
         $scope.idForo = $routeParams.idForo;
-
+        navegador.agregarBotones($scope);
         var VHilo2Data = $scope.res.data;
         if(typeof VHilo2Data === 'undefined') VHilo2Data=[];
         $scope.tableParams1 = new ngTableParams({
@@ -90,17 +72,15 @@ socialModule.controller('VForoController',
           })};
       };
 
+      $scope.AbrirForm = function(){
+          $scope.openForm = true;
+          $scope.fForoSubmitted = false
+      };
+
       $scope.VHilo0 = function(idHilo){
           $location.path('/VHilos/'+idHilo);
 
       };
-
-
-
-     // $scope.VHilo0 = function(idHilo) {
-     //   $location.path('/VForo');
-     // };
-
       });
 
 $scope.__ayuda = function() {
@@ -110,16 +90,13 @@ $scope.__ayuda = function() {
     }]);
 
 socialModule.controller('VForosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'foroService', 'ngTableParams',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, foroService, ngTableParams) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'foroService', 'ngTableParams', 'navegador',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, foroService, ngTableParams, navegador) {
       $scope.msg = '';
       foroService.VForos().then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
-        }
-        if ($scope.logout) {
-            $location.path('/');
         }
 
         var VForo2Data = $scope.res.data;
@@ -134,20 +111,11 @@ socialModule.controller('VForosController',
                   }
         });
 
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
+      navegador.agregarBotones($scope);
+
+      $scope.AbrirForm = function(){
+          $scope.openForm = true;
+          $scope.fForoSubmitted = false
       };
 
       $scope.fForoSubmitted = false;
@@ -187,41 +155,24 @@ socialModule.controller('VForosController',
 
       });
 
-$scope.__ayuda = function() {
-  ngDialog.open({ template: 'ayuda_VForos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VForos.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
+      }
     }]);
     
 socialModule.controller('VHilosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'navegador',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, navegador) {
       $scope.msg = '';
       foroService.VHilos({"idHilo":$routeParams.idHilo}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-        $scope.VForo1 = function(){
-          $location.path('/VForo/' + $scope.foroPadre);
-        };
-        $scope.VForos = function(){
-          $location.path('/VForos');
-        };
-        $scope.VLogin1 = function() {
-          $location.path('/VLogin');
-        };
-        $scope.VContactos2 = function(idUsuario) {
-          $location.path('/VContactos/'+idUsuario);
-        };
-        $scope.VMiPagina0 = function(idUsuario) {
-          $location.path('/VMiPagina/'+idUsuario);
-        };
-      
+        
+        navegador.agregarBotones($scope);
+        
         $scope.AElimPublicacion1 = function(idPublicacion) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
@@ -293,8 +244,8 @@ socialModule.controller('VHilosController',
 
       });
 
-$scope.__ayuda = function() {
-  ngDialog.open({ template: 'ayuda_VHilos.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VHilos.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
+      }
     }]);

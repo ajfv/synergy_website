@@ -9,47 +9,31 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VMiPaginaController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
       $scope.msg = '';
       paginasService.VMiPagina({"idUsuario":$routeParams.idUsuario}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
       });
-      $scope.VPrincipal = function() {
-        $location.path('/VPrincipal');
-      };
+
       $scope.VPagina = function(idUsuario) {
         $location.path('/VPagina/'+idUsuario);
       };
-       $scope.VInicio = function() {
-        $location.path('/VInicio');
+      
+      navegador.agregarBotones($scope);
+      
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VMiPagina.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
       };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-      $scope.VLogin = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VMiPagina.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
     }]);
 socialModule.controller('VPaginaController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
       $scope.msg = '';
       $scope.fPagina = {};
 
@@ -58,45 +42,10 @@ socialModule.controller('VPaginaController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
       });
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VPagina0 = function(idUsuario) {
-        $location.path('/VPagina/'+idUsuario);
-      };
-       $scope.VInicio0 = function() {
-        $location.path('/VInicio');
-      };
-      $scope.VForos0 = function(){
-        $location.path('/VForos');
-      };
-      $scope.VLogin0 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos0 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-
-
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-
+     
+      navegador.agregarBotones($scope);
+      
       $scope.fPaginaSubmitted = false;
       $scope.AModificarPagina0 = function(isValid) {
         $scope.fPaginaSubmitted = true;
@@ -111,9 +60,9 @@ socialModule.controller('VPaginaController',
           });
         }
       };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VPagina.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      
+      $scope.__ayuda = function() {
+      ngDialog.open({ template: 'ayuda_VPagina.html',
+              showClose: true, closeByDocument: true, closeByEscape: true});
+      }
     }]);

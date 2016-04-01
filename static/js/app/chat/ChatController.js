@@ -15,8 +15,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VAdminContactosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fContacto = {};
 
@@ -25,10 +25,6 @@ socialModule.controller('VAdminContactosController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var AElimContacto1Data = $scope.res.data1;
               if(typeof AElimContacto1Data === 'undefined') AElimContacto1Data=[];
@@ -54,26 +50,9 @@ socialModule.controller('VAdminContactosController',
                   }
               });
 
-
       });
 
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-
+     navegador.agregarBotones($scope);
 
       $scope.AgregGrupo4 = function(idUsuario) {
 
@@ -198,8 +177,8 @@ socialModule.controller('VChatController',
           }]);
           
 socialModule.controller('VContactosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService', '$interval',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService,$interval) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService', '$interval',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService,$interval) {
       $scope.msg = '';
       $scope.fChat = {};
       chatService.VContactos({"idUsuario":$routeParams.idUsuario}).then(function (object) {
@@ -207,10 +186,6 @@ socialModule.controller('VContactosController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var VChat1Data = $scope.res.data1;
               if(typeof VChat1Data === 'undefined') VChat1Data=[];
@@ -226,6 +201,10 @@ socialModule.controller('VContactosController',
 
 
       });
+      
+     $scope.VAdminContactos = function (id) {
+         $location.path('/VAdminContactos/' + id);
+     };
 
       $scope.VLogin1 = function() {
         $location.path('/VLogin');
@@ -290,22 +269,18 @@ socialModule.controller('VContactosController',
         
       };
       
-     
+      navegador.agregarBotones($scope);
       
-      $scope.__chat = function() {
-        ngDialog.open({ template: 'VContactos.html',controller:'VChatController' });
-        
-          
-      
-      };
-      
-      
-      
+
+      $scope.__ayuda = function() {
+        ngDialog.open({ template: 'ayuda_VContactos.html',
+        showClose: true, closeByDocument: true, closeByEscape: true});
+      }
       
     }]);
 socialModule.controller('VGrupoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fMiembro = {};
 
@@ -314,10 +289,6 @@ socialModule.controller('VGrupoController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var AElimMiembro3Data = $scope.res.data3;
               if(typeof AElimMiembro3Data === 'undefined') AElimMiembro3Data=[];
@@ -346,18 +317,7 @@ socialModule.controller('VGrupoController',
         $location.path('/VAdminContactos/'+idUsuario);
       };
 
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
+    navegador.agregarBotones($scope);
 
       $scope.fMiembroSubmitted = false;
       $scope.AgregMiembro0 = function(isValid) {

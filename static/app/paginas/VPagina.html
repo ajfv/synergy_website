@@ -1,30 +1,44 @@
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" ng-click="VInicio0()">
-                <img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
-            </a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <div>
-                <ul class="nav navbar-nav navbar-right lista headerNavBar">
-                    <li>
-                        <a ng-click="VMiPagina0(idUsuario)">
-                            Perfil
-                        </a>
-                    </li>
-                    <li>
-                        <a ng-click="VContactos0(idUsuario)">
-                            Contactos
-                        </a>
-                    </li>
-                    <li>
-                        <a ng-click="VForos0()">
-                            Foros
-                        </a>
-                    </li>
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+						<li>
+							<a ng-click="VMiPagina(idUsuario)" ng-show='idUsuario'>
+								Perfil
+							</a>
+						</li>
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
                     <li id="user">
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown">
@@ -35,20 +49,19 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a style="color:#3B3F44" ng-click="__ayuda()">
-                                        <span class="glyphicon glyphicon-info-sign"></span>Ayuda
+                                    <a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)" ng-show='idUsuario'>
+                                        Perfil
                                     </a>
-                                </li>
+                                </li>                       
                                 <li>
-                                    <a style="color:#3B3F44" ng-click="VPrincipal1()"><!--Usar una clase para el color-->
-                                        Regresar
-                                    </a>
-                                </li>
-                                
-                                <li>
-                                    <a style="color:#3B3F44" ng-click="VLogin1()">
+                                    <a style="color:#3B3F44" ng-click="ASalir()">
                                         Salir
                                     </a>
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="__ayuda()">
+                                            <span class="glyphicon glyphicon-info-sign"></span>Ayuda
+                                        </a>
+                                    </li>    
                                 </li>
                             </ul>
                         </div>
@@ -60,7 +73,6 @@
 </header>
 
     <div id="wrap">
-        <h1 id="editarPagh1" >Edita tu página</h1>
         <div id='form_wrap'>
             <form id="formEditPag" name="fPaginaForm" ng-submit="AModificarPagina0(fPaginaForm.$valid)" novalidate>
                 <div class="form-group" ng-class="{ 'has-error' :  fPaginaSubmitted && fPaginaForm.titulo.$invalid && fPaginaForm.titulo.$pristine && fPaginaSubmitted}">
@@ -97,7 +109,6 @@
 <div><span></span>
 <p dir="ltr" style="text-align: center;"><span><b>Manual para modificar su página de usuario</b></span></p>
 <p dir="ltr" style="text-align: justify;"><span> Una página de usuario debe contener un título. Sin embargo, el contenido de la misma es opcional. Una vez haya terminado de realizar las modificaciones deseadas, puede guardar los cambios haciendo clic en el botón verde "Modificar" que se encuentra en la parte inferior de la ventana de Contenido.</span></p>
-<p dir="ltr"><span> Si no desea modificar su página, sino más bien volver a la página principal haga clic en la palabra “Regresar” que se encuentra en la esquina superior derecha. Desde allí, puede desconectarse si lo desea. Para ello haga clic en la palabra “Salir” que se encuentra en la esquina superior derecha de la vista.</span></p>
 <p dir="ltr" style="text-align: justify;"><span>Podrá notar que sobre el cuadro de texto grande que corresponde al contenido de su página, se encuentran una serie de botones que puede encontrar útiles a la hora de redactar el contenido. </span></p>
 <p dir="ltr"><span>Las funciones que cumplen cada uno de estos botones son las siguientes:</span></p>
 <ul>

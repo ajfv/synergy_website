@@ -2,42 +2,32 @@
 		<div class="container">
 			<div class="navbar-header">
 				<a class="navbar-brand" ng-click="VInicio2()">
-					<img style="padding-top:6px;max-width:300px;" src="img2/logo.png" alt="logo">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
 				</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<div>
 					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
 						<li>
-							<a ng-click="VInicio()">Inicio</a>
-						</li>
-						<li>
-							<a ng-click="VMiPagina0(idUsuario)" ng-show='idUsuario'>
-								Perfil
-							</a>
-						</li>
-						<li>
-							<a ng-click="VContactos2(idUsuario)" ng-show='idUsuario'>
+							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
 								Contactos
 							</a>
 						</li>
 						<li>
-							<a ng-click="VForos()">
-								Foro
-							</a>
-						</li>
-						<li>
-							<a ng-click="VLogin0()" ng-show='!idUsuario'>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
 								Iniciar sesión
 							</a>
 						</li>
 						<li> 
 							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
-						</li>
-						<li>
-							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
-								<span class="glyphicon glyphicon-info-sign"></span>
-							</a> 
 						</li>
 						<li ng-show="idUsuario" id="user">
 							<div class="dropdown">
@@ -49,11 +39,10 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a style="color:#3B3F44" ng-click="__ayuda()">
-										    Ayuda
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
 										</a>
-									</li>
-									
+									</li>			
 									<li>
 										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
 											Cerrar sesión
@@ -61,11 +50,7 @@
 									</li>
 								</ul>
 							</li>
-							</div>
-						</li>
-					</ul>
-							</div>
-						</li>
+						</div>
 					</ul>
 				</div>
 			</div>
@@ -75,33 +60,67 @@
 <script>
 $('.dropdown-toggle').dropdown()
 </script>
-
-
-Buscar: <input ng-model="query">
-<ul class="pags">
-    <ul  ng-repeat="pag in paginas | filter:query">
-          
-          <a ng-if= "pag.id != principal" ng-click="VSecundaria(pag.id)">{{pag.titulo}}</a>
-    </ul>
-</ul>
-
+<div id="pag-coment" class="container">
 <div class="row">
-    <div class="col-md-6">
-        <div ng-if="!comentarios">
-            <button ng-click="mostrarComentarios(pag.hilo)" class="btn btn-perso btn-lg btn-block">
-                Ver comentarios
-            </button>
-        </div>
-        <div ng-if="comentarios" class="well">
-            <h4>Comentarios:</h4>
-            <ul>
-                <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
-            </ul>
-            <div ng-include="'responder_Publicacion.html'"></div>
-    </div>
+  <div class="col-sm-8">
+
+  	<div class="panel panel-default">
+  		<div class="panel-heading">
+  		
+  		  	<table>
+  		  		<tr>
+  		  			<td><h4 class="panel-heading">Páginas</h></td>
+  		  			<td>
+  			         	<div id="imaginary_container"> 
+  			                <div id="buscador" class="input-group stylish-input-group">
+  			                    <input ng-model="query" class="form-control" placeholder="Buscar páginas">
+  			                    <span class="input-group-addon">
+  			                        <button type="submit">
+  			                            <span class="glyphicon glyphicon-search"></span>
+  			                        </button>  
+  			                    </span>
+  			                </div>
+  			            </div>
+  		        	</td>
+  		  		</tr>
+  		  	</table>
+  		  </div>
+  		  <div class="panel-body">
+  			<ul class="pags">
+  			    <ul  ng-repeat="pag in paginas | filter:query">
+  			          
+  			          <a ng-if= "pag.id != principal" ng-click="VSecundaria(pag.id)">{{pag.titulo}}</a>
+  			    </ul>
+  			</ul>
+  		  </div>
+  	</div>
+  </div>
+  <div class="col-sm-4">
+ 
+  			<div class="panel panel-default">
+  			  <div class="panel-heading">
+  			    <h4>Comentarios</h4>
+  			  </div>
+  			  <div class="panel-body">
+  				        <div ng-if="!comentarios">
+  				        	<div style="text-align: center;">
+  				            <a ng-click="mostrarComentarios(pag.hilo)">
+  				                Ver comentarios
+  				                <span class="glyphicon glyphicon-chevron-down"></span> 
+  				            </a>
+  				        </div>
+  				        </div>
+  				        <div ng-if="comentarios" class="well">
+  				            <h4>Comentarios:</h4>
+  				            <ul>
+  				                <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+  				            </ul>
+  				            <div ng-include="'responder_Publicacion.html'"></div>
+  				    </div>
+  			  </div>
+  			</div>
+  </div>
 </div>
-</div>
-<br>
 
 <!-- Templates -->
 <script type="text/ng-template"  id="tree_item_renderer.html">
@@ -111,7 +130,7 @@ Buscar: <input ng-model="query">
     <div id="{{'publicacion' + publicacion.id}}">
         <p>{{publicacion.contenido}}</p>
         <button ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</button>
-        <button ng-show="!esInvitado" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
+        <button ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</button>
         <ul>
             <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
         </ul>
@@ -119,7 +138,7 @@ Buscar: <input ng-model="query">
 </script>
 
 <script type="text/ng-template" id="responder_Publicacion.html">
-    <form ng-show="!esInvitado" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+    <form ng-show="idUsuario" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
         <label for="fpublicacion_texto">
             Tu comentario:
@@ -131,7 +150,7 @@ Buscar: <input ng-model="query">
             Error en campo Texto.
         </p>
     </div>
-    <button type="submit" class="btn btn-perso btn-lg btn-block">
+    <button type="submit" id="btnHilos" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span> Enviar
     </button>
 </form>
