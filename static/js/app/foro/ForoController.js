@@ -18,44 +18,17 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VForoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'identService', 'ngTableParams',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, identService, ngTableParams) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'navegador', 'ngTableParams',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, navegador, ngTableParams) {
       $scope.msg = '';
       foroService.VForo({"idForo":$routeParams.idForo}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        $scope.VInicio = function() {
-            $location.path('/');
-        };
-        $scope.VPrincipal0 = function() {
-          $location.path('/VPrincipal');
-        };
-        $scope.VRegistro0 = function() {
-          $location.path('/VRegistro');
-        };
-        $scope.VForos = function(){
-          $location.path('/VForos');
-        };
-        $scope.VLogin0 = function() {
-          $location.path('/VLogin');
-        };
-        $scope.VContactos2 = function(idUsuario) {
-          $location.path('/VContactos/'+idUsuario);
-        };
-        $scope.VMiPagina0 = function(idUsuario) {
-          $location.path('/VMiPagina/'+idUsuario);
-        };
-        $scope.ASalir = function(id) {
-            identService.ASalir({'idUsuario': id}).then( function (object){
-                var msg = object.data["msg"];
-                if (msg) flash(msg);
-                $location.path('/');
-            });
-        };
+        
         $scope.idForo = $routeParams.idForo;
-
+        navegador.agregarBotones($scope);
         var VHilo2Data = $scope.res.data;
         if(typeof VHilo2Data === 'undefined') VHilo2Data=[];
         $scope.tableParams1 = new ngTableParams({
@@ -99,6 +72,11 @@ socialModule.controller('VForoController',
           })};
       };
 
+      $scope.AbrirForm = function(){
+          $scope.openForm = true;
+          $scope.fForoSubmitted = false
+      };
+
       $scope.VHilo0 = function(idHilo){
           $location.path('/VHilos/'+idHilo);
 
@@ -112,8 +90,8 @@ $scope.__ayuda = function() {
     }]);
 
 socialModule.controller('VForosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'foroService', 'ngTableParams', 'identService',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, foroService, ngTableParams, identService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', 'foroService', 'ngTableParams', 'navegador',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, foroService, ngTableParams, navegador) {
       $scope.msg = '';
       foroService.VForos().then(function (object) {
         $scope.res = object.data;
@@ -133,33 +111,11 @@ socialModule.controller('VForosController',
                   }
         });
 
-      $scope.VInicio = function() {
-          $location.path('/');
-      };
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-      $scope.VLogin0 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VRegistro0 = function() {
-        $location.path('/VRegistro');
-      };
-      $scope.ASalir = function(id) {
-          identService.ASalir({'idUsuario': id}).then( function (object){
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              $location.path('/');
-          });
+      navegador.agregarBotones($scope);
+
+      $scope.AbrirForm = function(){
+          $scope.openForm = true;
+          $scope.fForoSubmitted = false
       };
 
       $scope.fForoSubmitted = false;
@@ -206,46 +162,17 @@ socialModule.controller('VForosController',
     }]);
     
 socialModule.controller('VHilosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, identService) {
+   ['$scope', '$location', '$route', '$timeout', 'flash', 'ngDialog', '$routeParams', 'foroService', 'navegador',
+    function ($scope, $location, $route, $timeout, flash, ngDialog, $routeParams, foroService, navegador) {
       $scope.msg = '';
       foroService.VHilos({"idHilo":$routeParams.idHilo}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-        $scope.VInicio = function() {
-            $location.path('/');
-        };
-        $scope.VPrincipal0 = function() {
-          $location.path('/VPrincipal');
-        };
-        $scope.VRegistro0 = function() {
-          $location.path('/VRegistro');
-        };
-        $scope.VForos = function(){
-          $location.path('/VForos');
-        };
-        $scope.VLogin0 = function() {
-          $location.path('/VLogin');
-        };
-        $scope.VContactos2 = function(idUsuario) {
-          $location.path('/VContactos/'+idUsuario);
-        };
-        $scope.VMiPagina0 = function(idUsuario) {
-          $location.path('/VMiPagina/'+idUsuario);
-        };
-        $scope.ASalir = function(id) {
-            identService.ASalir({'idUsuario': id}).then( function (object){
-                var msg = object.data["msg"];
-                if (msg) flash(msg);
-                $location.path('/');
-            });
-        };
+        
+        navegador.agregarBotones($scope);
+        
         $scope.AElimPublicacion1 = function(idPublicacion) {
           //var tableFields = [["idForo","id"],["titulo","Titulo"],["fecha","Fipo"]];
           var arg = {};
