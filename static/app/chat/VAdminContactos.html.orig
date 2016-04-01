@@ -86,7 +86,11 @@ $('.dropdown-toggle').dropdown()
             </tr>
         </table>
 
+<<<<<<< HEAD
+<hr />     <table ng-table="tableParams2" template-pagination="pager.html" class="table">
+=======
 <hr />        <table ng-table="tableParams2" template-pagination="pager.html" class="table table-hover">
+>>>>>>> 338aaffb0fb9d020fba918b443c3c3c8395ccf65
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
@@ -97,13 +101,24 @@ $('.dropdown-toggle').dropdown()
 <hr />    
 
 
-<div id="right"></div>
+<div id="right"></div><script type="text/ng-template" id="ayuda_VAdminContactos.html">
+
+<div style="text-align: center;"><span><b>Manual:</b></span></div>
+<p style="text-align: left;">En la vista actual se encuentran las siguientes opciones:</span></p>
+<p style="text-align: left;"></p>
+<ul>
+<li>Eliminar: Se elimina de la lista de contactos a la persona correspondiente.</li>
+<li>Modificar Grupo: Se va a la página del grupo correspondiente, en la cual se puede modificar el grupo.</li>
+<li>Agregar Contacto: Se agrega a los contactos a la persona seleccionada en la barra.</li>
+</ul>
+
+
 
 </script>
- <div class="panel panel-default">
+<div class="panel panel-default">
   <div class="panel-heading">
   	<table>
-  	  		<tr>
+  		<tr>
 		    <td><h3 class="panel-title">Busca a tus amigos</h3></td>
 			<td><div id="buscadorAmigos" class="input-group stylish-input-group">
 		  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
@@ -131,17 +146,5 @@ $('.dropdown-toggle').dropdown()
   </div>
 </div>
 <hr>
-</ul>
-
-<script type="text/ng-template" id="ayuda_VAdminContactos.html">
-
-<div style="text-align: center;"><span><b>Manual:</b></span></div>
-<p style="text-align: left;">En la vista actual se encuentran las siguientes opciones:</span></p>
-<p style="text-align: left;"></p>
-<ul>
-<li>Eliminar: Se elimina de la lista de contactos a la persona correspondiente.</li>
-<li>Modificar Grupo: Se va a la página del grupo correspondiente, en la cual se puede modificar el grupo.</li>
-<li>Agregar Contacto: Se agrega a los contactos a la persona seleccionada en la barra.</li>
-</ul>
   			
   

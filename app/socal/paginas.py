@@ -82,7 +82,7 @@ def VMiPagina():
         res['titulo'] = pagina_existente.titulo
         res['contenido'] = pagina_existente.contenido
     else:
-        res['titulo'] = ""
+        res['titulo'] = "La página no existe."
         res['contenido'] = "Este usuario no ha creado su página."
         res['crearPag'] = "Si desea crear su página presione el botón \"crear página\"."
         res['pagVacia'] = 'true' 
