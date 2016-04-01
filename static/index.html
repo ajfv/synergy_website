@@ -50,7 +50,9 @@
 				                <td ng-show="row['idContacto']"><img src="img/chat.png" ng-click="VChat1(row['idContacto'])" style="padding-left:5px;" alt="chat"></td>
 				            </tr>
 				        </table>
-						<span class="glyphicon glyphicon-cog"></span> Administrar
+						<div ng-click="VAdminContactos(idUsuario)">
+							<span class="glyphicon glyphicon-cog"></span> Administrar
+						</div>
 					</div>
 				</div>
 			</div>

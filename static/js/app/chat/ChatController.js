@@ -193,30 +193,30 @@ socialModule.controller('VChatController',
 socialModule.controller('VContactosController',
    ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService', '$interval',
     function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService,$interval) {
-        $scope.verContactos = function(idUsuario) {
-            document.getElementById('invisible').style.display = 'table';
-            chatService.VContactos({"idUsuario":idUsuario}).then(function (object) {
-                $scope.res = object.data;
-                for (var key in object.data) {
-                    $scope[key] = object.data[key];
-                }
-
-                      var VChat1Data = $scope.res.data1;
-                      if(typeof VChat1Data === 'undefined') VChat1Data=[];
-                      $scope.tableParams1 = new ngTableParams({
-                          page: 1,            // show first page
-                          count: 10           // count per page
-                      }, {
-                          total: VChat1Data.length, // length of data
-                          getData: function($defer, params) {
-                              $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                          }
-                      });
-        });};
-        $scope.ocultarContactos = function () {
-            document.getElementById('invisible').style.display = 'none';
-        };
-      });
+    //     $scope.verContactos = function(idUsuario) {
+    //         document.getElementById('invisible').style.display = 'table';
+    //         chatService.VContactos({"idUsuario":idUsuario}).then(function (object) {
+    //             $scope.res = object.data;
+    //             for (var key in object.data) {
+    //                 $scope[key] = object.data[key];
+    //             }
+      // 
+    //                   var VChat1Data = $scope.res.data1;
+    //                   if(typeof VChat1Data === 'undefined') VChat1Data=[];
+    //                   $scope.tableParams1 = new ngTableParams({
+    //                       page: 1,            // show first page
+    //                       count: 10           // count per page
+    //                   }, {
+    //                       total: VChat1Data.length, // length of data
+    //                       getData: function($defer, params) {
+    //                           $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+    //                       }
+    //                   });
+    //     });};
+    //     $scope.ocultarContactos = function () {
+    //         document.getElementById('invisible').style.display = 'none';
+    //     };
+    //   });
       
     //  navegador.agregarBotones($scope);
     //  $scope.VAdminContactos = function (id) {

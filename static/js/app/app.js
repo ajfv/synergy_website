@@ -33,6 +33,9 @@ function($scope, $http, $location, chatService, ngTableParams) {
     $scope.ocultarContactos = function () {
         document.getElementById('invisible').style.display = 'none';
     };
+    $scope.VAdminContactos = function (idUsuario) {
+        $location.path('/VAdminContactos/' + idUsuario);
+    };
 }]);
 socialModule.directive('sameAs', [function () {
     return {
