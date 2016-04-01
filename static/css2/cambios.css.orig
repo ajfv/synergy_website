@@ -192,6 +192,10 @@ a,button,.icono i{
 	text-align: center;
 }
 
+<<<<<<< HEAD
+#boton-modif a{
+	padding:10px;
+=======
 #boton-modif a {
 	border-radius: 4px;
 	font-style: bold;
@@ -204,6 +208,7 @@ a,button,.icono i{
   	border-color: #2c3e50;
   	color: white;
 
+>>>>>>> e3b30a00edeb0c38ac0ea52cce5edf2da798bb94
 }
 
 
@@ -341,7 +346,15 @@ a,button,.icono i{
 	color: #e67e22;
 }
 
+/*
+
+*/
+
 .alert-perso{
 	background-color:#3B3F44;
 	color:#E7E0DA;
+<<<<<<< HEAD
 }
+=======
+}*/
+>>>>>>> e3b30a00edeb0c38ac0ea52cce5edf2da798bb94

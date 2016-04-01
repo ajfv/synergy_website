@@ -1,71 +1,75 @@
+<style>
+    .ngdialog-content {overflow:auto; 
+                       height: 90%;}
+</style>
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" ng-click="VInicio2()">
-					<img style="padding-top:6px;max-width:300px;" 
-						 src="img2/logo.png" 
-						 alt="logo"
-						 ng-click="VInicio()">
-				</a>
-			</div>
-			<div class="collapse navbar-collapse">
-				<div>
-					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-click="VInicio()">
+                    <img style="padding-top:6px;max-width:300px;" 
+                         src="img2/logo.png" 
+                         alt="logo"
+                         ng-click="VInicio()">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div>
+                    <ul class="nav navbar-nav navbar-right lista headerNavBar">
                         <li>
-        					<a ng-click="VForos()">
+                            <a ng-click="VForos()">
                                 Foros
                             </a>
-        				</li>
+                        </li>
                         <li>
-							<a ng-click="VPrincipal()">
-								Páginas
-							</a>
-						</li>
-						<li>
-							<a ng-click="VLogin()" ng-show='!idUsuario'>
-								Iniciar sesión
-							</a>
-						</li>
-						<li> 
-							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
-						</li>
-						<li>
-							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
-								<span class="glyphicon glyphicon-info-sign"></span>
-							</a> 
-						</li>
-						<li ng-show="idUsuario" id="user">
-							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown">
-									<span ng-bind="idUsuario">
-									</span>
-									<i class="icon-chevron-down">
-									</i>
-								</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
-											Perfil
-										</a>
-									</li>			
-									<li>
-										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
-											Cerrar sesión
-										</a>
-									</li>
-									<li>
-										<a style="color:#3B3F44" ng-click="__ayuda()">
-											Ayuda
-										</a>
-									</li>
-								</ul>
-							</li>
-						</div>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</header>
+                            <a ng-click="VPrincipal()">
+                                Páginas
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="VLogin()" ng-show='!idUsuario'>
+                                Iniciar sesión
+                            </a>
+                        </li>
+                        <li> 
+                            <a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+                        </li>
+                        <li>
+                            <a ng-click="__ayuda()" ng-show='!idUsuario'> 
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </a> 
+                        </li>
+                        <li ng-show="idUsuario" id="user">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown">
+                                    <span ng-bind="idUsuario">
+                                    </span>
+                                    <i class="icon-chevron-down">
+                                    </i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+                                            Perfil
+                                        </a>
+                                    </li>			
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+                                            Cerrar sesión
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="__ayuda()">
+                                            Ayuda
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
 <script>
 $('.dropdown-toggle').dropdown()
 </script>
@@ -77,7 +81,7 @@ $('.dropdown-toggle').dropdown()
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'">
                     <div ng-if="row['tipo'] === 'usuario'">
-                        <a href="" ng-click="VMiPagina0(row['nombre'])">{{row['nombre']}}</a>
+                        <a href="" ng-click="VMiPagina(row['nombre'])">{{row['nombre']}}</a>
                     </div>
                     <div ng-if="row['tipo'] === 'grupo'">
                         <div ng-bind="row['nombre']"></div>
@@ -101,9 +105,9 @@ $('.dropdown-toggle').dropdown()
 </ul>
 </script><!--
 <a ng-click="__chat()"> 
-								<button>hola</button>
-							</a> 
-							
+                                <button>hola</button>
+                            </a> 
+                            
 <script  type="text/ng-template" id = 'VContactos.html' >
     <div   ng-include = "'app/chat/VChat.html'" ng-controller = "VContactosController">
     </div>
@@ -111,7 +115,7 @@ $('.dropdown-toggle').dropdown()
 
 -->
 <script type="text/ng-template" id="pop_up_chat.html">
-<div style="overflow:auto; height: 25%;">
+<div>
 <ul>
   <li style="word-wrap:break-word;" ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
 </ul>

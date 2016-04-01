@@ -235,10 +235,10 @@ socialModule.controller('VHilosController',
             var boton = document.getElementById('boton' + id);
             if (element.style.display == 'none') {
                 element.style.display = 'initial';
-                boton.innerHTML = "[-]";
+                boton.innerHTML = "<span id='up' class='glyphicon glyphicon-chevron-up'></span>";
             } else {
                 element.style.display = 'none';
-                boton.innerHTML = "[+]";
+                boton.innerHTML = "<span id='up' class='glyphicon glyphicon-chevron-down'></span>";
             }
         };
 
