@@ -69,8 +69,10 @@ socialModule.controller('VLoginController',
           
           identService.AIdentificar($scope.fLogin).then(function (object) {
               var msg = object.data["msg"];
-              if (msg) flash(msg);
-              alert(msg);
+              if (msg) {
+                  flash(msg);
+                  alert(msg);
+              }
               var label = object.data["label"];
               $location.path(label);
               $route.reload();
@@ -302,8 +304,10 @@ socialModule.controller('VRegistroController',
 
           identService.ARegistrar($scope.fUsuario).then(function (object) {
               var msg = object.data["msg"];
-              if (msg) flash(msg);
-              alert(msg);
+              if (msg) {
+                  flash(msg);
+                  alert(msg);
+              }
               var label = object.data["label"];
               $location.path(label);
               $route.reload();

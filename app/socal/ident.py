@@ -7,7 +7,7 @@ from base import Usuario, Pagina, db, Sitio, Hilo, Publicacion
 def AIdentificar():
     #POST/PUT parameters
     params = request.get_json()
-    results = [{'label':'/VPrincipal', 'msg':['Bienvenido usuario'], "actor":"duenoProducto"}, {'label':'/VLogin', 'msg':['Datos de identificación incorrectos']}, ]
+    results = [{'label':'/VPrincipal', "actor":"duenoProducto"}, {'label':'/VLogin', 'msg':['Datos de identificación incorrectos']}, ]
     res = results[1]
     #Action code goes here, res should be a list with a label and a message
 
@@ -53,7 +53,7 @@ def ASalir():
 def ARegistrar():
     #POST/PUT parameters
     params = request.get_json()
-    results = [{'label':'/VLogin', 'msg':['Felicitaciones, Ya estás registrado en la aplicación']}, {'label':'/VRegistro', 'msg':['Error al tratar de registrarse']}, ]
+    results = [{'label':'/VLogin'}, {'label':'/VRegistro', 'msg':['Error al tratar de registrarse']}, ]
     res = results[1]
 
     # Se verifica si el usuario existe en la base de datos
