@@ -36,6 +36,9 @@ function($scope, $http, $location, chatService, ngTableParams) {
     $scope.VAdminContactos = function (idUsuario) {
         $location.path('/VAdminContactos/' + idUsuario);
     };
+    $scope.VMiPagina = function (idUsuario) {
+        $location.path('/VMiPagina/' + idUsuario);
+    };
 }]);
 socialModule.directive('sameAs', [function () {
     return {
