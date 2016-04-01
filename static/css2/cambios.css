@@ -313,14 +313,31 @@ a,button,.icono i{
 
 .btn-naranja-blanco{
 	border:1px solid transparent;
+	border-color: #F6F6F6;
+	background-color: #e67e22;
+	border-radius: 1px;
+	color: #F6F6F6;
+}
+
+.btn-negro-naranja{
+	border:1px solid transparent;
 	border-color: #e67e22;
-	background-color: #F6F6F6;
+	background-color: #e67e22;
+	border-radius: 1px;
+	color: #3B3F44;
+}
+
+
+.btn-naranja-negro{
+	border:1px solid transparent;
+	border-color: #3B3F44;
+	background-color: #3B3F44;
 	border-radius: 1px;
 	color: #e67e22;
 }
-
+/*
 .alert-perso{
 	background-color:#3B3F44;
 	color:#E7E0DA;
-}
+}*/
 
