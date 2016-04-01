@@ -182,6 +182,11 @@ body > section {
   border-color: #2c3e50;
 
 }
+
+#config:hover{
+  background-color: #237799;
+  border-color: #237799;
+}
 /*VContacto*/
 
 /*VPagina*/
