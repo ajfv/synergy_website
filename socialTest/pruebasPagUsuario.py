@@ -12,7 +12,7 @@ class PruebasPagUsuario(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "https://rsocialfl-prmm95.c9users.io/"
+        self.base_url = "localhost:8080"
         self.verificationErrors = []
         self.accept_next_alert = True
     
