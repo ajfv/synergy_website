@@ -80,31 +80,44 @@ $('.dropdown-toggle').dropdown()
     <span class="glyphicon glyphicon-log-out"></span>  Salirme del grupo
 </a>
 	
-	<div id="buscador" class="input-group stylish-input-group">
-  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
-  		
-  		<span class="input-group-addon">
-  			<button type="submit">
-      			<span class="glyphicon glyphicon-search"></span>
- 			</button>  
-  		</span>
-	</div>
-	
+    
+
+	<table ng-table="tableParams3" template-pagination="pager.html" class="table">
+        <tr ng-repeat="row in $data">
+            <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
+            <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
+        </tr>
+    </table>
+<hr>
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<table>
+  		<tr>
+		    <td><h3 class="panel-title">Añade a tus contactos</h3></td>
+			<td><div id="buscadorAmigos" class="input-group stylish-input-group">
+		  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
+		  		
+		  		<span class="input-group-addon">
+		  			<button type="submit">
+		      			<span class="glyphicon glyphicon-search"></span>
+		 			</button>  
+		  		</span>
+			</div></td>
+		</tr>
+	</table>
+  </div>
+  <div class="panel-body">
 	<ul class="agregMiembros">
 		<!-- El repeat se hace sobre los usuarios que pueden ser tus contactos, si no hay nada escrito en el buscador, éste no muestra resultados. -->
-		  <ul  ng-repeat="item in fMiembro_opcionesNombre | filter:query">
-		      <ul ng-if= "query.length" ng-bind="item.value" ng-click="AgregarContactoQuery(item.value)"></ul>
-		  </ul>
+		<table template-pagination="pager.html" class="table">
+		          <tr ng-repeat="item in fMiembro_opcionesNombre | filter:query">
+		              <td data-title="'Nombre'" ng-if= "query.length" ng-bind="item.value"></td>
+		              <td ng-if= "query.length"><button ng-click="AgregarContactoQuery(item.value)" id="btnHilos" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>  Añadir contacto</button></td>
+		          </tr>
+		      </table>
 	</ul>
-	
-    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
-            <tr ng-repeat="row in $data">
-                <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
-                <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
-            </tr>
-        </table>
-
-<hr />
+  </div>
+</div>
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VGrupo.html">
