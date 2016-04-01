@@ -169,16 +169,15 @@ $('.dropdown-toggle').dropdown()
                 <div class="activity-body act-in">
                     <span class="arrow"></span>
                     <div class="text">
-                        <a href="#" class="activity-img"><img class="avatar" src="img/chat-avatar.jpg" alt=""></a>
                         <h4><strong>{{publicacion.titulo}}</strong>
                             <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
                         </h4>
                         <div id="{{'publicacion' + publicacion.id}}">
                             <h4>{{publicacion.contenido}}</h4>
                             <p id="firma"class="attribution">Publicado por:{{publicacion.autor}}</p>
-                            <a ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</a>
                             <a ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</a>
-                            <ul id="bulletForo" >
+                            <a ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</a>
+                            <ul style="visibility: hidden;" id="bulletForo" >
                                 <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
                             </ul>
                         </div>
