@@ -80,15 +80,16 @@ $('.dropdown-toggle').dropdown()
     <span class="glyphicon glyphicon-log-out"></span>  Salirme del grupo
 </a>
 	
-    
+  
+    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table table-hover">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
+                <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
+            </tr>
+        </table>
 
-	<table ng-table="tableParams3" template-pagination="pager.html" class="table">
-        <tr ng-repeat="row in $data">
-            <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
-            <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
-        </tr>
-    </table>
-<hr>
+<hr />
+
 <div class="panel panel-default">
   <div class="panel-heading">
   	<table>
@@ -116,8 +117,10 @@ $('.dropdown-toggle').dropdown()
 		          </tr>
 		      </table>
 	</ul>
+
   </div>
 </div>
+
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VGrupo.html">
