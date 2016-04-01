@@ -138,11 +138,6 @@ socialModule.controller('VPrincipalController',
       } 
       };
       
-      $scope.__ayuda = function() {
-      ngDialog.open({
-              showClose: true, closeByDocument: true, closeByEscape: true});
-      }
-      
       $scope.AgregPublicacion3 = function(isValid, id) {
           agregarPublicacion($scope, isValid, id);
       };
@@ -297,10 +292,6 @@ socialModule.controller('VRegistroController',
 
       navegador.agregarBotones($scope);
       
-      $scope.reloadRoute = function() {
-         $route.reload();
-      }
-
       $scope.fUsuarioSubmitted = false;
       $scope.ARegistrar0 = function(isValid) {
         $scope.fUsuarioSubmitted = true;

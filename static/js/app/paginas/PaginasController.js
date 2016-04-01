@@ -23,7 +23,13 @@ socialModule.controller('VMiPaginaController',
       $scope.VPagina = function(idUsuario) {
         $location.path('/VPagina/'+idUsuario);
       };
+      
       navegador.agregarBotones($scope);
+      
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VMiPagina.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
+      };
     }]);
 socialModule.controller('VPaginaController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
@@ -54,4 +60,9 @@ socialModule.controller('VPaginaController',
           });
         }
       };
+      
+      $scope.__ayuda = function() {
+      ngDialog.open({ template: 'ayuda_VPagina.html',
+              showClose: true, closeByDocument: true, closeByEscape: true});
+      }
     }]);

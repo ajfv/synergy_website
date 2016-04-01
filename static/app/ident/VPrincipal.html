@@ -34,11 +34,6 @@
 						<li> 
 							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
 						</li>
-						<li>
-							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
-								<span class="glyphicon glyphicon-info-sign"></span>
-							</a> 
-						</li>
 						<li ng-show="idUsuario" id="user">
 							<div class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown">
@@ -48,12 +43,6 @@
 									</i>
 								</a>
 								<ul class="dropdown-menu">
-									<li>
-										<a style="color:#3B3F44" ng-click="__ayuda()">
-										    Ayuda
-										</a>
-									</li>
-									
 									<li>
 										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
 											Cerrar sesión
