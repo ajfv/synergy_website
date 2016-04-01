@@ -1,11 +1,10 @@
 /*
 
 Colores: 
-* E7E0DA: Gris claro (fondo)
+* B0B0B0: Gris claro (fondo)
 * 3B3F44: Gris obscuro (footer)
 * e67e22: Anaranjado (Nav)
 * B0B0B0: Interior de la pagina de usuario
-* F6F6F6: Gris casi blanco (algunos botones)
 */
 
 a,button,.icono i{
@@ -13,7 +12,7 @@ a,button,.icono i{
 }
 
 .fondo{
-	background-color: #E7E0DA;
+	background-color: #ECEFF1;
 }
 
 .headerNavBar{

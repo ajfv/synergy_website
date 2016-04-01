@@ -80,10 +80,11 @@ $('.dropdown-toggle').dropdown()
 <h2>Hilo: {{publicacion.titulo}}</h2>
 <h3> {{publicacion.contenido + '  - '}} <em>{{publicacion.autor}}</em> </h3>
 <hr>
+<div style="word-wrap:break-word;">
 <ul>
     <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
 </ul>
-
+</div>
 <hr>
 <div class="container" id="formHilos">
     <form id="foros" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
