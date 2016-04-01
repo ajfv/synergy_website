@@ -99,4 +99,27 @@ $('.dropdown-toggle').dropdown()
 <li>Administrar Contactos: Se muestra la página en la que se puede agregar o eliminar un contacto, y crear o modificar un grupo.</li>
 <li>chat: Se abre el chat con el contacto correspondiente.</li>
 </ul>
+</script><!--
+<a ng-click="__chat()"> 
+								<button>hola</button>
+							</a> 
+							
+<script  type="text/ng-template" id = 'VContactos.html' >
+    <div   ng-include = "'app/chat/VChat.html'" ng-controller = "VContactosController">
+    </div>
+</script>
+
+-->
+<script type="text/ng-template" id="pop_up_chat.html">
+
+<ul>
+  <li ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
+</ul>    
+<form name="fChatForm" ng-submit="AEscribir1(fChatForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fChatSubmitted && fChatForm.texto.$invalid && fChatForm.texto.$pristine && fChatSubmitted}"><label for="fChat_texto">Texto</label><textarea id="fChat_texto" name="texto" class="form-control" ng-model="fChat.texto" placeholder="Texto" required></textarea><p ng-show="fChatSubmitted && fChatForm.texto.$invalid" class="help-block">Error en campo Texto.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>Escribir
+        </button>
+</form>
+
 </script>
