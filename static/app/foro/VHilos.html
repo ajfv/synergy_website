@@ -96,7 +96,7 @@ $('.dropdown-toggle').dropdown()
 <hr>
 
 <div style="word-wrap:break-word;">
-<ul>
+<ul style="visibility: hidden;">
     <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
 </ul>
 </div>
@@ -177,7 +177,7 @@ $('.dropdown-toggle').dropdown()
                             <p id="firma"class="attribution">Publicado por:{{publicacion.autor}}</p>
                             <a ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</a>
                             <a ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</a>
-                            <ul style="visibility: hidden;" id="bulletForo" >
+                            <ul style="visibility: hidden;">
                                 <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
                             </ul>
                         </div>

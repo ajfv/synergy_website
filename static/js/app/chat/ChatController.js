@@ -202,28 +202,11 @@ socialModule.controller('VContactosController',
 
       });
       
+     navegador.agregarBotones($scope);
      $scope.VAdminContactos = function (id) {
          $location.path('/VAdminContactos/' + id);
      };
-
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VAdminContactos2 = function(idUsuario) {
-        $location.path('/VAdminContactos/'+idUsuario);
-      };
+     
       $scope.VChat1 = function(idChat) {
         //$location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
         //debugger;
@@ -235,11 +218,6 @@ socialModule.controller('VContactosController',
           for (var key in object.data) {
               $scope[key] = object.data[key];
           }
-          if ($scope.logout) {
-              $location.path('/');
-          }
-
-
         });
 
         var recargarChat = $interval(function () {
@@ -268,9 +246,6 @@ socialModule.controller('VContactosController',
         };
         
       };
-      
-      navegador.agregarBotones($scope);
-      
 
       $scope.__ayuda = function() {
         ngDialog.open({ template: 'ayuda_VContactos.html',
