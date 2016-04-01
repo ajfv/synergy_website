@@ -75,7 +75,6 @@ def VMiPagina():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     pagina_existente = db.session.query(Pagina).filter_by(id_usuario=idUsuario).first()
@@ -90,7 +89,8 @@ def VMiPagina():
 
     if session['nombre_usuario'] == idUsuario:
         res['mostrar'] = 'true'
-    res['idUsuario'] = idUsuario #Esto arregla el botón del prof
+    
+    res['idUsuario'] = session['nombre_usuario'] #Esto arregla el botón del prof
     #Action code ends here
     return json.dumps(res)
 
