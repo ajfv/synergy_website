@@ -40,7 +40,6 @@ function($scope, $http, $location, chatService, ngTableParams, ngDialog, $interv
     $scope.VMiPagina = function (idUsuario) {
         $location.path('/VMiPagina/' + idUsuario);
     };
-    $scope.close = function (value) {$interval.cancel(recargarChat);return true;};
     $scope.VChat = function(idChat) {
       var newScope = $scope.$new();
       newScope.fChat = {};
