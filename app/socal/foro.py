@@ -63,6 +63,7 @@ def AgregForo():
 
     titulo_nuevo_foro = params['texto']
     foro_ya_existe = Foro.query.filter_by(titulo=titulo_nuevo_foro).first()
+
     res = results[1]
     if foro_ya_existe is None:
         if 'nombre_usuario' in session:

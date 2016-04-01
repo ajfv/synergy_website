@@ -345,6 +345,7 @@ def VContactos():
                 listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
 
         res['data1'] = listaAmigos
+        res['usuario'] = session['nombre_usuario']
     else:
         res['data1'] = []
 
