@@ -80,13 +80,13 @@ def AEscribir():
     idChat = session['idChat']
     usuarioActual = session['nombre_usuario']
 
-    results = [{'label':'/VChat', 'msg':['Enviado']}, {'label':'/VChat', 'msg':['No se pudo enviar mensaje']}, ]
+    results = [{'label':'/VContactos', 'msg':['Enviado']}, {'label':'/VContactos', 'msg':['No se pudo enviar mensaje']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    res['label'] = res['label'] + '/' + session['idChat']
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
 
     chat = Chat.query.filter_by(id = idChat).first()
-
+    print(idChat)
     mensaje = Mensaje(usuarioActual,texto,idChat)
     db.session.add(mensaje)
     db.session.commit()
