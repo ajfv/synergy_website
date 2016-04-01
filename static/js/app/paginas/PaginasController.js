@@ -17,35 +17,13 @@ socialModule.controller('VMiPaginaController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
       });
-      $scope.VPrincipal = function() {
-        $location.path('/VPrincipal');
-      };
+
       $scope.VPagina = function(idUsuario) {
         $location.path('/VPagina/'+idUsuario);
       };
-       $scope.VInicio = function() {
-        $location.path('/');
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-      $scope.VLogin = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VMiPagina.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      navegador.agregarBotones($scope);
     }]);
 socialModule.controller('VPaginaController', 
    ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
@@ -58,45 +36,10 @@ socialModule.controller('VPaginaController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
       });
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VPagina0 = function(idUsuario) {
-        $location.path('/VPagina/'+idUsuario);
-      };
-       $scope.VInicio0 = function() {
-        $location.path('/');
-      };
-      $scope.VForos0 = function(){
-        $location.path('/VForos');
-      };
-      $scope.VLogin0 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos0 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-
-
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-
+     
+      navegador.agregarBotones($scope);
+      
       $scope.fPaginaSubmitted = false;
       $scope.AModificarPagina0 = function(isValid) {
         $scope.fPaginaSubmitted = true;
@@ -111,9 +54,4 @@ socialModule.controller('VPaginaController',
           });
         }
       };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VPagina.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
     }]);

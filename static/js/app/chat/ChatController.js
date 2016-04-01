@@ -15,8 +15,8 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VAdminContactosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fContacto = {};
 
@@ -25,10 +25,6 @@ socialModule.controller('VAdminContactosController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var AElimContacto1Data = $scope.res.data1;
               if(typeof AElimContacto1Data === 'undefined') AElimContacto1Data=[];
@@ -56,32 +52,7 @@ socialModule.controller('VAdminContactosController',
 
       });
 
-      $scope.AInicio = function() { $location.path('/');};
-
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VLogin = function() {
-        $location.path('/VLogin');
-      };
-
-      $scope.VRegistro = function() {
-        $location.path('/VRegistro');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-
-      $scope.ASalir = function(id) {
-          identService.ASalir({'idUsuario': id}).then( function (object){
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              $location.path("/");
-          });
-      };
+     navegador.agregarBotones($scope);
 
       $scope.AgregGrupo4 = function(idUsuario) {
 
@@ -194,18 +165,14 @@ ngDialog.open({ template: 'ayuda_VChat.html',
 }
     }]);
 socialModule.controller('VContactosController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       chatService.VContactos({"idUsuario":$routeParams.idUsuario}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var VChat1Data = $scope.res.data1;
               if(typeof VChat1Data === 'undefined') VChat1Data=[];
@@ -221,39 +188,12 @@ socialModule.controller('VContactosController',
 
 
       });
+      
+     $scope.VAdminContactos = function (id) {
+         $location.path('/VAdminContactos/' + id);
+     };
 
-      $scope.VLogin = function() {
-        $location.path('/VLogin');
-      };
-
-      $scope.VRegistro = function() {
-        $location.path('/VRegistro');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VPrincipal0 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VAdminContactos2 = function(idUsuario) {
-        $location.path('/VAdminContactos/'+idUsuario);
-      };
-      $scope.VChat1 = function(idChat) {
-        $location.path('/VChat/'+((typeof idChat === 'object')?JSON.stringify(idChat):idChat));
-      };
-      $scope.ASalir = function(id) {
-          identService.ASalir({'idUsuario': id}).then( function (object){
-              var msg = object.data["msg"];
-              if (msg) flash(msg);
-              $location.path("/");
-          });
-      };
+     navegador.agregarBotones($scope);
       
 
 $scope.__ayuda = function() {
@@ -262,8 +202,8 @@ ngDialog.open({ template: 'ayuda_VContactos.html',
 }
     }]);
 socialModule.controller('VGrupoController',
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'ngTableParams', 'chatService', 'identService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, ngTableParams, chatService, identService) {
       $scope.msg = '';
       $scope.fMiembro = {};
 
@@ -272,10 +212,6 @@ socialModule.controller('VGrupoController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
               var AElimMiembro3Data = $scope.res.data3;
               if(typeof AElimMiembro3Data === 'undefined') AElimMiembro3Data=[];
@@ -304,18 +240,7 @@ socialModule.controller('VGrupoController',
         $location.path('/VAdminContactos/'+idUsuario);
       };
 
-      $scope.VMiPagina0 = function(idUsuario) {
-        $location.path('/VMiPagina/'+idUsuario);
-      };
-      $scope.VLogin1 = function() {
-        $location.path('/VLogin');
-      };
-      $scope.VContactos2 = function(idUsuario) {
-        $location.path('/VContactos/'+idUsuario);
-      };
-      $scope.VForos = function(){
-        $location.path('/VForos');
-      };
+    navegador.agregarBotones($scope);
 
       $scope.fMiembroSubmitted = false;
       $scope.AgregMiembro0 = function(isValid) {

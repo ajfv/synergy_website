@@ -1,30 +1,29 @@
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" ng-click="VInicio2()">
-                    <img 
-                        style="padding-top:6px;max-width:300px;" 
-                        src="img2/logo.png" 
-                        alt="logo"
-                        ng-click="AInicio()">
-                </a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <div>
-                    <ul class="nav navbar-nav navbar-right lista headerNavBar">
-                        <li>
-							<a ng-click="VMiPagina0(idUsuario)" ng-show='idUsuario'>
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+						<li>
+							<a ng-click="VMiPagina(idUsuario)" ng-show='idUsuario'>
 								Perfil
 							</a>
 						</li>
-						<li>
-							<a ng-click="VContactos2(idUsuario)" ng-show='idUsuario'>
-								Contactos
-							</a>
-						</li>
-						<li>
-							<a ng-click="VForos()">
-								Foros
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
 							</a>
 						</li>
 						<li>
@@ -62,19 +61,17 @@
 									</li>
 								</ul>
 							</li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-</header>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
 <script>
 $('.dropdown-toggle').dropdown()
 </script>
 
-        <a id="config" class="btn btn-primary" ng-click="VAdminContactos2(idUsuario)">
+        <a id="config" class="btn btn-primary" ng-click="VAdminContactos(idUsuario)">
             <span class="glyphicon glyphicon-cog"></span>Administrar contactos
         </a>
         <table ng-table="tableParams1" template-pagination="pager.html" class="table">

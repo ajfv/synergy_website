@@ -12,22 +12,22 @@
 				<div>
 					<ul class="nav navbar-nav navbar-right lista headerNavBar">
 						<li>
-							<a ng-click="VMiPagina0(idUsuario)" ng-show='idUsuario'>
+							<a ng-click="VMiPagina(idUsuario)" ng-show='idUsuario'>
 								Perfil
 							</a>
 						</li>
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
 						<li>
-							<a ng-click="VContactos2(idUsuario)" ng-show='idUsuario'>
+							<a ng-click="VContactos(idUsuario)" ng-show='idUsuario'>
 								Contactos
 							</a>
 						</li>
 						<li>
-							<a ng-click="VForos()">
-								Foros
-							</a>
-						</li>
-						<li>
-							<a ng-click="VLogin0()" ng-show='!idUsuario'>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
 								Iniciar sesión
 							</a>
 						</li>
@@ -61,11 +61,7 @@
 									</li>
 								</ul>
 							</li>
-							</div>
-						</li>
-					</ul>
-							</div>
-						</li>
+						</div>
 					</ul>
 				</div>
 			</div>
