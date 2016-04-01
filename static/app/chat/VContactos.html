@@ -1,3 +1,30 @@
+<style>
+
+
+.enjoy-css {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 160px;
+  opacity: 0.71;
+  padding: 20px;
+  border: 2px solid rgb(119,119,119);
+  font: normal normal bold 15px/1 Arial Black, Gadget, sans-serif;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  background: rgb(255, 255, 255);
+  -webkit-transition: opacity 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) 10ms;
+  -moz-transition: opacity 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) 10ms;
+  -o-transition: opacity 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) 10ms;
+  transition: opacity 200ms cubic-bezier(0.25, 0.25, 0.75, 0.75) 10ms;
+}
+
+</style>
+
+
 <header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
         <div class="container">
             <div class="navbar-header">
@@ -77,18 +104,29 @@ $('.dropdown-toggle').dropdown()
         <a id="config" class="btn btn-primary" ng-click="VAdminContactos2(idUsuario)">
             <span class="glyphicon glyphicon-cog"></span>Administrar contactos
         </a>
-        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+        <table ng-table="tableParams1" template-pagination="pager.html">
             <tr ng-repeat="row in $data">
-                <td data-title="'Nombre'">
-                    <div ng-if="row['tipo'] === 'usuario'">
+                <td>
+                    <div class=enjoy-css>
+                     <div style="display:inline">
+                     	
                         <a href="" ng-click="VMiPagina0(row['nombre'])">{{row['nombre']}}</a>
-                    </div>
-                    <div ng-if="row['tipo'] === 'grupo'">
-                        <div ng-bind="row['nombre']"></div>
+                     	
+                     </div style="display:inline">
+    					 <img src="img/chat.png" ng-click="VChat1(row['idContacto'])" style="padding-left:5px;" alt="chat">
+                     <div>
+
+                     </div>
+
                     </div>
                 </td>
-                <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
-                <td ng-show="row['idContacto']"><a ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false" ng-click="VChat1(row['idContacto'])">chat</a></td>
+                <td  ng-show="row['idContacto']"><a ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false" >
+                	
+               
+
+
+
+                </a></td>
             </tr>
         </table>
 
