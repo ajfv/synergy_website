@@ -1,7 +1,7 @@
 /*
 
 Colores: 
-* B0B0B0: Gris claro (fondo)
+* ECEFF1: Gris claro (fondo)
 * 3B3F44: Gris obscuro (footer)
 * e67e22: Anaranjado (Nav)
 * B0B0B0: Interior de la pagina de usuario
@@ -300,3 +300,44 @@ a,button,.icono i{
 	font-family: 'NavFont';
 	src: url('../fonts2/fuente.ttf');
 }
+
+/* BOTONES */
+
+.btn-blanco-naranja{
+	border:1px solid transparent;
+	border-color: #e67e22;
+	background-color: #F6F6F6;
+	border-radius: 1px;
+	color: #e67e22;
+}
+
+.btn-naranja-blanco{
+	border:1px solid transparent;
+	border-color: #F6F6F6;
+	background-color: #e67e22;
+	border-radius: 1px;
+	color: #F6F6F6;
+}
+
+.btn-negro-naranja{
+	border:1px solid transparent;
+	border-color: #e67e22;
+	background-color: #e67e22;
+	border-radius: 1px;
+	color: #3B3F44;
+}
+
+
+.btn-naranja-negro{
+	border:1px solid transparent;
+	border-color: #3B3F44;
+	background-color: #3B3F44;
+	border-radius: 1px;
+	color: #e67e22;
+}
+/*
+.alert-perso{
+	background-color:#3B3F44;
+	color:#E7E0DA;
+}*/
+
