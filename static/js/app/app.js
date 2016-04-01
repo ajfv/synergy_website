@@ -133,6 +133,7 @@ socialModule.service('navegador',
                 var msg = object.data["msg"];
                 if (msg) flash(msg);
                 $location.path('/');
+                document.getElementById('invisible').style.display = 'none';
                 $route.reload();
             });
         };
