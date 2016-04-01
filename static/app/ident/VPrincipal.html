@@ -130,12 +130,12 @@ $('.dropdown-toggle').dropdown()
                 <div class="activity-body act-in">
                     <span class="arrow"></span>
                     <div class="text">
-                        <h5><strong>{{publicacion.titulo}}</strong>
-                            <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
-                        </h4>
+						<div style="text-align: right;" 
+						class="flecha"><span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
+						</div>
                         <div id="{{'publicacion' + publicacion.id}}">
                             <p>{{publicacion.contenido}}</p>
-                            <p id="firma"class="attribution">Publicado por:{{publicacion.autor}}</p>
+                            <p id="firma"class="attribution">Publicado por: {{publicacion.autor}}</p>
                             <a ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</a>
                             <a ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</a>
                             <ul style="visibility: hidden;" id="bulletForo" >

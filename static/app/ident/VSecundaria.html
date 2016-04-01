@@ -105,9 +105,9 @@ $('.dropdown-toggle').dropdown()
                 <div class="activity-body act-in">
                     <span class="arrow"></span>
                     <div class="text">
-                        <h4><strong>{{publicacion.titulo}}</strong>
-                            <span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
-                        </h4>
+						<div style="text-align: right;" 
+						class="flecha"><span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
+						</div>
                         <div id="{{'publicacion' + publicacion.id}}">
                             <h4>{{publicacion.contenido}}</h4>
                             <p id="firma"class="attribution">Publicado por:{{publicacion.autor}}</p>
