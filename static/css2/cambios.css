@@ -213,7 +213,7 @@ a,button,.icono i, .pulsor {
 	margin-top: 50px;
 	width: 100%;
 	height: 500px;
-	background-color: #B0B0B0;
+	background-color: #ECEFF1;
 }
 
 #profile-box{
@@ -223,7 +223,7 @@ a,button,.icono i, .pulsor {
 	border:0px; 
 	text-align: center;
 	color: #3B3F44;
-	background-color: #B0B0B0;
+	background-color: #ECEFF1;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -240,7 +240,7 @@ a,button,.icono i, .pulsor {
 #perfil{
 	padding-left: 15px;
 	padding-top: 10px;
-	background-color: #B0B0B0;
+	background-color: #ECEFF1;
 	max-width: 250px;
 	cursor: pointer; 
 	cursor: hand;
@@ -253,7 +253,7 @@ a,button,.icono i, .pulsor {
 	border:0px; 
 	text-align: center;
 	color: #3B3F44;
-	background-color: #B0B0B0;
+	background-color: #ECEFF1;
 	margin-left: auto;
 	margin-right: auto;
 }
