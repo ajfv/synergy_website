@@ -1,7 +1,7 @@
 /*
 
 Colores: 
-* B0B0B0: Gris claro (fondo)
+* ECEFF1: Gris claro (fondo)
 * 3B3F44: Gris obscuro (footer)
 * e67e22: Anaranjado (Nav)
 * B0B0B0: Interior de la pagina de usuario
@@ -12,7 +12,7 @@ a,button,.icono i{
 }
 
 .fondo{
-	background-color: #B0B0B0;
+	background-color: #ECEFF1;
 }
 
 .headerNavBar{
@@ -159,7 +159,7 @@ a,button,.icono i{
 }
 
 .pagina-usuario{
-	background-color: #DFDCD8;
+	background-color: #FFFFFF;
 	border-radius: 6px;
 	text-align: center;
 	margin-left: auto;
@@ -170,15 +170,13 @@ a,button,.icono i{
 }
 
 .titulo-pagina{
-	background-color: #3B3F44;
-	color: #DFDCD8;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	font-size: 40px;
+	font-size: 30px;
 	min-height: 80px;
 }
 
-.pagina-contenido{
+.pagina-contenido {
 	text-align: justify;
 	height: 100%;
 }
@@ -194,14 +192,21 @@ a,button,.icono i{
 	text-align: center;
 }
 
-#boton-modif a{
+#boton-modif a {
 	border-radius: 4px;
 	font-style: bold;
 	font-size: 20px;
 	padding:10px;
-	background-color: #FFF8ED;
-	color: #3B3F44;
+  	font-family: 'Roboto', sans-serif;
+  	font-weight: 300;
+  	display: inline-block;
+  	background-color: #2c3e50;
+  	border-color: #2c3e50;
+  	color: white;
+
 }
+
+
 
 /* Este poco de identificadores hay que cambiarlos por clases de arriba*/
 #profile {
@@ -300,3 +305,43 @@ a,button,.icono i{
 	font-family: 'NavFont';
 	src: url('../fonts2/fuente.ttf');
 }
+
+/* BOTONES */
+
+.btn-blanco-naranja{
+	border:1px solid transparent;
+	border-color: #e67e22;
+	background-color: #F6F6F6;
+	border-radius: 1px;
+	color: #e67e22;
+}
+
+.btn-naranja-blanco{
+	border:1px solid transparent;
+	border-color: #F6F6F6;
+	background-color: #e67e22;
+	border-radius: 1px;
+	color: #F6F6F6;
+}
+
+.btn-negro-naranja{
+	border:1px solid transparent;
+	border-color: #e67e22;
+	background-color: #e67e22;
+	border-radius: 1px;
+	color: #3B3F44;
+}
+
+
+.btn-naranja-negro{
+	border:1px solid transparent;
+	border-color: #3B3F44;
+	background-color: #3B3F44;
+	border-radius: 1px;
+	color: #e67e22;
+}
+/*
+.alert-perso{
+	background-color:#3B3F44;
+	color:#E7E0DA;
+}*/
