@@ -111,10 +111,11 @@ $('.dropdown-toggle').dropdown()
 
 -->
 <script type="text/ng-template" id="pop_up_chat.html">
-
+<div style="overflow:auto; height: 25%;">
 <ul>
-  <li ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
-</ul>    
+  <li style="word-wrap:break-word;" ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
+</ul>
+</div>
 <form name="fChatForm" ng-submit="AEscribir1(fChatForm.$valid)" novalidate>
             <div class="form-group" ng-class="{ 'has-error' :  fChatSubmitted && fChatForm.texto.$invalid && fChatForm.texto.$pristine && fChatSubmitted}"><label for="fChat_texto">Texto</label><textarea id="fChat_texto" name="texto" class="form-control" ng-model="fChat.texto" placeholder="Texto" required></textarea><p ng-show="fChatSubmitted && fChatForm.texto.$invalid" class="help-block">Error en campo Texto.</p></div>
         <button type="submit" class="btn btn-perso btn-lg btn-block">
