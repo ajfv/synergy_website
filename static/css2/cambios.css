@@ -7,6 +7,10 @@ Colores:
 * B0B0B0: Interior de la pagina de usuario
 */
 
+a,button,.icono i{
+	cursor: pointer; 
+}
+
 .fondo{
 	background-color: #B0B0B0;
 }
@@ -56,7 +60,7 @@ Colores:
 #contenidos {
 	width: 100%;
 	height: 350px;
-	background-color: #B0B0B0;
+	background-color: #E7DBD2 ;
 }
 
 #recent-works{

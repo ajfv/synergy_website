@@ -103,9 +103,12 @@ $('.dropdown-toggle').dropdown()
   			  </div>
   			  <div class="panel-body">
   				        <div ng-if="!comentarios">
-  				            <button ng-click="mostrarComentarios(pag.hilo)" class="btn btn-perso btn-lg btn-block">
+  				        	<div style="text-align: center;">
+  				            <a ng-click="mostrarComentarios(pag.hilo)">
   				                Ver comentarios
-  				            </button>
+  				                <span class="glyphicon glyphicon-chevron-down"></span> 
+  				            </a>
+  				        </div>
   				        </div>
   				        <div ng-if="comentarios" class="well">
   				            <h4>Comentarios:</h4>
@@ -147,7 +150,7 @@ $('.dropdown-toggle').dropdown()
             Error en campo Texto.
         </p>
     </div>
-    <button type="submit" class="btn btn-perso btn-lg btn-block">
+    <button type="submit" id="btnHilos" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span> Enviar
     </button>
 </form>
