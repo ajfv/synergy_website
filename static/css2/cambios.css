@@ -7,7 +7,7 @@ Colores:
 * B0B0B0: Interior de la pagina de usuario
 */
 
-a,button,.icono i{
+a,button,.icono i, .pulsor {
 	cursor: pointer; 
 }
 
