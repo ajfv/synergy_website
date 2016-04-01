@@ -7,9 +7,32 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'app/ident/VInicio.html'
             });
 }]);
-socialModule.controller('socialController_',  ['$scope', '$http', '$location',
-function($scope) {
+socialModule.controller('socialController_',  ['$scope', '$http', '$location', "chatService",'ngTableParams',
+function($scope, $http, $location, chatService, ngTableParams) {
     $scope.title = "Social";
+    $scope.verContactos = function(idUsuario) {
+        document.getElementById('invisible').style.display = 'table';
+        chatService.VContactos({"idUsuario":idUsuario}).then(function (object) {
+            $scope.res = object.data;
+            for (var key in object.data) {
+                $scope[key] = object.data[key];
+            }
+
+                  var VChat1Data = $scope.res.data1;
+                  if(typeof VChat1Data === 'undefined') VChat1Data=[];
+                  $scope.tableParams1 = new ngTableParams({
+                      page: 1,            // show first page
+                      count: 10           // count per page
+                  }, {
+                      total: VChat1Data.length, // length of data
+                      getData: function($defer, params) {
+                          $defer.resolve(VChat1Data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                      }
+                  });
+    });};
+    $scope.ocultarContactos = function () {
+        document.getElementById('invisible').style.display = 'none';
+    };
 }]);
 socialModule.directive('sameAs', [function () {
     return {
