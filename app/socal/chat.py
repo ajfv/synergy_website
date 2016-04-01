@@ -301,13 +301,9 @@ def VChat():
     idChat = request.args['idChat']
     session['idChat'] = idChat
     res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
-        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     res['idChat'] = idChat
-    res['idUsuario'] = session['nombre_usuario']
 
     usuarioActual = session['nombre_usuario']
 
@@ -332,8 +328,6 @@ def VContactos():
     #GET parameter
     idUsuario = request.args['idUsuario']
     res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
     if 'nombre_usuario' in session:
@@ -352,7 +346,6 @@ def VContactos():
                 listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
 
         res['data1'] = listaAmigos
-        res['idUsuario'] = idUsuario # Esto arregla el botón del prof
     else:
         res['data1'] = []
 
