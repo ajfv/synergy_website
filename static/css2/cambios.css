@@ -195,12 +195,7 @@ a,button,.icono i{
 }
 
 #boton-modif a{
-	border-radius: 4px;
-	font-style: bold;
-	font-size: 20px;
 	padding:10px;
-	background-color: #FFF8ED;
-	color: #3B3F44;
 }
 
 /* Este poco de identificadores hay que cambiarlos por clases de arriba*/
@@ -335,9 +330,12 @@ a,button,.icono i{
 	border-radius: 1px;
 	color: #e67e22;
 }
+
 /*
+
+*/
+
 .alert-perso{
 	background-color:#3B3F44;
 	color:#E7E0DA;
-}*/
-
+}

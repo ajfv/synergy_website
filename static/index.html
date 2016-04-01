@@ -25,7 +25,7 @@
 	</head>
 	<body class="fondo" ng-controller="socialController_">
 		<div id="body" class="container">
-			<flash:messages class="alert-perso"></flash:messages>
+			<flash:messages class="alerta alert-perso"></flash:messages>
 			<div ng-view class="fade"></div>
 		</div>
 
@@ -77,7 +77,6 @@
 		<script src="js/angular/textAngular.min.js"></script>
 		<script src="js/angular/ngDialog.min.js"></script>
 		<script src="js/angular/ng-flash.js"></script>
-		
 
 		<!-- LOAD APP -->
 		<script src="js/app/app.js"></script>
@@ -112,4 +111,11 @@
 			</ul>
 		</script>
 	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    setTimeout(function() {
+		        $(".alerta").fadeOut(1500);
+		    },3000);
+		});
+		</script>
 </html>
