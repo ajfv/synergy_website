@@ -86,7 +86,6 @@ def AEscribir():
     res['label'] = res['label'] + '/' + session['nombre_usuario']
 
     chat = Chat.query.filter_by(id = idChat).first()
-    print(idChat)
     mensaje = Mensaje(usuarioActual,texto,idChat)
     db.session.add(mensaje)
     db.session.commit()

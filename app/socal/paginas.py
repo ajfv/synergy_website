@@ -43,7 +43,6 @@ def APagina():
     idPagina = request.args['idPagina']
     results = [{'label':'/VPagina', 'msg':[]}, {'label':'/VMiPagina', 'msg':[]}, ]
     res = results[0]
-    print("ESTOY EN APAGINA")
     #Action code goes here, res should be a list with a label and a message
 
     #Cuando la página exista, ir directamente a ella.
