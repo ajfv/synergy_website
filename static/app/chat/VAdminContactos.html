@@ -78,7 +78,7 @@ $('.dropdown-toggle').dropdown()
 <a id="config" class="btn btn-primary" ng-click="AgregGrupo4(idUsuario)">
     <span class="glyphicon glyphicon-plus"></span>Agregar Grupo
 </a>
-        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+        <table ng-table="tableParams1" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
@@ -86,7 +86,7 @@ $('.dropdown-toggle').dropdown()
             </tr>
         </table>
 
-<hr />        <table ng-table="tableParams2" template-pagination="pager.html" class="table">
+<hr />        <table ng-table="tableParams2" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td data-title="'Tipo'" ng-bind="row['tipo']"></td>

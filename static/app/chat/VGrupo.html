@@ -97,7 +97,7 @@ $('.dropdown-toggle').dropdown()
 		  </ul>
 	</ul>
 	
-    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
+    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
                 <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
