@@ -13,7 +13,7 @@ class PruebasIniSesion(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "localhost:8080"
+        self.base_url = "https://rsocialfl-prmm95.c9users.io/"
         self.verificationErrors = []
         self.accept_next_alert = True
     
@@ -350,12 +350,7 @@ class PruebasIniSesion(unittest.TestCase):
         time.sleep(.5)
         actions.send_keys(Keys.CONTROL)
         actions.send_keys('r')
-        actions.perform()
-        time.sleep(.5)
-        
-        driver.find_element_by_xpath("//img[@ng-click='VInicio()']").click()
-        
-        
+        actions.perform() 
         
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -379,9 +374,8 @@ class PruebasIniSesion(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        #self.driver.quit()
-        #self.assertEqual([], self.verificationErrors)
-        pass
+        self.driver.quit()
+        self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
     unittest.main()

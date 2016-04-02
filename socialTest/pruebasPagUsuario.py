@@ -12,7 +12,7 @@ class PruebasPagUsuario(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "localhost:8080"
+        self.base_url = "https://rsocialfl-prmm95.c9users.io/"
         self.verificationErrors = []
         self.accept_next_alert = True
     
@@ -25,7 +25,7 @@ class PruebasPagUsuario(unittest.TestCase):
         driver.find_element_by_id("fUsuario_nombre").clear()
         driver.find_element_by_id("fUsuario_nombre").send_keys("Nombre")
         driver.find_element_by_id("fUsuario_usuario").clear()
-        driver.find_element_by_id("fUsuario_usuario").send_keys("Usuario13")
+        driver.find_element_by_id("fUsuario_usuario").send_keys("UsuarioNuevo")
         driver.find_element_by_id("fUsuario_clave").clear()
         driver.find_element_by_id("fUsuario_clave").send_keys("aaaaaaaa")
         driver.find_element_by_id("fUsuario_clave2").clear()
@@ -35,7 +35,7 @@ class PruebasPagUsuario(unittest.TestCase):
         driver.find_element_by_xpath("//button[@id='botonRegistro']").click()
         time.sleep(1)
         driver.find_element_by_id("fLogin_usuario").clear()
-        driver.find_element_by_id("fLogin_usuario").send_keys("Usuario13")
+        driver.find_element_by_id("fLogin_usuario").send_keys("UsuarioNuevo")
         time.sleep(.5)
         driver.find_element_by_id("fLogin_clave").clear()
         driver.find_element_by_id("fLogin_clave").send_keys("aaaaaaaa")
@@ -146,8 +146,6 @@ class PruebasPagUsuario(unittest.TestCase):
         
         driver.find_element_by_xpath("//a[@ng-click='VMiPagina(idUsuario)']").click()
         
-        
-    
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
@@ -170,9 +168,8 @@ class PruebasPagUsuario(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        pass
-        #self.driver.quit()
-        #self.assertEqual([], self.verificationErrors)
+        self.driver.quit()
+        self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
     unittest.main()

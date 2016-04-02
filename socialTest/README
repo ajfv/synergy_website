@@ -1,0 +1,86 @@
+Descripcion pruebas
+--------------
+pruebasAdminC.py
+    Se ejecutan todas las acciones de la administracion de los contactos, lo que
+    incluye, agregar y eliminar un usuario a la lista de contactos, crear un nuevo
+    grupo, agregar un miembro al grupo y salirse del grupo
+    
+pruebasChat.py
+    Se escriben mensajes de pruebas entre dos usuarios y se revisa su existencia
+    en los respectivos chats
+    
+pruebasComSitio.py
+    Se escriben comentarios en la pagina de sitio
+    
+pruebasForo.py
+    Se ejecutan todas las funcionalidades del foro, creacion y eliminacion de:
+    foros, hilos y publicaciones. Asi como publicaciones anidadas y se verifica
+    el comportamiento al eliminar una publicacion anidada
+    
+pruebasIniSesion.py
+    Se verifican todos los posibles errores que un usuario puede comenter al 
+    tratar de iniciar sesion
+    
+pruebasPagUsuario.py
+    Se crea un nuevo usuario y se crea su pagina de usuario revisando todas las
+    opciones existentes para la redaccion del contenido. Ademas se verifica
+    que exista titulo de la pagina
+    
+pruebasRegistro.py
+    Se verifican todos los posibles errores que un usuario puede comenter al 
+    tratar de registrarse
+
+
+
+Requisitos Generales
+--------------
+    Para correr las pruebas se requiere de la existencia de un usuario con las
+    siguientes caracteristicas:
+
+    Usuario: Usuario
+    Clave: aaaaaaaa
+
+
+
+Requerimientos particulares de cada pruebas
+--------------
+pruebasAdminC.py
+    Para correr la prueba se requiere de la existencia de un usuario con las
+    siguientes caracteristicas:
+    1)
+    Usuario: Usuario1
+    2)
+    Usuario: Usuario3
+    
+    Ademas 'Usuario' debe tener como amigo a 'Usuario1' mas no debe tener como
+    amigo a 'Usuario3'
+    Es altamente recomendado que 'Usuario' no pertenezca a ningun grupo
+    
+pruebasChat.py
+    Para correr la prueba se requiere de la existencia de dos usuarios con las
+    siguientes caracteristicas:
+    
+    1)
+    Usuario: Usuario
+    Clave: aaaaaaaa
+    2)
+    Usuario: Usuario1
+    Clave: aaaaaaaa
+    
+    Estos dos usuarios deben tenerse como amigos y NO deben tener a ningun otro
+    usuario en sus listas de contactos
+    
+pruebasComSitio.py
+    No posee requisitos especiales
+    
+pruebasForo.py
+    NO debe existir creado un foro llamado 'Foro Prueba'
+    
+pruebasIniSesion.py
+    NO debe estar registrado el usuario 'UsuarioNoExiste'
+    
+pruebasPagUsuario.py
+    NO debe estar registrado el usuario 'UsuarioNuevo'
+    
+pruebasRegistro.py
+    No posee requisitos especiales

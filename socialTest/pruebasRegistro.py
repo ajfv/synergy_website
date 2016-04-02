@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.alert import Alert
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
@@ -12,7 +13,7 @@ class PruebasRegistro(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "localhost:8080"
+        self.base_url = "https://rsocialfl-prmm95.c9users.io/"
         self.verificationErrors = []
         self.accept_next_alert = True
     
@@ -20,6 +21,7 @@ class PruebasRegistro(unittest.TestCase):
         driver = self.driver
         driver.get(self.base_url + "/#/VRegistro")
         actions = ActionChains(self.driver)
+        alert = Alert(self.driver)
         
 ######################## Claves de 7 caracteres #############################################        
             
@@ -34,7 +36,6 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")  
         driver.find_element_by_xpath("//button[@id='botonRegistro']").click()
-        time.sleep(.5)
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con clave de menos de 8 caracteres.")
@@ -57,7 +58,6 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")
         driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con verificacion de clave erronea.")
@@ -80,7 +80,6 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("mail")
         driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con email invalido.")
@@ -101,7 +100,6 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")
         driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con nombre vacio.")
@@ -122,7 +120,6 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")
         driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con usuario vacio.")
@@ -145,7 +142,6 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")
         driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con usuario vacio.")
@@ -165,8 +161,7 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_clave2").send_keys("aaaaaaaa")
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")
-        driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)     
+        driver.find_element_by_id("botonRegistro").click()     
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con clave vacia.")
@@ -186,8 +181,7 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_clave").send_keys("aaaaaaaa")
         driver.find_element_by_id("fUsuario_correo").clear()
         driver.find_element_by_id("fUsuario_correo").send_keys("nombre@mail.com")
-        driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5) 
+        driver.find_element_by_id("botonRegistro").click() 
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con verificacion de clave vacia.")
@@ -207,8 +201,7 @@ class PruebasRegistro(unittest.TestCase):
         driver.find_element_by_id("fUsuario_clave").send_keys("aaaaaaaa")
         driver.find_element_by_id("fUsuario_clave2").clear()
         driver.find_element_by_id("fUsuario_clave2").send_keys("aaaaaaaa")
-        driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)    
+        driver.find_element_by_id("botonRegistro").click() 
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con correo vacio.")
@@ -220,8 +213,7 @@ class PruebasRegistro(unittest.TestCase):
         actions.perform()
         time.sleep(.5)
         
-        driver.find_element_by_id("botonRegistro").click()
-        time.sleep(.5)     
+        driver.find_element_by_id("botonRegistro").click()    
         
         try: driver.find_element_by_xpath("//button[@id='botonRegistro']")
         except: raise SyntaxError("Se creo un usuario con todos los campos vacios. Boo")        
@@ -248,7 +240,8 @@ class PruebasRegistro(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
-        pass
+        self.driver.quit()
+        self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
     unittest.main()
