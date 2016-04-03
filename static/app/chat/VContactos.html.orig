@@ -1,0 +1,133 @@
+<style>
+    .ngdialog-content {overflow:auto; 
+                       height: 90%;}
+</style>
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-click="VInicio2()">
+                    <img style="padding-top:6px;max-width:300px;" 
+                         src="img2/logo.png" 
+                         alt="logo"
+                         ng-click="VInicio()">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div>
+                    <ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+                            <a ng-click="VForos()">
+                                Foros
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="VPrincipal()">
+                                Páginas
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="VLogin()" ng-show='!idUsuario'>
+                                Iniciar sesión
+                            </a>
+                        </li>
+                        <li> 
+                            <a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+                        </li>
+                        <li>
+                            <a ng-click="__ayuda()" ng-show='!idUsuario'> 
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </a> 
+                        </li>
+                        <li ng-show="idUsuario" id="user">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown">
+                                    <span ng-bind="idUsuario">
+                                    </span>
+                                    <i class="icon-chevron-down">
+                                    </i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+                                            Perfil
+                                        </a>
+                                    </li>			
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+                                            Cerrar sesión
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a style="color:#3B3F44" ng-click="__ayuda()">
+                                            Ayuda
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
+
+        <a id="config" class="btn btn-primary btn-negro-naranja" ng-click="VAdminContactos(idUsuario)">
+            <span class="glyphicon glyphicon-cog"></span>Administrar contactos
+        </a>
+        <table ng-table="tableParams1" template-pagination="pager.html" class="table">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Nombre'">
+                    <div ng-if="row['tipo'] === 'usuario'">
+                        <a href="" ng-click="VMiPagina0(row['nombre'])">{{row['nombre']}}</a>
+                    </div>
+                    <div ng-if="row['tipo'] === 'grupo'">
+                        <div ng-bind="row['nombre']"></div>
+                    </div>
+                </td>
+                <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
+                <td ng-show="row['idContacto']"><a ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false" ng-click="VChat1(row['idContacto'])">chat</a></td>
+            </tr>
+        </table>
+
+<hr />
+
+
+<div id="right"></div><script type="text/ng-template" id="ayuda_VContactos.html">
+
+<div style="text-align: center;"><span><b>Manual:</b></span></div>
+<p>En la vista actual se encuentran las siguentes opciones:</p><p></p>
+<ul>
+<li>Administrar Contactos: Se muestra la página en la que se puede agregar o eliminar un contacto, y crear o modificar un grupo.</li>
+<li>chat: Se abre el chat con el contacto correspondiente.</li>
+</ul>
+</script><!--
+<a ng-click="__chat()"> 
+                                <button>hola</button>
+                            </a> 
+                            
+<script  type="text/ng-template" id = 'VContactos.html' >
+    <div   ng-include = "'app/chat/VChat.html'" ng-controller = "VContactosController">
+    </div>
+</script>
+
+-->
+<script type="text/ng-template" id="pop_up_chat.html">
+<<<<<<< HEAD
+
+=======
+<div>
+>>>>>>> 6d45910d655649f9efc4ade4f2a5e000ad9fa76f
+<ul>
+  <li ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
+</ul>    
+<form name="fChatForm" ng-submit="AEscribir1(fChatForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' :  fChatSubmitted && fChatForm.texto.$invalid && fChatForm.texto.$pristine && fChatSubmitted}"><label for="fChat_texto">Texto</label><textarea id="fChat_texto" name="texto" class="form-control" ng-model="fChat.texto" placeholder="Texto" required></textarea><p ng-show="fChatSubmitted && fChatForm.texto.$invalid" class="help-block">Error en campo Texto.</p></div>
+        <button type="submit" class="btn btn-perso btn-lg btn-block">
+            <span class="glyphicon glyphicon-flash"></span>Escribir
+        </button>
+</form>
+
+</script>

@@ -80,13 +80,12 @@ def AEscribir():
     idChat = session['idChat']
     usuarioActual = session['nombre_usuario']
 
-    results = [{'label':'/VChat', 'msg':['Enviado']}, {'label':'/VChat', 'msg':['No se pudo enviar mensaje']}, ]
+    results = [{'label':'/VContactos', 'msg':['Enviado']}, {'label':'/VContactos', 'msg':['No se pudo enviar mensaje']}, ]
     res = results[0]
     #Action code goes here, res should be a list with a label and a message
-    res['label'] = res['label'] + '/' + session['idChat']
+    res['label'] = res['label'] + '/' + session['nombre_usuario']
 
     chat = Chat.query.filter_by(id = idChat).first()
-
     mensaje = Mensaje(usuarioActual,texto,idChat)
     db.session.add(mensaje)
     db.session.commit()
@@ -253,8 +252,10 @@ def VAdminContactos():
     if "actor" in session:
         res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
-
+    if 'nombre_usuario' not in session or session['nombre_usuario'] != idUsuario:
+        return json.dumps({'data1': [], 'data2':[]})
     res['idContacto'] = idUsuario
+    res['idUsuario'] = idUsuario
     Amistades = Amigo.query.filter_by(amigo1=idUsuario).all()
 
     listaAmigos = []
@@ -286,6 +287,7 @@ def VAdminContactos():
 
 
     res['fContacto_opcionesNombre'] = opciones_usuarios
+    res['idUsuario'] = idUsuario
 
 
     #Action code ends here
@@ -298,12 +300,9 @@ def VChat():
     idChat = request.args['idChat']
     session['idChat'] = idChat
     res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
     res['idChat'] = idChat
-    res['idUsuario'] = session['nombre_usuario']
 
     usuarioActual = session['nombre_usuario']
 
@@ -328,28 +327,27 @@ def VContactos():
     #GET parameter
     idUsuario = request.args['idUsuario']
     res = {}
-    if "actor" in session:
-        res['actor']=session['actor']
     #Action code goes here, res should be a JSON structure
 
-    res['idContacto'] = 1
+    if 'nombre_usuario' in session:
+        res['idContacto'] = 1
+        listaAmigos = []
+        User = Amigo.query.filter_by(amigo1=idUsuario).all()
 
-    listaAmigos = []
+        for i in User:
+            listaAmigos += [{'idContacto':i.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
 
-    User = Amigo.query.filter_by(amigo1=idUsuario).all()
-
-    for i in User:
-        listaAmigos += [{'idContacto':i.chat_id,'nombre':i.amigo2, 'tipo':'usuario'}]
-
-    usuarioID = Usuario.query.filter_by(nombre_usuario = idUsuario).first()
+        usuarioID = Usuario.query.filter_by(nombre_usuario = idUsuario).first()
 
 
-    if(usuarioID.grupos):
-        for i in usuarioID.grupos:
-            listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
+        if(usuarioID.grupos):
+            for i in usuarioID.grupos:
+                listaAmigos += [ {'idContacto':i.chat_id,'nombre':i.nombre,'tipo':'grupo'} ]
 
-    res['data1'] = listaAmigos
-    res['idUsuario'] = idUsuario # Esto arregla el botón del prof
+        res['data1'] = listaAmigos
+        res['usuario'] = session['nombre_usuario']
+    else:
+        res['data1'] = []
 
 
     #Action code ends here
@@ -362,6 +360,7 @@ def VGrupo():
     res = {}
     if "actor" in session:
         res['actor']=session['actor']
+        res['usuario'] = {'nombre': session['nombre_usuario']}
     #Action code goes here, res should be a JSON structure
 
     #Para que el botón de regresar cuando se modifique un grupo funcione.
@@ -369,9 +368,10 @@ def VGrupo():
     session['idGrupo']=idGrupo
     res['idGrupo'] = idGrupo
 
-
     #En data3 van los miembros del grupo.
     grupoModificar = Grupo.query.filter_by(id = idGrupo).first()
+    res['admin'] = grupoModificar.id_admin
+    
     miembrosGrupo = []
     idMiembros =[]
     if (grupoModificar.miembros):

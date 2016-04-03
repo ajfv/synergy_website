@@ -1,25 +1,134 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" 
-                    data-toggle="collapse" 
-                    data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" >Foro</span>
-        </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li>
+							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</a> 
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
+											Ayuda
+										</a>
+									</li>
+								</ul>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+</header>
 
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
+
+<a id="config" class="btn btn-primary" ng-show="idUsuario" ng-click="AbrirForm()">
+    <span class="glyphicon glyphicon-plus"></span>Agregar Hilo
+</a>
+       <table ng-table="tableParams1" template-pagination="pager.html" class="table table-hover">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Titulo'" style='text-align : center'>
+                    <a href="" ng-click="VHilo0(row['id'])">{{row["titulo"]}}</a>
+                </td>
+                <td data-title="'Fecha'" ng-bind="row['fecha']" style='text-align : center'></td>
+                <td data-title="'Autor'" ng-bind="row['autor']" style='text-align : center'></td>
+                <td><a ng-show="row['autor']==idUsuario" ng-click="AElimHilo1(row['id'])">Eliminar</a></td>
+            </tr>
+        </table>
+
+        <hr />
+
+        <div ng-show="openForm">
+            <div class="container" id="formForos">
+                <form id="foros" ng-show="idUsuario" name="fHiloForm" ng-submit="AgregHilo3(fHiloForm.$valid)" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' :  fHiloSubmitted && fHiloForm.titulo.$invalid && fHiloForm.titulo.$pristine && fHiloSubmitted}">
+                        <label for="fHilo_titulo">
+                            Título del Hilo
+                        </label>
+                        <input type="text" id="fHilo_titulo" name="titulo" class="form-control" ng-model="fHilo.titulo" placeholder="Título" required>
+
+                        </input>
+                        <p ng-show="fHiloSubmitted && fHiloForm.titulo.$invalid" class="help-block">
+                            Error en campo Título.
+                        </p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' :  fHiloSubmitted && fhiloForm.contenido.$invalid && fHiloForm.contenido.$pristine && fHiloSubmitted}">
+                        <label for="fHilo_contenido">
+                            Contenido
+                        </label>
+                        <textarea id="fHilo_contenido" name="contenido" class="form-control" ng-model="fHilo.contenido" placeholder="Contenido" required></textarea>
+                        <p ng-show="fHiloSubmitted && fHiloForm.contenido.$invalid" class="help-block">
+                            Error en campo Contenido.
+                        </p>
+                    </div>
+                    <button type="submit" id="btnForos" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-flash"></span>Crear Hilo
+                    </button>
+                </form>
+            </div>
+        </div>
+    
 
 
 <div id="right"></div>
+
+<script type="text/ng-template" id="ayuda_VForo.html">
+
+<div style="text-align: center;"><span><b>Manual</b></span><br/></div><div><br/></div><div>En esta vista podrá ver todos los hilos que han sido creados en Social FL con su respectivo dueño.</div><div><br/></div><div>Los usuarios registrados en Social FL tendrán permitido crear un nuevo hilo y eliminar aquellos que hayan sido creados por ellos mismos. Para ello, deberán hacer lo siguiente: </div><div><br/></div><div>En caso de que desee crear un hilo, deberá presionar el botón de <b>Agregar Hilo</b> e ingresar el nombre del mismo en el campo <b>Título del Hilo</b> que aparecerá en la parte inferior de la lista de foros actuales. Luego deberá presionar el botón <b>Crear Hilo</b>. Recuerde que no debe crear un nuevo hilo con el mismo nombre de uno existente.</div><div><br/></div><div>Para eliminar un hilo que haya creado, debe presionar el botón de eliminar que aparecerá al lado de su nombre en los hilos de los cuales usted sea el creador.</div>
+
+
+</script>

@@ -1,9 +1,36 @@
 socialModule.service('identService', ['$q', '$http', function($q, $http) {
 
+
+    this.VSecundaria = function(args) {
+          if(typeof args == 'undefined') args={};
+          return $http({
+            url: 'ident/VSecundaria',
+            method: 'GET',
+            params: args
+          });
+      //    var res = {};
+      //    var deferred = $q.defer();
+      //    deferred.resolve(res);
+      //    return deferred.promise;
+    };
+
     this.AIdentificar = function(fLogin) {
         return  $http({
           url: "ident/AIdentificar",
           data: fLogin,
+          method: 'POST',
+        });
+    //    var labels = ["/VPrincipal", "/VLogin", ];
+    //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+    
+    this.ASalir = function(idUsuario) {
+        return  $http({
+          url: "ident/ASalir",
+          data: idUsuario,
           method: 'POST',
         });
     //    var labels = ["/VPrincipal", "/VLogin", ];
@@ -21,6 +48,19 @@ socialModule.service('identService', ['$q', '$http', function($q, $http) {
         });
     //    var labels = ["/VLogin", "/VRegistro", ];
     //    var res = labels[0];
+    //    var deferred = $q.defer();
+    //    deferred.resolve(res);
+    //    return deferred.promise;
+    };
+
+    this.VInicio = function(args) {
+        if(typeof args == 'undefined') args={};
+        return $http({
+          url: 'ident/VInicio',
+          method: 'GET',
+          params: args
+        });
+    //    var res = {};
     //    var deferred = $q.defer();
     //    deferred.resolve(res);
     //    return deferred.promise;

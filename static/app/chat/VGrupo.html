@@ -1,46 +1,126 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" 
-                    data-toggle="collapse" 
-                    data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" >Miembros del gurpo</span>
-        </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-<li><a ng-click="ASalirGrupo1()">
-  Salirme del grupo</a></li>
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li>
+							<a ng-click="__ayuda()" ng-show='!idUsuario'> 
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</a> 
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
+											Ayuda
+										</a>
+									</li>
+								</ul>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+</header>
 
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-<li><a ng-click="VAdminContactos2(idUsuario)">
-    Regresar</a></li>
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
 
-            </ul>
-        </div>
-    </div>
-</nav>
-
-    <form name="fMiembroForm" ng-submit="AgregMiembro0(fMiembroForm.$valid)" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' :  fMiembroSubmitted && fMiembroForm.nombre.$invalid && fMiembroForm.nombre.$pristine && fMiembroSubmitted}"><label for="fMiembro_nombre">Nombre</label>:&nbsp;<select id="fMiembro_nombre" ng-model="fMiembro.nombre" required ng-options="item.value as item.value for item in fMiembro_opcionesNombre"></select><p ng-show="fMiembroSubmitted && fMiembroForm.nombre.$invalid" class="help-block">Error en campo Nombre.</p></div>
-        <button type="submit" class="btn btn-perso btn-lg btn-block">
-            <span class="glyphicon glyphicon-flash"></span>Agregar
-        </button>
-    </form>
-    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table">
+<a id="config" class="btn btn-primary" ng-click="ASalirGrupo1()">
+    <span class="glyphicon glyphicon-log-out"></span>  Salirme del grupo
+</a>
+	
+  
+    <hr />        <table ng-table="tableParams3" template-pagination="pager.html" class="table table-hover">
             <tr ng-repeat="row in $data">
                 <td data-title="'Nombre'" ng-bind="row['nombre']"></td>
-                <td ng-show="row['nombre']"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
+                <td ng-show="admin==usuario.nombre"><a ng-click="AElimMiembro3(row['nombre'])">Eliminar</a></td>
             </tr>
         </table>
 
 <hr />
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<table>
+  		<tr>
+		    <td><h3 class="panel-title">Añade a tus contactos</h3></td>
+			<td><div id="buscadorAmigos" class="input-group stylish-input-group">
+		  		<input ng-model="query" class="form-control" placeholder="Buscar amigos">
+		  		
+		  		<span class="input-group-addon">
+		  			<button type="submit">
+		      			<span class="glyphicon glyphicon-search"></span>
+		 			</button>  
+		  		</span>
+			</div></td>
+		</tr>
+	</table>
+  </div>
+  <div class="panel-body">
+	<ul class="agregMiembros">
+		<!-- El repeat se hace sobre los usuarios que pueden ser tus contactos, si no hay nada escrito en el buscador, éste no muestra resultados. -->
+		<table template-pagination="pager.html" class="table">
+		          <tr ng-repeat="item in fMiembro_opcionesNombre | filter:query">
+		              <td data-title="'Nombre'" ng-if= "query.length" ng-bind="item.value"></td>
+		              <td ng-if= "query.length"><button ng-click="AgregarContactoQuery(item.value)" id="btnHilos" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>  Añadir contacto</button></td>
+		          </tr>
+		      </table>
+	</ul>
+
+  </div>
+</div>
+
 
 
 <div id="right"></div><script type="text/ng-template" id="ayuda_VGrupo.html">
@@ -48,9 +128,9 @@
 <p style="text-align: left;">En la vista actual se encuentran las siguientes opciones:</span></p>
 <p style="text-align: left;"></p>
 <ul>
-<li>Regresar: Se regresa a administrar sus contactos.</li>
 <li>Salirme del grupo: Se sale del grupo, el grupo ya no aparecera en su lisa de contactos.</li>
 <li>Agregar: Se agrega al usuario seleccionado al grupo.</li>
 <li>Eliminar: Se elimina el miembro seleccionado del grupo.</li>
 </ul>
 </script>
+

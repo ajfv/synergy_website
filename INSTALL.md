@@ -97,6 +97,12 @@ para entrar en la aplicación.
 
 Para detener el servidor escriba Ctrl-c en la cónsola en la que se ejecuta.
 
+Si lo desea, puede agregar páginas de ejemplo a la aplicación usando el script `ejemplos.py`:
+
+    python ejemplos.py --crear
+    
+(Luego puede eliminarlos on la opción `--eliminar`)
+
 Para instalar con Miniconda:
 Crear ambiente:
 

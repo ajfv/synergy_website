@@ -1,85 +1,164 @@
 <!DOCTYPE html>
 <html ng-app="social">
-    <head><title>social</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="css/bsPerso.css">
-        <link rel="stylesheet" href="css/angular/ngDialog.min.css">
-        <link rel="stylesheet" href="css/angular/ngDialog-theme-default.min.css">
-        <link rel="stylesheet" href="css/angular/ng-table.min.css">
-        <link rel="stylesheet" href="css/app/style.css">
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-    </head>
-<body ng-controller="socialController_">
-    <div class="container">
-        <flash:messages class="alert-perso"></flash:messages>
-        <div ng-view class="fade"></div>
-    </div>
-    <footer class="footer">
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12" style="background-color: #333333; height: 2px;"></div>
-          </div>
-          <div class="row">
-              <div class="col-xs-10 text-inverse" ng-bind="title"></div>
-              <div class="col-xs-2" style="text-align: right"><img alt="Logo" src="img/logo.png" height="30" /></div>
-          </div>
-      </div>
-    </footer>
-    <!-- LOAD JQUERY -->
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/d3.v3.min.js"></script>
+	<head><title>social</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/bsPerso.css">
+		<link rel="stylesheet" href="css/angular/ngDialog.min.css">
+		<link rel="stylesheet" href="css/angular/ngDialog-theme-default.min.css">
+		<link rel="stylesheet" href="css/angular/ng-table.min.css">
+		<link rel="stylesheet" href="css/app/style.css">
+		<link href="css2/font-awesome.min.css" rel="stylesheet">
+		<link href="css2/prettyPhoto.css" rel="stylesheet">
+		<link href="css2/animate.css" rel="stylesheet">
+		<link href="css2/main.css" rel="stylesheet">
+		<link href="css2/cambios.css" rel="stylesheet">
+		<link rel="shortcut icon" href="img2/ico/synergy.png">
+		<link rel="synergy-icon" sizes="64x64" href="img2/ico/synergy.png">
+		<!-- SECCION NUEVA -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<script src="js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class="fondo" ng-controller="socialController_">
+		<div id="body" class="container">
+			<flash:messages class="alerta alert-perso"></flash:messages>
+			<div ng-view class="fade"></div>
+		</div>
+		
+		<div id="invisible" ng-click="ocultarContactos()">
+			<div id="invisible_interno" >
+				<div class="panel panel-default" style="width:50%;margin-left:25%;">
+			  		<div class="panel-heading">
+					  		<div class="panel-heading"> Contactos </div>
+					</div>
+					<div class="panel-body">
+						<table ng-table="tableParams1" template-pagination="pager.html" class="table">
+				            <tr ng-repeat="row in $data">
+				                <td data-title="'Nombre'">
+				                    <div ng-if="row['tipo'] === 'usuario'">
+				                        <a href="" ng-click="VMiPagina(row['nombre'])">{{row['nombre']}}</a>
+				                    </div>
+				                    <div ng-if="row['tipo'] === 'grupo'">
+				                        <div ng-bind="row['nombre']"></div>
+				                    </div>
+				                </td>
+				                <td data-title="'Tipo'" ng-bind="row['tipo']"></td>
+				                <td ng-show="row['idContacto']"><img src="img/chat.png" ng-click="VChat(row['idContacto'])" style="padding-left:5px;" alt="chat"></td>
+				            </tr>
+				        </table>
+						<div class="pulsor" ng-click="VAdminContactos(usuario)">
+							<span class="glyphicon glyphicon-cog"></span> Administrar
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/ng-template" id="pop_up_chat.html">
+		<div>
+		<ul>
+		  <li style="word-wrap:break-word;" ng-repeat="msg in mensajesAnt">De {{msg.usuario}}, el {{msg.fecha}}: {{msg.texto}}</li>
+		</ul>
+		</div>
+		<form name="fChatForm" ng-submit="AEscribir1(fChatForm.$valid)" novalidate>
+		            <div class="form-group" ng-class="{ 'has-error' :  fChatSubmitted && fChatForm.texto.$invalid && fChatForm.texto.$pristine && fChatSubmitted}"><label for="fChat_texto">Texto</label><textarea id="fChat_texto" name="texto" class="form-control" ng-model="fChat.texto" placeholder="Texto" required></textarea><p ng-show="fChatSubmitted && fChatForm.texto.$invalid" class="help-block">Error en campo Texto.</p></div>
+		        <button type="submit" id="btnHilos" class="btn btn-primary">
+		            Enviar 
+		        </button>
+		</form>
 
-    <!-- LOAD ANGULAR -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular/angular.min.js"></script>
-    <script src="js/angular/angular-animate.min.js"></script>
-    <script src="js/angular/angular-resource.min.js"></script>
-    <script src="js/angular/angular-route.min.js"></script>
-    <script src="js/angular/angular-sanitize.js"></script>
-    <script src="js/angular/textAngular-sanitize.min.js"></script>
-    <script src="js/angular/textAngular.min.js"></script>
-    <script src="js/angular/ngDialog.min.js"></script>
-    <script src="js/jquery.layout-latest.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/angular/ng-flash.js"></script>
-    <!-- LOAD APP -->
-    <script src="js/app/app.js"></script>
-    <script src="js/app/ident/IdentService.js"></script>
-    <script src="js/app/ident/IdentController.js"></script>
-    <script src="js/app/paginas/PaginasService.js"></script>
-    <script src="js/app/paginas/PaginasController.js"></script>
-    <script src="js/app/chat/ChatService.js"></script>
-    <script src="js/app/chat/ChatController.js"></script>
-    <script src="js/app/foro/ForoService.js"></script>
-    <script src="js/app/foro/ForoController.js"></script>
+		</script>
 
-    <!-- LOAD NGTABLE -->
-    <script src="js/angular/ng-table.min.js"></script>
-<script type="text/ng-template" id="pager.html">
-<ul class="pager ng-cloak" ng-show="pages.length>1">
-    <li ng-repeat="page in pages"
-          ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
-          ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
-      <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
-      <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
-    </li>
-      <li> 
-      <div class="btn-group">
-          <button type="button" ng-class="{'active':params.count() == 10}" ng-click="params.count(10)" class="btn btn-default">10</button>
-          <button type="button" ng-class="{'active':params.count() == 25}" ng-click="params.count(25)" class="btn btn-default">25</button>
-          <button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
-          <button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
-      </div>
-      </li>
-  </ul>
-</script>
+		<!--FOOTER-->
+		<footer id="footer" class="container">
+			<div class="container">
+				<div class="row">
+					<div id="derechos" class="col-sm-6">
+						&copy; 2016 
+						<span target="_blank">Synergy. All Rights Reserved. </span>
+					</div>
+					<div class="icono col-sm-2 hidden-xs">
+						<div class="pull-left">
+							<i class="icon-twitter icon-md"></i>
+						</div>
+					</div>
+					<div class="icono col-sm-2 hidden-xs">
+						<div class="pull-left">
+							<i class="icon-facebook icon-md"></i>
+						</div>
+					</div>
+					<div class="icono col-sm-2 hidden-xs">
+						<div class="media">
+							<div class="pull-left">
+								<i class="icon-google-plus icon-md"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!--/FOOTER-->
 
-</body>
+		<!-- LOAD JQUERY -->
+		<script src="js/jquery-1.11.2.min.js"></script>
+		<script src="js/d3.v3.min.js"></script>
+		<script src="js/jquery.layout-latest.min.js"></script>
+		<script src="js/dropdown.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+
+		<!-- LOAD ANGULAR -->
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/angular/angular.min.js"></script>
+		<script src="js/angular/angular-animate.min.js"></script>
+		<script src="js/angular/angular-resource.min.js"></script>
+		<script src="js/angular/angular-route.min.js"></script>
+		<script src="js/angular/angular-sanitize.js"></script>
+		<script src="js/angular/textAngular-sanitize.min.js"></script>
+		<script src="js/angular/textAngular.min.js"></script>
+		<script src="js/angular/ngDialog.min.js"></script>
+		<script src="js/angular/ng-flash.js"></script>
+
+		<!-- LOAD APP -->
+		<script src="js/app/app.js"></script>
+		<script src="js/app/ident/IdentService.js"></script>
+		<script src="js/app/ident/IdentController.js"></script>
+		<script src="js/app/paginas/PaginasService.js"></script>
+		<script src="js/app/paginas/PaginasController.js"></script>
+		<script src="js/app/chat/ChatService.js"></script>
+		<script src="js/app/chat/ChatController.js"></script>
+		<script src="js/app/foro/ForoService.js"></script>
+		<script src="js/app/foro/ForoController.js"></script>
+
+		<!-- LOAD NGTABLE -->
+		<script src="js/angular/ng-table.min.js"></script>
+		<script type="text/ng-template" id="pager.html">
+			<ul class="pager ng-cloak" ng-show="pages.length>1">
+				<li ng-repeat="page in pages"
+					ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+					ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
+					
+					<a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
+					<a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
+				</li>
+				<li> 
+					<div class="btn-group">
+						<button type="button" ng-class="{'active':params.count() == 10}" ng-click="params.count(10)" class="btn btn-default">10</button>
+						<button type="button" ng-class="{'active':params.count() == 25}" ng-click="params.count(25)" class="btn btn-default">25</button>
+						<button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
+						<button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
+					</div>
+				</li>
+			</ul>
+		</script>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    setTimeout(function() {
+		        $(".alerta").fadeOut(1500);
+		    },3000);
+		});
+		</script>
 </html>

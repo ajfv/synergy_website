@@ -1,0 +1,147 @@
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+								</ul>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+</header>
+<script>
+$('.dropdown-toggle').dropdown()
+</script>
+
+<div class="row" >
+    <div class="col-md-6"><h3>{{pag.titulo}}</h3>{{pag.contenido}}</div>
+    <div class="col-md-6"><br><img ng-src="{{pag.imagenes}}"></a></div>
+</div>
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Comentarios</h3>
+  </div>
+  <div class="panel-body">
+
+    <div ng-if="!comentarios">
+        <a ng-click="mostrarComentarios(pag.hilo)">
+        	<div style="text-align: center;">
+	            Ver comentarios
+	            <span class="glyphicon glyphicon-chevron-down"></span> 
+        	</div>
+        </a>
+    </div>
+    <div ng-if="comentarios" class="well">
+        <ul style="visibility: hidden;">
+            <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+        </ul>
+        <div ng-include="'responder_Publicacion.html'"></div>
+	</div>
+  </div>
+</div>
+
+<br>
+
+<!-- Templates -->
+<script type="text/ng-template"  id="tree_item_renderer.html">
+<div class="tab-content">
+    <div id="recent-activity" class="tab-pane active">
+        <div class="profile-activity">
+            <div class="act-time">                                      
+                <div class="activity-body act-in">
+                    <span class="arrow"></span>
+                    <div class="text">
+						<div style="text-align: right;" 
+						class="flecha"><span ng-click="colapsar(publicacion.id)" id="{{'boton' + publicacion.id }}"><span id="up" class="glyphicon glyphicon-chevron-up"></span></span>
+						</div>
+                        <div id="{{'publicacion' + publicacion.id}}">
+                            <h4>{{publicacion.contenido}}</h4>
+                            <p id="firma"class="attribution">Publicado por:{{publicacion.autor}}</p>
+                            <a ng-show="idUsuario" ng-click="responderPublicacion(publicacion)" ng-show="!publicacion.eliminada">Responder</a>
+                            <a ng-click="AElimPublicacion1(publicacion.id)" ng-show="!publicacion.eliminada && publicacion.autor == idUsuario">Eliminar</a>
+                            <ul style="visibility: hidden;" id="bulletForo" >
+                                <li ng-repeat="publicacion in publicacion.hijos" ng-include="'tree_item_renderer.html'"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="responder_Publicacion.html">
+    <form ng-show="idUsuario" name="fpublicacionForm" ng-submit="AgregPublicacion3(fpublicacionForm.$valid, publicacion.id)" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : fpublicacionFormSubmitted && fpublicacionForm.texto.$invalid && fpublicacionForm.texto.$pristine && fpublicacionSubmitted}">
+        <label for="fpublicacion_texto">
+            Tu comentario:
+        </label>
+        <textarea  type="text" id="fpublicacion_texto" name="texto" class="form-control" ng-model="fpublicacion.texto" placeholder="Texto" required>
+            
+        </textarea >
+        <p ng-show="error && fpublicacionForm.texto.$invalid" class="help-block">
+            Error en campo Texto.
+        </p>
+    </div>
+    <button type="submit" id="btnHilos" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span> Enviar
+    </button>
+</form>
+</script>
+
+<div id="right"></div>

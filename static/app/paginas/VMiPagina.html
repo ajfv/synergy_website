@@ -1,51 +1,161 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-                    data-toggle="collapse"
-                    data-target="#contenido-plegable">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand" >{{titulo}}</span>
-        </div>
-        <div class="collapse navbar-collapse" id="contenido-plegable">
-            <ul class="nav navbar-nav navbar-left">
-<li><a ng-click="VPagina2(idUsuario)"
-       ng-show="(actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false) && mostrar">
-  Modificar</a></li>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<header class="container navbar navbar-inverse navbar-fixed-top carrot" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="VInicio2()">
+					<img style="padding-top:6px;max-width:300px;" 
+						 src="img2/logo.png" 
+						 alt="logo"
+						 ng-click="VInicio()">
+				</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav navbar-right lista headerNavBar">
+                        <li>
+        					<a ng-click="VForos()">
+                                Foros
+                            </a>
+        				</li>
+                        <li>
+							<a ng-click="VPrincipal()">
+								Páginas
+							</a>
+						</li>
+						<li>
+							<a ng-click="verContactos(idUsuario)" ng-show='idUsuario'>
+								Contactos
+							</a>
+						</li>
+						<li>
+							<a ng-click="VLogin()" ng-show='!idUsuario'>
+								Iniciar sesión
+							</a>
+						</li>
+						<li> 
+							<a ng-click="VRegistro()" ng-show='!idUsuario'>Registrarse</a>
+						</li>
+						<li ng-show="idUsuario" id="user">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown">
+									<span ng-bind="idUsuario">
+									</span>
+									<i class="icon-chevron-down">
+									</i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a style="color:#3B3F44" ng-click="VMiPagina(idUsuario)">
+											Perfil
+										</a>
+									</li>			
+									<li>
+										<a style="color:#3B3F44" ng-click="ASalir(idUsuario)">
+											Cerrar sesión
+										</a>
+									</li>
+									<li>
+										<a style="color:#3B3F44" ng-click="__ayuda()">
+											Ayuda
+										</a>
+									</li>
+								</ul>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
 
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-<li class="navbar-text" ng-show="usuario.nombre" ng-bind="usuario.nombre"></li>
-<li><a ng-click="__ayuda()"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-<li><a ng-click="VPrincipal1()"
-       ng-show="actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false">
-    Regresar</a></li>
+	<script>
+	$('.dropdown-toggle').dropdown()
+	</script>
 
-            </ul>
-        </div>
-    </div>
-</nav>
+<!-- VISTA PARA USUARIO CON PAGINA -->
+<div ng-show="!pagVacia || !mostrar">
+	<!-- TITULO -->
+	<div class="pagina-usuario titulo-pagina">
+		<span>{{titulo}}</span>
+	</div>
 
-<div ng-bind-html="contenido"></div>
+	<!-- CONTENIDO -->
+	<div class="pagina-usuario">
+		<div class="pagina-contenido" ng-bind-html="contenido">
+		</div>
+	</div>
+
+	<div id="boton-modif">
+		<div>
+			<a class="btn-naranja-negro" ng-click="VPagina(idUsuario)"
+			   ng-show="(actor=='desarrollador' || actor=='duenoProducto' || actor=='maestroScrum' || false) && mostrar">
+				Modificar
+			</a>
+		</div>
+	</div>
+</div>
+
+<!-- VISTA PARA USUARIO SIN PAGINA -->
+<!--
+<div class="well" ng-show="pagVacia && mostrar">
+	{{crearPag}} 
+	<br>
+	<a id = "config" class="btn btn-primary" ng-click="VPagina(idUsuario)">Crear página</a>
+</div>
+-->
 
 
 
-<div id="right"></div><script type="text/ng-template" id="ayuda_VMiPagina.html">
+<div id="profile" class="container" ng-show="pagVacia && mostrar">
+	<div class="center-column row">
+		<div class="portfolio-item">
+			<div id="profile-box" class="item-inner">
+				<a ng-click="VPagina(idUsuario)">
+					<img id="perfil" src="img/profile/profile13.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="center-column row">
+		<div class="portfolio-item">
+			<div id="profile-message" class="item-inner">
+				<h2>
+					¿Aún no has creado tu página?
+				</h2>
+				<p>
+					Haz click en la imagen y personaliza el contenido de tu perfil agregando fotos y textos de tu interés.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
 
-<div style="text-align: center;"><span><b>Manual:</b></span></div>
-<p>En la vista actual se encuentran las siguientes opciones:</p><p></p>
-<ul> 
-<li>Modificar: Se dirige a la página en la que puede modificar su pagina de usuario.</li>
-<li>Regresar: Se regresa a la página principal.</li>
-</ul>
+<!-- AYUDA -->
+<div id="right"></div>
+<script type="text/ng-template" id="ayuda_VMiPagina.html">
+	<div style="text-align: center;">
+		<span>
+			<b>
+				Manual:
+			</b>
+		</span>
+	</div>
+	<p>
+		En la vista actual se encuentran las siguientes opciones:
+	</p>
+	<p>
+	</p>
+	<ul> 
+		<li>
+			Modificar: Se dirige a la página en la que puede modificar su pagina de usuario.
+		</li>
+	</ul>
+	<br>
+	<div ng-bind-html="contenido">
+	</div>
+</script>
 
-
-
-
-
-<br><div ng-bind-html="contenido"></div>
-
+<!-- Para asegurar que se despliegue el menu dropdown -->
+<script>
+$('.dropdown-toggle').dropdown()
 </script>

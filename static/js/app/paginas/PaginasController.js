@@ -9,35 +9,31 @@ socialModule.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 socialModule.controller('VMiPaginaController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
       $scope.msg = '';
       paginasService.VMiPagina({"idUsuario":$routeParams.idUsuario}).then(function (object) {
         $scope.res = object.data;
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
 
       });
-      $scope.VPrincipal1 = function() {
-        $location.path('/VPrincipal');
-      };
-      $scope.VPagina2 = function(idUsuario) {
+
+      $scope.VPagina = function(idUsuario) {
         $location.path('/VPagina/'+idUsuario);
       };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VMiPagina.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      
+      navegador.agregarBotones($scope);
+      
+      $scope.__ayuda = function() {
+          ngDialog.open({ template: 'ayuda_VMiPagina.html',
+          showClose: true, closeByDocument: true, closeByEscape: true});
+      };
     }]);
 socialModule.controller('VPaginaController', 
-   ['$scope', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
-    function ($scope, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
+   ['$scope', 'navegador', '$location', '$route', '$timeout', 'flash', '$routeParams', 'ngDialog', 'identService', 'paginasService',
+    function ($scope, navegador, $location, $route, $timeout, flash, $routeParams, ngDialog, identService, paginasService) {
       $scope.msg = '';
       $scope.fPagina = {};
 
@@ -46,16 +42,10 @@ socialModule.controller('VPaginaController',
         for (var key in object.data) {
             $scope[key] = object.data[key];
         }
-        if ($scope.logout) {
-            $location.path('/');
-        }
-
-
       });
-      $scope.VPrincipal1 = function() {
-        $location.path('/VPrincipal');
-      };
-
+     
+      navegador.agregarBotones($scope);
+      
       $scope.fPaginaSubmitted = false;
       $scope.AModificarPagina0 = function(isValid) {
         $scope.fPaginaSubmitted = true;
@@ -70,9 +60,9 @@ socialModule.controller('VPaginaController',
           });
         }
       };
-
-$scope.__ayuda = function() {
-ngDialog.open({ template: 'ayuda_VPagina.html',
-        showClose: true, closeByDocument: true, closeByEscape: true});
-}
+      
+      $scope.__ayuda = function() {
+      ngDialog.open({ template: 'ayuda_VPagina.html',
+              showClose: true, closeByDocument: true, closeByEscape: true});
+      }
     }]);

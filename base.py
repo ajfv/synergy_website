@@ -26,8 +26,9 @@ def root():
 #Application code starts here
 
 # Código para la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://synergy:lacontraseña@localhost/ci3715_db?client_encoding=utf8'
 app.config['TESTING']=True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config.update(SECRET_KEY = repr(SystemRandom().random()))
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -89,6 +90,82 @@ class Pagina(db.Model):
 
 #-------------------------------------------------------------------------------
 
+class Publicacion(db.Model):
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    titulo = db.Column(db.String)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+    contenido = db.Column(db.Text)
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+    eliminada = db.Column(db.Boolean, default=False)
+    padre_id = db.Column(db.Integer, db.ForeignKey('publicacion.id'))
+    padre = db.relationship('Publicacion',
+                            backref=db.backref(
+                                'hijos', 
+                                order_by=lambda: db.asc(Publicacion.fecha_creacion)),
+                            remote_side=[id])
+
+    hilo = db.relationship('Hilo',
+                            backref=db.backref('publicaciones'), uselist=False)
+    hilo_id = db.Column(db.Integer, db.ForeignKey('hilo.id'))
+
+
+    def __init__(self, titulo, contenido, usuario=None, hilo=None, padre=None):
+        self.titulo = titulo
+        self.contenido = contenido
+        self.autor_id = usuario
+        #self.responde_a = respondido.titulo
+        self.hilo = hilo
+        self.padre = padre
+        
+    def a_diccionario(self):
+        return {
+            'id' : self.id,
+            'titulo' : self.titulo,
+            'contenido' : self.contenido,
+            'autor' : self.autor_id,
+            'eliminada' : self.eliminada,
+            'hijos' : [hijo.a_diccionario() for hijo in self.hijos]
+        }
+
+
+#-------------------------------------------------------------------------------
+
+class Hilo(db.Model):
+    id = db.Column (db.Integer, primary_key=True, autoincrement=True)
+    foro_id = db.Column(db.String, db.ForeignKey('foro.titulo'))
+    sitio_id = db.Column(db.String, db.ForeignKey('sitio.id'))
+
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+
+    sitio = db.relationship('Sitio',
+                            backref=db.backref('hilo', uselist=False), uselist=False)
+    foro = db.relationship('Foro',
+                            backref=db.backref('hilos'), uselist=False)
+
+
+    def __init__(self, foro=None, sitio=None):
+        self.foro = foro
+        self.sitio = sitio
+
+    @property
+    def raiz(self):
+        for p in self.publicaciones:
+            if p.padre is None:
+                return p
+
+#-------------------------------------------------------------------------------
+class Foro(db.Model):
+    titulo = db.Column(db.String, primary_key=True)
+    fecha_creacion = db.Column(db.DateTime, server_default=db.func.now())
+
+    autor_id = db.Column(db.String, db.ForeignKey('usuario.nombre_usuario'))
+
+    def __init__(self, titulo, nombre_usuario):
+        self.titulo = titulo
+        self.autor_id = nombre_usuario
+
+#-------------------------------------------------------------------------------
+
 class Chat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -140,9 +217,19 @@ class Grupo(db.Model):
         self.admin_id = admin.nombre_usuario
         self.chat_id = chat.id
         self.chat = chat
-
+        
 #-------------------------------------------------------------------------------
-
+class Sitio(db.Model):
+    id = db.Column(db.String, primary_key=True)
+    titulo = db.Column(db.String)
+    contenido = db.Column(db.String)
+    imagenes = db.Column(db.String)
+     
+    def __init__(self, id, titulo = None, contenido = None, imagenes = None):
+        self.id = id
+        self.titulo = titulo
+        self.contenido = contenido
+        self.imagenes = imagenes
 #Application code ends here
 
 from app.socal.ident import ident
@@ -153,6 +240,8 @@ app.register_blueprint(paginas)
 from app.socal.chat import chat
 app.register_blueprint(chat)
 
+from app.socal.foro import foro
+app.register_blueprint(foro)
 
 if __name__ == '__main__':
     app.config.update(
